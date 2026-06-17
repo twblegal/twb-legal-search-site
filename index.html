@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TWB Legal Search</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #faf9f7;
+      --surface: #f2f0ec;
+      --border: rgba(0,0,0,0.08);
+      --text-primary: #111110;
+      --text-secondary: rgba(17,17,16,0.78);
+      --accent: #2563eb;
+      --accent-dim: rgba(37,99,235,0.1);
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--sans);
+      font-weight: 400;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Fade-in stagger ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) forwards;
+    }
+    .d1 { animation-delay: 0.1s; }
+    .d2 { animation-delay: 0.28s; }
+    .d3 { animation-delay: 0.46s; }
+    .d4 { animation-delay: 0.64s; }
+    .d5 { animation-delay: 0.82s; }
+    .d6 { animation-delay: 1.00s; }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Layout ── */
+    .page {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* ── Header / Nav ── */
+    header {
+      padding: 48px 0 0;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .wordmark {
+      font-family: var(--serif);
+      font-weight: 00;
+      font-size: 1.2rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #6b0f1f;
+      text-decoration: none;
+    }
+
+    .wordmark span {
+      color: #6b0f1f;
+    }
+
+    nav {
+      display: flex;
+      gap: 36px;
+      align-items: center;
+    }
+
+    nav a {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      font-weight: 400;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--text-primary); }
+
+    /* ── Rule ── */
+    .rule {
+      height: 1px;
+      background: var(--border);
+      margin-top: 36px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 120px 0 100px;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.6;
+    }
+
+    .hero-headline {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(2.8rem, 5.5vw, 4.6rem);
+      line-height: 1.12;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+      max-width: 780px;
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      color: #6b0f1f;
+    }
+
+    .hero-sub {
+      margin-top: 48px;
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      max-width: 520px;
+    }
+
+    .hero-tagline {
+      margin-top: 28px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.15rem;
+      line-height: 1.4;
+      color: var(--text-primary);
+      max-width: 520px;
+    }
+
+    /* ── Pillars ── */
+    .pillars {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .pillar {
+      padding: 48px 40px 48px 0;
+      border-right: 1px solid var(--border);
+    }
+
+    .pillar:last-child {
+      border-right: none;
+    }
+
+    .pillar:not(:first-child) {
+      padding-left: 40px;
+    }
+
+    .pillar-num {
+      font-family: var(--serif);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .pillar-title {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 1.3rem;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .pillar-body {
+      font-size: 0.85rem;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+
+    /* ── Markets ── */
+    .markets-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+
+    .section-headline {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      line-height: 1.2;
+      margin-bottom: 28px;
+    }
+
+    .section-body {
+      font-size: 0.875rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+
+    .market-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .market-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+    }
+
+    .market-item:first-child { border-top: 1px solid var(--border); }
+
+    .market-item .city {
+      color: var(--text-primary);
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 400;
+    }
+
+    .market-item .state {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── Practice ── */
+    .practice-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .practice-grid {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .practice-left {}
+
+    .roles-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      margin-top: 0;
+    }
+
+    .role-card {
+      background: var(--bg);
+      padding: 32px 28px;
+    }
+
+    .role-card-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .role-card-title {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 500;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .role-card-body {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 14px;
+      font-weight: 400;
+    }
+
+    .role-card-keywords {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .role-card-keywords span {
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      font-weight: 400;
+    }
+
+    .role-card-examples {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* ── Contact ── */
+    .contact-section {
+      padding: 100px 0 120px;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: end;
+    }
+
+    .contact-headline {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      line-height: 1.15;
+      margin-bottom: 24px;
+    }
+
+    .contact-body {
+      font-size: 0.875rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      max-width: 400px;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      align-self: center;
+    }
+
+    .contact-row {
+      display: flex;
+      flex-direction: column;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+      gap: 6px;
+    }
+
+    .contact-row:first-child { border-top: 1px solid var(--border); }
+
+    .contact-row-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .contact-row-value {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contact-row-value:hover { color: var(--accent); }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 40px;
+      padding: 14px 28px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      background: transparent;
+      transition: background 0.2s, color 0.2s;
+      cursor: pointer;
+    }
+
+    .cta-btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .cta-btn svg {
+      width: 12px;
+      height: 12px;
+      transition: transform 0.2s;
+    }
+
+    .cta-btn:hover svg { transform: translate(2px, -2px); }
+
+    /* ── Jobs ── */
+    .jobs-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .job-list {
+      display: flex;
+      flex-direction: column;
+      margin-top: 40px;
+    }
+
+    .job-item {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+      display: grid;
+      grid-template-columns: 1fr auto auto auto;
+      gap: 24px;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .job-list .job-item:last-child {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .job-title {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .job-location, .job-type {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .job-apply-link {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .job-empty {
+      padding: 40px 0;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-style: italic;
+      font-family: var(--serif);
+    }
+
+    /* ── Application Form ── */
+    .apply-form {
+      margin-top: 56px;
+      padding-top: 56px;
+      border-top: 1px solid var(--border);
+      max-width: 560px;
+    }
+
+    .apply-form-title {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: 1.6rem;
+      margin-bottom: 12px;
+    }
+
+    .apply-form-sub {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .form-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .form-row label {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .form-row input,
+    .form-row select,
+    .form-row textarea {
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-row input:focus,
+    .form-row select:focus,
+    .form-row textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .form-row textarea {
+      resize: vertical;
+      min-height: 100px;
+      font-family: var(--sans);
+    }
+
+    .form-row-file {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .form-submit-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+      padding: 14px 28px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: transparent;
+      transition: background 0.2s, color 0.2s;
+      cursor: pointer;
+    }
+
+    .form-submit-btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .form-submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .form-status {
+      margin-top: 18px;
+      font-size: 0.85rem;
+      display: none;
+    }
+
+    .form-status.success { color: #1a7a3c; display: block; }
+    .form-status.error { color: #b3261e; display: block; }
+
+    @media (max-width: 768px) {
+      .job-item {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        align-items: start;
+      }
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .footer-copy {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+    }
+
+    .footer-mark {
+      font-family: var(--serif);
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      color: var(--text-secondary);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .page { padding: 0 24px; }
+
+      header {
+        flex-direction: column;
+        gap: 20px;
+        padding-top: 36px;
+      }
+
+      nav { gap: 24px; }
+
+      .hero { padding: 72px 0 64px; }
+
+      .pillars {
+        grid-template-columns: 1fr;
+      }
+
+      .pillar {
+        padding: 40px 0;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .pillar:last-child {
+        border-bottom: none;
+      }
+
+      .pillar:not(:first-child) { padding-left: 0; }
+
+      .markets-section {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .practice-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .roles-grid { grid-template-columns: 1fr; }
+
+      .contact-section {
+        grid-template-columns: 1fr;
+        gap: 48px;
+        padding: 72px 0 80px;
+      }
+
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <!-- Header -->
+    <header>
+      <a class="wordmark reveal d1" href="#">TWB<span></span> Legal Search</a>
+      <nav class="reveal d1">
+        <a href="#practice">Practice</a>
+        <a href="#markets">Markets</a>
+        <a href="#jobs">Jobs</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <div class="rule reveal d2"></div>
+
+    <!-- Hero -->
+    <section class="hero">
+      <h1 class="hero-headline reveal d3">
+        Connecting the people<br />
+        <em>driving law firm innovation.</em>
+      </h1>
+      <p class="hero-sub reveal d4">
+        TWB Legal Search works exclusively with Am Law 200 firms, sourcing and placing the technology professionals who keep them running.
+      </p>
+      
+    </section>
+
+    <!-- Pillars -->
+    <div class="pillars reveal d4">
+      <div class="pillar">
+        <div class="pillar-title">Exclusive Focus</div>
+        <p class="pillar-body">We don't recruit across practice areas and hope something sticks. Legal technology is the only thing we do — and that's exactly why we're better at it.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-title">Deliberate Volume</div>
+        <p class="pillar-body">Fewer searches means every one gets worked properly — by us, start to finish. You won't be handed a shortlist and left to figure out the rest.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-title">Long-Term Lens</div>
+        <p class="pillar-body">A good placement isn't the end of the relationship. We stay connected to the firms and candidates we work with because that's what makes the next search smoother than the last.</p>
+      </div>
+    </div>
+
+    <!-- Markets -->
+    <section class="markets-section reveal d5" id="markets">
+      <div>
+        <div class="section-label">Active Markets</div>
+        <h2 class="section-headline">Where we work</h2>
+        <p class="section-body">
+          Three regions where Am Law 200 firms have a serious operational presence and a consistent need for legal technology talent — Southern California, Texas, and New York.
+        </p>
+      </div>
+      <ul class="market-list">
+        <li class="market-item">
+          <span class="city">Los Angeles</span>
+          <span class="state">California</span>
+        </li>
+        <li class="market-item">
+          <span class="city">San Diego</span>
+          <span class="state">California</span>
+        </li>
+        <li class="market-item">
+          <span class="city">Orange County</span>
+          <span class="state">California</span>
+        </li>
+                <li class="market-item">
+          <span class="city">Houston</span>
+          <span class="state">Texas</span>
+        </li>
+        <li class="market-item">
+          <span class="city">Dallas</span>
+          <span class="state">Texas</span>
+        </li>
+        <li class="market-item">
+          <span class="city">Austin</span>
+          <span class="state">Texas</span>
+        </li>
+        <li class="market-item">
+          <span class="city">San Antonio</span>
+          <span class="state">Texas</span>
+        </li>
+        <li class="market-item">
+          <span class="city">New York City</span>
+          <span class="state">New York</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Practice -->
+    <section class="practice-section reveal d5" id="practice">
+      <div class="practice-grid">
+        <div class="practice-left">
+          <div class="section-label">Practice Areas</div>
+          <h2 class="section-headline">What we do</h2>
+          <p class="section-body">
+            Seven years placed exclusively in legal technology means you're not explaining the environment to us — we already know it.      </p>
+        </div>
+        <div class="roles-grid">
+          <div class="role-card">
+            <div class="role-card-title">Cloud Infrastructure & Automation</div>
+            <div class="role-card-body">The engineers and architects building the backbone of modern law firm operations.</div>
+            <div class="role-card-keywords">
+              <span>Azure</span><span>M365</span><span>IaC</span><span>SaaS</span>
+            </div>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title">Legal Applications</div>
+            <div class="role-card-body">Specialists who implement, manage, and optimize the platforms firms run on.</div>
+            <div class="role-card-keywords">
+              <span>iManage</span><span>NetDocuments</span><span>Aderant</span><span>Elite 3E</span>
+            </div>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title">Security & Compliance</div>
+            <div class="role-card-body">Professionals protecting the most sensitive data in the business of law.</div>
+            <div class="role-card-keywords">
+              <span>Cybersecurity</span><span>Information Governance</span><span>Risk & Compliance</span>
+            </div>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title">Technology Support</div>
+            <div class="role-card-body">The people who keep firms running — responsive, technically sharp, high-stakes ready.</div>
+            <div class="role-card-keywords">
+              <span>Help Desk</span><span>Systems</span><span>Network</span><span>IT Leadership</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Jobs -->
+    <section class="jobs-section reveal d5" id="jobs">
+      <div class="section-label">Open Roles</div>
+      <h2 class="section-headline">Current opportunities</h2>
+      <p class="section-body">
+        Positions we're actively recruiting for on behalf of our law firm clients. Don't see a fit? Submit your resume below anyway — we keep a close pipeline for upcoming searches.
+      </p>
+
+      <!--
+        ════════════════════════════════════════════════════════════
+        EDITING JOBS: copy/paste a .job-item block to add a role,
+        delete one to remove it. Update the three text fields and
+        the value="" inside the <a> tag (used to pre-fill the
+        "Position" dropdown in the form below — keep it identical
+        to one of the <option> values in the form, or use "Other").
+        ════════════════════════════════════════════════════════════
+      -->
+      <div class="job-list">
+
+        <div class="job-item" onclick="document.getElementById('position').value=this.dataset.role; document.getElementById('apply').scrollIntoView({behavior:'smooth'});" data-role="IT Director">
+          <span class="job-title">IT Director</span>
+          <span class="job-location">Cincinnati, OH</span>
+          <span class="job-type">Full-Time</span>
+          <span class="job-apply-link">Apply →</span>
+        </div>
+
+        <div class="job-item" onclick="document.getElementById('position').value=this.dataset.role; document.getElementById('apply').scrollIntoView({behavior:'smooth'});" data-role="Systems Administrator">
+          <span class="job-title">Systems Administrator</span>
+          <span class="job-location">Cleveland, OH</span>
+          <span class="job-type">Full-Time</span>
+          <span class="job-apply-link">Apply →</span>
+        </div>
+
+        <div class="job-item" onclick="document.getElementById('position').value=this.dataset.role; document.getElementById('apply').scrollIntoView({behavior:'smooth'});" data-role="Help Desk Support Specialist">
+          <span class="job-title">Help Desk Support Specialist</span>
+          <span class="job-location">Detroit, MI</span>
+          <span class="job-type">Contract</span>
+          <span class="job-apply-link">Apply →</span>
+        </div>
+
+        <!-- To show "no roles open" instead, comment out the .job-item divs above and uncomment this:
+        <div class="job-empty">No open roles at the moment — check back soon, or submit your resume below for future searches.</div>
+        -->
+
+      </div>
+
+      <!-- Application Form -->
+      <div class="apply-form" id="apply">
+        <h3 class="apply-form-title">Submit your resume</h3>
+        <p class="apply-form-sub">Apply to a specific role above or send a general application. We review every submission personally.</p>
+
+        <form id="applyForm">
+          <div class="form-row">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required />
+          </div>
+
+          <div class="form-row">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+
+          <div class="form-row">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" />
+          </div>
+
+          <div class="form-row">
+            <label for="position">Position</label>
+            <select id="position" name="position" required>
+              <option value="">Select a role</option>
+              <option value="IT Director">IT Director — Cincinnati, OH</option>
+              <option value="Systems Administrator">Systems Administrator — Cleveland, OH</option>
+              <option value="Help Desk Support Specialist">Help Desk Support Specialist — Detroit, MI</option>
+              <option value="General Application">General Application</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="message">Note (optional)</label>
+            <textarea id="message" name="message" placeholder="Anything you'd like us to know"></textarea>
+          </div>
+
+          <div class="form-row">
+            <label for="resume">Resume (PDF or Word, max 10MB)</label>
+            <input class="form-row-file" type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required />
+          </div>
+
+          <button class="form-submit-btn" type="submit" id="submitBtn">Submit Application</button>
+          <div class="form-status" id="formStatus"></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact-section reveal d6" id="contact">
+      <div>
+        <h2 class="contact-headline">Let's talk about your search.</h2>
+        <p class="contact-body">
+          We work with a select number of firms and stay closely connected to the best talent in legal technology. If either applies to you, we'd love to talk.
+        </p>
+        <a class="cta-btn" href="mailto:info@twb.legal">
+          Get in touch
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M1 11L11 1M11 1H4M11 1v7" />
+          </svg>
+        </a>
+      </div>
+      <div class="contact-details">
+        <div class="contact-row">
+          <span class="contact-row-label">Email</span>
+          <a class="contact-row-value" href="mailto:info@twb.legal">info@twb.legal</a>
+        </div>
+        <div class="contact-row">
+          <span class="contact-row-label">LinkedIn</span>
+          <a class="contact-row-value" href="https://www.linkedin.com/company/twb-legal-search/" target="_blank">TWB Legal Search</a>
+        </div>
+        <div class="contact-row">
+          <span class="contact-row-label">Expertise</span>
+          <span class="contact-row-value" style="cursor:default;">Am Law 200 · Legal Technology · Infrastructure · Enterprise Applications</span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-row-label">Engagements</span>
+          <span class="contact-row-value" style="cursor:default;">Retained · Contingency</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <span class="footer-copy">© 2026 TWB Legal Search LLC. All rights reserved.</span>
+    </footer>
+
+  </div>
+  <script>
+    const applyForm = document.getElementById('applyForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const formStatus = document.getElementById('formStatus');
+
+    applyForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      formStatus.className = 'form-status';
+      formStatus.textContent = '';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting…';
+
+      try {
+        const formData = new FormData(applyForm);
+        const response = await fetch('/api/apply', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          formStatus.className = 'form-status success';
+          formStatus.textContent = 'Application received — thank you. We\'ll be in touch if there\'s a fit.';
+          applyForm.reset();
+        } else {
+          throw new Error(result.error || 'Submission failed');
+        }
+      } catch (err) {
+        formStatus.className = 'form-status error';
+        formStatus.textContent = 'Something went wrong submitting your application. Please try again or email info@twb.legal directly.';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Application';
+      }
+    });
+  </script>
+</body>
+</html>
