@@ -450,63 +450,93 @@
 
     .cta-btn:hover svg { transform: translate(2px, -2px); }
 
-    /* ── Jobs ── */
-    .jobs-section {
-      padding: 80px 0;
-      border-top: 1px solid var(--border);
-    }
+/* ── Jobs ── */
+.jobs-section {
+  padding: 80px 0;
+  border-top: 1px solid var(--border);
+}
 
-    .job-list {
-      display: flex;
-      flex-direction: column;
-      margin-top: 40px;
-    }
+.job-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+}
 
-    .job-item {
-      border-top: 1px solid var(--border);
-      padding: 28px 0;
-      display: grid;
-      grid-template-columns: 1fr auto auto auto;
-      gap: 24px;
-      align-items: center;
-      cursor: pointer;
-    }
+.job-item {
+  border-top: 1px solid var(--border);
+}
 
-    .job-list .job-item:last-child {
-      border-bottom: 1px solid var(--border);
-    }
+.job-list .job-item:last-child {
+  border-bottom: 1px solid var(--border);
+}
 
-    .job-title {
-      font-family: var(--serif);
-      font-size: 1.15rem;
-      font-weight: 500;
-      color: var(--text-primary);
-    }
+.job-row {
+  padding: 28px 0;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto auto;
+  gap: 24px;
+  align-items: center;
+  cursor: pointer;
+}
 
-    .job-location, .job-type {
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      white-space: nowrap;
-    }
+.job-toggle-icon {
+  width: 10px;
+  height: 10px;
+  border-right: 1.5px solid var(--text-secondary);
+  border-bottom: 1.5px solid var(--text-secondary);
+  transform: rotate(-45deg);
+  transition: transform 0.25s;
+  flex-shrink: 0;
+}
 
-    .job-apply-link {
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      text-decoration: none;
-      white-space: nowrap;
-    }
+.job-item.expanded .job-toggle-icon {
+  transform: rotate(45deg);
+}
 
-    .job-empty {
-      padding: 40px 0;
-      color: var(--text-secondary);
-      font-size: 0.875rem;
-      font-style: italic;
-      font-family: var(--serif);
-    }
+.job-title {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.job-location, .job-type {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.job-apply-link {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.job-description {
+  display: none;
+  padding: 0 0 32px 34px;
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  max-width: 640px;
+}
+
+.job-item.expanded .job-description {
+  display: block;
+}
+
+.job-empty {
+  padding: 40px 0;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-style: italic;
+  font-family: var(--serif);
+}
 
     /* ── Application Form ── */
     .apply-form {
@@ -612,10 +642,18 @@
     .form-status.error { color: #b3261e; display: block; }
 
     @media (max-width: 768px) {
-      .job-item {
-        grid-template-columns: 1fr;
+     .job-row {
+        grid-template-columns: auto 1fr;
         gap: 8px;
         align-items: start;
+      }
+      .job-row .job-location,
+      .job-row .job-type,
+      .job-row .job-apply-link {
+        grid-column: 2;
+      }
+      .job-description {
+        padding-left: 18px;
       }
     }
 
@@ -847,34 +885,189 @@
         to one of the <option> values in the form, or use "Other").
         ════════════════════════════════════════════════════════════
       -->
-      <div class="job-list">
+<div class="job-list">
 
-        <div class="job-item" onclick="document.getElementById('position').value=this.dataset.role; document.getElementById('apply').scrollIntoView({behavior:'smooth'});" data-role="Deskside Services Technician">
-  <span class="job-title">Deskside Services Technician</span>
-  <span class="job-location">New York, NY</span>
-  <span class="job-type">Full-Time · On-Site</span>
-  <span class="job-apply-link">Apply →</span>
-</div>
+  <div class="job-item">
+    <div class="job-row" onclick="toggleJob(this)">
+      <span class="job-toggle-icon"></span>
+      <span class="job-title">Deskside Services Technician</span>
+      <span class="job-location">New York, NY</span>
+      <span class="job-type">Full-Time · On-Site</span>
+      <span class="job-apply-link" onclick="event.stopPropagation(); applyToRole('Deskside Services Technician');">Apply →</span>
+    </div>
+    <div class="job-description">
+Deskside Services Technician
+Full-Service Law Firm  |  In-Office  |  New York, NY
+This role will involve collaborating with the Deskside Services team to address technical issues and ensure a seamless and cutting-edge technology environment. The ideal candidate will be instrumental in setting up and repairing technology within the firm, with a focus on troubleshooting laptops, printers, scanners, phones, and related hardware. Additionally, this role will provide support for conferences, events, and meetings, utilizing Zoom Rooms, Zoom Phone, and advanced AV technology.
+Essential Job Requirements
+•	Troubleshoot and diagnose hardware and software issues on Microsoft Surface laptops
+•	Deploy and set up IT equipment such as PCs, printers, and telephones
+•	Demonstrate expertise in Zoom Rooms, Zoom Phone, and AV troubleshooting
+•	Establish and manage video conferencing sessions, including Zoom meetings and Zoom Rooms
+•	Provide audio/video support during events, meetings, and conferences, ensuring high-quality presentations and interactions
+•	Assist with office moves by managing the relocation of IT equipment
+•	Maintain an organized inventory of hardware and parts
+•	Collaborate with the Help Desk and technical staff to identify and resolve desktop environment issues
+•	Track the status of issues and repairs, maintaining clear communication with users
+•	Offer training and assistance to staff on audio/video technology and usage
+•	Maintain a professional demeanor while fostering a cooperative environment with legal staff, peers, and administrators
+•	Adapt to changes in the workplace and integrate new technologies into daily operations
+•	Availability for additional hours to support events as needed
+Skills, Knowledge, and Abilities
+•	Two-year degree from a college or technical school, or equivalent job-related experience preferred
+•	Proficient understanding of audio/video conferencing technologies
+•	Experience and understanding of the Zoom platform, including Zoom Meetings, Zoom Phone, Zoom Rooms, and other Zoom modules
+•	Excellent problem-solving skills with a focus on diagnosing hardware and software issues
+•	Strong understanding of Windows 10/11 and Microsoft 365 environments
+•	Ability to work independently with minimal supervision, as well as collaboratively within a team
+•	Strong relationship-building skills with all levels of the organization
+•	Capable of performing under pressure while providing confident technological support
+•	Professional representation of the firm in various situations, interacting effectively with staff and external resources
+•	Exemplary customer service skills
+•	Excellent time management, organizational, and multitasking abilities
+•	Reliable attendance record and punctuality
+•	Adherence to all firm policies and procedures
+Position Details
+Office Location: New York, NY
+Schedule: Full-time, Monday through Friday, in-office presence, 9:30 AM – 5:30 PM
+    </div>
+  </div>
 
-<div class="job-item" onclick="document.getElementById('position').value=this.dataset.role; document.getElementById('apply').scrollIntoView({behavior:'smooth'});" data-role="Cloud Infrastructure Engineer">
-  <span class="job-title">Cloud Infrastructure Engineer</span>
-  <span class="job-location">Roseland, NJ</span>
-  <span class="job-type">Full-Time · Hybrid</span>
-  <span class="job-apply-link">Apply →</span>
-</div>
+  <div class="job-item">
+    <div class="job-row" onclick="toggleJob(this)">
+      <span class="job-toggle-icon"></span>
+      <span class="job-title">Cloud Infrastructure Engineer</span>
+      <span class="job-location">Roseland, NJ</span>
+      <span class="job-type">Full-Time · Hybrid</span>
+      <span class="job-apply-link" onclick="event.stopPropagation(); applyToRole('Cloud Infrastructure Engineer');">Apply →</span>
+    </div>
+    <div class="job-description">
+Cloud Infrastructure Engineer
+Responsible for the day-to-day design, administration, and optimization of the firm's cloud and hybrid infrastructure, with a primary focus on Microsoft Azure. Responds to platform alerts and incidents, and partners with security, endpoint, network, and application teams to deploy and maintain production services in alignment with governance and compliance requirements.
 
-<div class="job-item" onclick="document.getElementById('position').value=this.dataset.role; document.getElementById('apply').scrollIntoView({behavior:'smooth'});" data-role="ITSM Supervisor">
-  <span class="job-title">ITSM Supervisor</span>
-  <span class="job-location">New York, NY</span>
-  <span class="job-type">Full-Time · Hybrid</span>
-  <span class="job-apply-link">Apply →</span>
-</div>
+Core Responsibilities
+•	Design and architect end-to-end Azure infrastructure solutions aligned with business, security, and technical requirements
+•	Lead cloud deployment initiatives; work with Information Security leadership to secure applications on Azure and other cloud platforms
+•	Develop and enforce cloud architecture standards, governance frameworks, and best practices
+•	Implement and maintain monitoring and observability across the Azure estate using Azure Monitor, Log Analytics, diagnostic settings, workbooks, and action groups
+•	Define and deploy Azure Policy to enforce governance, security baselines, resource tagging, and regulatory compliance; author custom policies and remediation tasks where needed
+•	Administer Entra ID at scale: Conditional Access, Privileged Identity Management (PIM), named locations, passwordless/FIDO2/YubiKey, administrative units, and Graph API automation
+•	Automate routine tasks and workflows using PowerShell, including modules, error handling, REST API consumption, and Microsoft Graph SDK
+•	Deliver infrastructure as code using Bicep, Terraform, or equivalent tooling
+•	Implement and maintain hybrid environments integrating on-premises systems with Azure AD
+•	Support and enhance Microsoft 365 services: Exchange Online, Teams, SharePoint, and Intune
+•	Implement and maintain cloud networking solutions: VNets, VPNs, ExpressRoute, and hybrid connectivity
+•	Optimize cloud environments for cost, performance, scalability, and reliability
+•	Support backup, disaster recovery, and business continuity strategies
+•	Troubleshoot complex infrastructure issues and provide root cause analysis
+•	Evaluate emerging technologies and recommend improvements to cloud architecture strategy
+•	Participate in on-call rotation (monthly)
 
-<div class="job-item" onclick="document.getElementById('position').value=this.dataset.role; document.getElementById('apply').scrollIntoView({behavior:'smooth'});" data-role="Applications Support Specialist">
-  <span class="job-title">Applications Support Specialist</span>
-  <span class="job-location">Los Angeles, CA</span>
-  <span class="job-type">Full-Time · Hybrid</span>
-  <span class="job-apply-link">Apply →</span>
+Requirements
+•	5+ years designing cloud architecture and contributing to cloud strategy and standards
+•	Hands-on experience with Azure infrastructure: IaaS, PaaS, networking, and identity
+•	Proficiency with Azure Monitor, Log Analytics, and related observability tools
+•	Experience implementing governance and compliance controls using Azure Policy
+•	Deep experience administering Entra ID: Conditional Access, PIM, passwordless authentication (FIDO2/YubiKey)
+•	Infrastructure as code experience: Bicep, Terraform, or equivalent
+•	PowerShell scripting and automation proficiency, including Microsoft Graph SDK
+•	Strong Windows Server administration skills; experience in hybrid environments
+•	Active Directory and Group Policy administration in an enterprise environment
+•	Experience supporting Microsoft 365: Exchange Online, Teams, SharePoint, Intune
+•	Familiarity with cloud security best practices and production security standards
+•	Experience with backup, disaster recovery, and business continuity practices
+•	BS degree or equivalent experience; IT certifications a plus
+    </div>
+  </div>
+
+  <div class="job-item">
+    <div class="job-row" onclick="toggleJob(this)">
+      <span class="job-toggle-icon"></span>
+      <span class="job-title">ITSM Supervisor</span>
+      <span class="job-location">New York, NY</span>
+      <span class="job-type">Full-Time · Hybrid</span>
+      <span class="job-apply-link" onclick="event.stopPropagation(); applyToRole('ITSM Supervisor');">Apply →</span>
+    </div>
+    <div class="job-description">
+IT Supervisor – IT Service Management (ITSM)
+Working supervisor role leading Help Desk and IT support operations while remaining hands-on in daily ticket work and escalations. Responsible for team development, SLA compliance, VIP/executive support, and continuous improvement of service delivery across a multi-office law firm environment. After-hours availability required for maintenance windows and incidents.
+
+Core Responsibilities
+•	Lead, mentor, and coach Help Desk technicians; manage performance, workload, and team engagement
+•	Work tickets directly and participate in day-to-day service delivery — this is a working supervisor role, not a pure management position
+•	Serve as escalation point for complex incidents; assist technicians with advanced troubleshooting
+•	Provide high-touch support for attorneys, executives, and VIP users — in-office when required
+•	Monitor ticket queues, SLA compliance, escalation trends, response times, and backlog volume
+•	Report on Help Desk KPIs weekly; maintain operational dashboards in the ITSM platform
+•	Identify recurring issues and drive long-term fixes through process improvement and automation
+•	Coordinate with engineers, infrastructure, and application teams to resolve roadblocks
+•	Support after-hours maintenance windows, migrations, and East Coast operational coverage
+•	Oversee onboarding and ongoing development of Help Desk staff
+•	Drive knowledge base adoption and documentation consistency across the team
+
+Key Metrics Ownership
+•	First Contact Resolution (FCR) rate
+•	Average response and resolution time
+•	SLA compliance and ticket backlog
+•	Escalation trend analysis
+•	Customer satisfaction (CSAT)
+•	Technician productivity and workflow efficiency
+
+Requirements
+•	Proven Help Desk or IT support leadership experience — supervisory or team lead background required
+•	Hands-on technical troubleshooting skills; must be comfortable working tickets alongside the team
+•	Strong working knowledge of ITSM operations, ticket management, and SLA-driven environments
+•	Experience supporting Microsoft applications and enterprise support systems; Citrix and legal applications a plus
+•	Ability to manage escalations and high-pressure situations professionally
+•	Strong communication skills across technical and non-technical audiences
+•	Willingness to support after-hours activities when required
+    </div>
+  </div>
+
+  <div class="job-item">
+    <div class="job-row" onclick="toggleJob(this)">
+      <span class="job-toggle-icon"></span>
+      <span class="job-title">Applications Support Specialist</span>
+      <span class="job-location">Los Angeles, CA</span>
+      <span class="job-type">Full-Time · Hybrid</span>
+      <span class="job-apply-link" onclick="event.stopPropagation(); applyToRole('Applications Support Specialist');">Apply →</span>
+    </div>
+    <div class="job-description">
+Application Support Specialist
+Full-Service Law Firm  |  Hybrid / Remote  |  Irvine, CA
+Position Overview
+We are seeking an experienced Application Support Specialist to provide remote technical assistance to end users across a range of software applications. This is a hybrid role with the primary work location being remote, with occasional visits required to our Irvine, California office.
+
+Key Responsibilities
+•	Respond courteously and professionally to help requests received via telephone and email
+•	Provide software support and troubleshoot application issues across the firm
+•	Assess and understand user needs to deliver timely and effective resolutions
+•	Participate in the design, improvement, and implementation of software applications
+
+Required Qualifications
+•	Minimum of five years of technology experience in a law firm or related professional services environment
+•	In-depth knowledge and hands-on support experience with the following applications:
+•	Microsoft Office 365 Suite
+•	Adobe Acrobat DC
+•	iManage Work
+•	ALN Forms Workflow
+•	pdfDocs and document comparison applications
+•	Zoom and Microsoft Teams
+•	Extensive knowledge and support of macro packages
+•	Excellent verbal and written communication skills
+•	Strong analytical and problem-solving skills
+•	Proven ability to provide professional, courteous customer service
+•	Ability to collaborate effectively within a team environment
+
+Preferred Qualifications
+•	Bachelor’s degree in Computer Science, Information Systems, or a related field
+    </div>
+  </div>
+
+  <!-- To show "no roles open" instead, comment out the .job-item divs above and uncomment this:
+  <div class="job-empty">No open roles at the moment — check back soon, or submit your resume below for future searches.</div>
+  -->
+
 </div>
 
         <!-- To show "no roles open" instead, comment out the .job-item divs above and uncomment this:
