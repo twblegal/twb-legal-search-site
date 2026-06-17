@@ -1165,6 +1165,14 @@ Preferred Qualifications
 
   </div>
   <script>
+    function toggleJob(rowEl) {
+  rowEl.parentElement.classList.toggle('expanded');
+}
+
+function applyToRole(roleName) {
+  document.getElementById('position').value = roleName;
+  document.getElementById('apply').scrollIntoView({ behavior: 'smooth' });
+}
     const applyForm = document.getElementById('applyForm');
     const submitBtn = document.getElementById('submitBtn');
     const formStatus = document.getElementById('formStatus');
