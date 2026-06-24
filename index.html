@@ -10,7 +10,7 @@
   <title>TWB Legal Search</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after {
@@ -27,8 +27,8 @@
       --text-secondary: rgba(17,17,16,0.78);
       --accent: #2563eb;
       --accent-dim: rgba(37,99,235,0.1);
-      --serif: 'Cormorant Garamond', Georgia, serif;
-      --sans: 'DM Sans', system-ui, sans-serif;
+      --serif: 'Spectral', Georgia, serif;
+      --sans: 'Source Sans 3', system-ui, sans-serif;
     }
 
     html {
@@ -80,9 +80,10 @@
 
     .wordmark {
       font-family: var(--serif);
-      font-weight: 00;
+      font-style: italic;
+      font-weight: 300;
       font-size: 1.2rem;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: #6b0f1f;
       text-decoration: none;
@@ -146,8 +147,8 @@
       font-family: var(--serif);
       font-weight: 300;
       font-size: clamp(2.8rem, 5.5vw, 4.6rem);
-      line-height: 1.12;
-      letter-spacing: -0.01em;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
       color: var(--text-primary);
       max-width: 780px;
     }
@@ -207,9 +208,10 @@
 
     .pillar-title {
       font-family: var(--serif);
-      font-weight: 500;
+      font-weight: 300;
       font-size: 1.3rem;
       line-height: 1.25;
+      letter-spacing: -0.01em;
       margin-bottom: 16px;
       color: var(--text-primary);
     }
@@ -233,17 +235,19 @@
 
     .section-label {
       font-size: 0.7rem;
-      letter-spacing: 0.2em;
+      font-weight: 400;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--text-secondary);
+      color: var(--accent);
       margin-bottom: 32px;
     }
 
     .section-headline {
       font-family: var(--serif);
       font-weight: 300;
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-size: clamp(1.75rem, 3.2vw, 2.4rem);
       line-height: 1.2;
+      letter-spacing: -0.01em;
       margin-bottom: 28px;
     }
 
@@ -260,30 +264,56 @@
       gap: 0;
     }
 
-    .market-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 0;
+    .market-group {
       border-bottom: 1px solid var(--border);
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      transition: color 0.2s;
     }
 
-    .market-item:first-child { border-top: 1px solid var(--border); }
+    .market-group:first-child {
+      border-top: 1px solid var(--border);
+    }
 
-    .market-item .city {
+    .market-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 0;
+      cursor: pointer;
+    }
+
+    .market-toggle-icon {
+      width: 8px;
+      height: 8px;
+      border-right: 1.5px solid var(--text-secondary);
+      border-bottom: 1.5px solid var(--text-secondary);
+      transform: rotate(-45deg);
+      transition: transform 0.25s;
+      flex-shrink: 0;
+    }
+
+    .market-group.expanded .market-toggle-icon {
+      transform: rotate(45deg);
+    }
+
+    .market-group .region {
       color: var(--text-primary);
       font-family: var(--serif);
       font-size: 1.05rem;
-      font-weight: 400;
+      font-weight: 300;
     }
 
-    .market-item .state {
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+    .market-cities {
+      display: none;
+      padding: 0 0 18px 22px;
+    }
+
+    .market-group.expanded .market-cities {
+      display: block;
+    }
+
+    .market-city-item {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      padding: 6px 0;
     }
 
     /* ── Practice ── */
@@ -325,8 +355,9 @@
     .role-card-title {
       font-family: var(--serif);
       font-size: 1.3rem;
-      font-weight: 500;
+      font-weight: 300;
       line-height: 1.3;
+      letter-spacing: -0.01em;
       margin-bottom: 12px;
     }
 
@@ -496,7 +527,8 @@
     .job-title {
       font-family: var(--serif);
       font-size: 1.15rem;
-      font-weight: 500;
+      font-weight: 300;
+      letter-spacing: -0.01em;
       color: var(--text-primary);
     }
 
@@ -551,6 +583,7 @@
       font-family: var(--serif);
       font-weight: 300;
       font-size: 1.6rem;
+      letter-spacing: -0.01em;
       margin-bottom: 12px;
     }
 
@@ -787,41 +820,52 @@
         
         <h2 class="section-headline">Where we work</h2>
         <p class="section-body">
-          Three regions where Am Law 200 firms have a serious operational presence and a consistent need for legal technology talent — Southern California, Texas, and New York.
+          Four regions where Am Law 200 firms have a serious operational presence and a consistent need for legal technology talent — Southern California, Texas, Northern Kentucky / Ohio, New York.
         </p>
       </div>
       <ul class="market-list">
-        <li class="market-item">
-          <span class="city">Los Angeles</span>
-          <span class="state">California</span>
+        <li class="market-group">
+          <div class="market-row" onclick="toggleMarket(this)">
+            <span class="market-toggle-icon"></span>
+            <span class="region">Southern California</span>
+          </div>
+          <div class="market-cities">
+            <div class="market-city-item">Los Angeles</div>
+            <div class="market-city-item">Orange County</div>
+            <div class="market-city-item">San Diego</div>
+          </div>
         </li>
-        <li class="market-item">
-          <span class="city">San Diego</span>
-          <span class="state">California</span>
+        <li class="market-group">
+          <div class="market-row" onclick="toggleMarket(this)">
+            <span class="market-toggle-icon"></span>
+            <span class="region">Texas</span>
+          </div>
+          <div class="market-cities">
+            <div class="market-city-item">Houston</div>
+            <div class="market-city-item">Dallas</div>
+            <div class="market-city-item">Austin</div>
+          </div>
         </li>
-        <li class="market-item">
-          <span class="city">Orange County</span>
-          <span class="state">California</span>
+        <li class="market-group">
+          <div class="market-row" onclick="toggleMarket(this)">
+            <span class="market-toggle-icon"></span>
+            <span class="region">Northern Kentucky / Ohio</span>
+          </div>
+          <div class="market-cities">
+            <div class="market-city-item">Cincinnati</div>
+            <div class="market-city-item">Cleveland</div>
+            <div class="market-city-item">Louisville</div>
+            <div class="market-city-item">Lexington</div>
+          </div>
         </li>
-        <li class="market-item">
-          <span class="city">Houston</span>
-          <span class="state">Texas</span>
-        </li>
-        <li class="market-item">
-          <span class="city">Dallas</span>
-          <span class="state">Texas</span>
-        </li>
-        <li class="market-item">
-          <span class="city">Austin</span>
-          <span class="state">Texas</span>
-        </li>
-        <li class="market-item">
-          <span class="city">San Antonio</span>
-          <span class="state">Texas</span>
-        </li>
-        <li class="market-item">
-          <span class="city">New York City</span>
-          <span class="state">New York</span>
+        <li class="market-group">
+          <div class="market-row" onclick="toggleMarket(this)">
+            <span class="market-toggle-icon"></span>
+            <span class="region">New York</span>
+          </div>
+          <div class="market-cities">
+            <div class="market-city-item">New York City</div>
+          </div>
         </li>
       </ul>
     </section>
@@ -830,7 +874,7 @@
     <section class="practice-section reveal d5" id="practice">
       <div class="practice-grid">
         <div class="practice-left">
-          <div class="section-label"></div>
+          <div class="section-label">Practice Areas</div>
           <h2 class="section-headline">What we do</h2>
           <p class="section-body">
             Eight years placed exclusively in legal technology means we speak your language.
@@ -1153,6 +1197,10 @@ We are seeking an experienced Application Support Specialist to provide remote t
   </div>
   <script>
     function toggleJob(rowEl) {
+      rowEl.parentElement.classList.toggle('expanded');
+    }
+
+    function toggleMarket(rowEl) {
       rowEl.parentElement.classList.toggle('expanded');
     }
 
