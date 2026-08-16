@@ -467,13 +467,20 @@
 
        id        — short reference code, shown next to the title.
                    Keep it unique; format is up to you (e.g. state
-                   + a running number).
+                   + a running number). This also becomes the
+                   direct link to that listing — see below.
        title     — job title.
        location  — "City, ST" shown under the title.
        type      — e.g. "Full-Time · On-Site" / "Full-Time · Hybrid".
        description — plain text. Blank lines create paragraph
                    breaks. Wrap a line in <b>...</b> to bold it
                    (used for section headers like Requirements).
+
+       LINKING DIRECTLY TO ONE JOB
+       For a LinkedIn post (or anywhere else), link straight to a
+       single listing — the page opens with that job already
+       expanded — using yoursite.com/#job-<id>. Example: a job
+       with id "NY-041" is linked as yoursite.com/#job-NY-041.
        ════════════════════════════════════════════════════════════ */
     const JOBS = [
       {
@@ -650,6 +657,7 @@ We are seeking an experienced Application Support Specialist to provide remote t
       JOBS.forEach((job, i) => {
         const item = document.createElement('div');
         item.className = 'job-item';
+        item.id = `job-${job.id}`;
         item.innerHTML = `
           <div class="job-row">
             <span class="job-docket">${escapeHtml(job.id)}</span>
@@ -676,6 +684,19 @@ We are seeking an experienced Application Support Specialist to provide remote t
         opt.textContent = `${job.title} — ${job.location}`;
         positionSelect.appendChild(opt);
       });
+
+      // Deep link support: a URL like yoursite.com/#job-NY-041 opens
+      // straight to that listing, expanded — this is the link to drop
+      // into a short LinkedIn post instead of paying to post the job
+      // there directly. The part after "job-" is just the docket id
+      // shown next to each title.
+      if (location.hash) {
+        const target = document.querySelector(location.hash);
+        if (target && target.classList.contains('job-item')) {
+          target.classList.add('expanded');
+          setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+        }
+      }
     }
 
     const generalOpt = document.createElement('option');
