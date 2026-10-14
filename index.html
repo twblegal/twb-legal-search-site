@@ -164,6 +164,9 @@
       max-width: 560px;
     }
 
+    /* About */
+    .about-section { padding: 64px 0; border-top: 1px solid var(--rule); }
+
     /* Jobs */
     .jobs-section { padding: 64px 0; border-top: 1px solid var(--rule); }
 
@@ -309,6 +312,15 @@
       gap: 20px;
     }
 
+    .contact-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .contact-links { display: flex; flex-wrap: wrap; gap: 32px; align-items: center; }
     .contact-strip a { text-decoration: none; font-size: 0.85rem; color: var(--ink-soft); transition: color 0.2s; }
     .contact-strip a:hover { color: var(--accent); }
 
@@ -336,7 +348,8 @@
       .job-apply-link { grid-area: apply; justify-self: start; }
       .job-description { padding-left: 0; }
 
-      .contact-strip { flex-direction: column; align-items: flex-start; }
+      .contact-strip { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .contact-links { gap: 20px; }
     }
   </style>
 </head>
@@ -359,20 +372,25 @@
     <section class="hero">
       <p class="hero-eyebrow reveal d2">LEGAL TECHNOLOGY CAREERS</p>
       <h1 class="hero-headline reveal d2">
-        Legal technology jobs at law firms.
+        Legal technology careers at Am Law 200 firms.
       </h1>
       <p class="hero-sub reveal d3">
-        TWB Legal Search recruits for infrastructure, applications, support, and IT leadership roles. See what's open below, or apply generally if your fit isn't listed yet.
+        Every submission is reviewed personally. We don't forward resumes — we make introductions.
       </p>
       <a class="hero-cta reveal d3" href="#jobs">See open roles</a>
+    </section>
+
+    <!-- About -->
+    <section class="about-section reveal d4">
+      <p class="section-label">About</p>
+      <h2 class="section-headline">We know this space.</h2>
+      <p class="section-body">TWB Legal Search works exclusively in legal technology — infrastructure, applications, support, and IT leadership at Am Law 200 firms. That focus has been the whole business for eight years, which means we already know the firms, the roles, and what they actually look for. When we submit a candidate, it's because we believe there's a real match — not because we're running volume.</p>
     </section>
 
     <!-- Jobs -->
     <section class="jobs-section reveal d4" id="jobs">
       <p class="section-label">Open roles</p>
-      <h2 class="section-headline">Current opportunities</h2>
-      <p class="section-body">Actively recruiting for these positions. Don't see a fit? Submit a general application below — we keep a close pipeline for upcoming searches.</p>
-
+      <h2 class="section-headline" id="jobsHeadline">Current opportunities</h2>
       <div class="job-list" id="jobList"></div>
     </section>
 
@@ -380,11 +398,11 @@
     <section class="areas-section">
       <p class="section-label">Where we place</p>
       <h2 class="section-headline">Career areas</h2>
-      <p class="section-body">Most roles we work fall into one of these areas. If you don't see an open listing that fits, it's still worth applying — we recruit for these categories continuously.</p>
+      <p class="section-body">We place across all four of these areas regularly. If nothing's listed right now, it's still worth applying — searches move quickly and we stay close to the market.</p>
       <div class="areas-grid">
         <div class="area-card">
           <div class="area-title">Cloud Infrastructure & Automation</div>
-          <p class="area-body">Azure, IaC, networking, identity, and cybersecurity roles supporting firm-wide operations.</p>
+          <p class="area-body">Azure, IaC, networking, and cybersecurity roles supporting firm-wide operations.</p>
         </div>
         <div class="area-card">
           <div class="area-title">Legal Applications</div>
@@ -396,7 +414,7 @@
         </div>
         <div class="area-card">
           <div class="area-title">Technology Support</div>
-          <p class="area-body">Help desk, deskside, ITSM, and A/V roles keeping firms running day to day.</p>
+          <p class="area-body">End user support and ITSM roles keeping firms running day to day.</p>
         </div>
       </div>
     </section>
@@ -405,7 +423,7 @@
     <section class="apply-section" id="apply">
       <p class="section-label">Application</p>
       <h2 class="section-headline">Submit your resume</h2>
-      <p class="section-body">Apply to a specific role above or send a general application. We review every submission personally and won't share your information without asking first.</p>
+      <p class="section-body">Apply to a specific role or send a general application. We read every submission and reach out when there's a genuine fit. Your information stays with us.</p>
 
       <form class="apply-form" id="applyForm">
         <div class="form-row">
@@ -448,9 +466,12 @@
 
     <!-- Contact -->
     <section class="contact-strip" id="contact">
-      <a href="mailto:info@twb.legal">info@twb.legal</a>
-      <a href="https://www.linkedin.com/company/twb-legal-search/" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="tel:+18595130161">859-513-0161</a>
+      <p class="contact-label">Get in touch</p>
+      <div class="contact-links">
+        <a href="mailto:info@twbls.com">info@twbls.com</a>
+        <a href="https://www.linkedin.com/company/twb-legal-search/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="tel:+18595130161">859-513-0161</a>
+      </div>
     </section>
 
     <footer>
@@ -482,160 +503,7 @@
        expanded — using yoursite.com/#job-<id>. Example: a job
        with id "NY-041" is linked as yoursite.com/#job-NY-041.
        ════════════════════════════════════════════════════════════ */
-    const JOBS = [
-      {
-        id: "NY-041",
-        title: "Deskside Services Technician",
-        location: "New York, NY",
-        type: "Full-Time · On-Site",
-        description: `In-Office  |  New York, NY
-
-This role will involve collaborating with the Deskside Services team to address technical issues and ensure a seamless and cutting-edge technology environment. The ideal candidate will be instrumental in setting up and repairing technology within the firm, with a focus on troubleshooting laptops, printers, scanners, phones, and related hardware. Additionally, this role will provide support for conferences, events, and meetings, utilizing Zoom Rooms, Zoom Phone, and advanced AV technology.
-
-<b>Requirements</b>
-• Troubleshoot and diagnose hardware and software issues on Microsoft Surface laptops
-• Deploy and set up IT equipment such as PCs, printers, and telephones
-• Demonstrate expertise in Zoom Rooms, Zoom Phone, and AV troubleshooting
-• Establish and manage video conferencing sessions, including Zoom meetings and Zoom Rooms
-• Provide audio/video support during events, meetings, and conferences, ensuring high-quality presentations and interactions
-• Assist with office moves by managing the relocation of IT equipment
-• Maintain an organized inventory of hardware and parts
-• Collaborate with the Help Desk and technical staff to identify and resolve desktop environment issues
-• Track the status of issues and repairs, maintaining clear communication with users
-• Offer training and assistance to staff on audio/video technology and usage
-• Maintain a professional demeanor while fostering a cooperative environment with legal staff, peers, and administrators
-• Adapt to changes in the workplace and integrate new technologies into daily operations
-• Availability for additional hours to support events as needed
-
-<b>Skills, Knowledge, and Abilities</b>
-• Two-year degree from a college or technical school, or equivalent job-related experience preferred
-• Proficient understanding of audio/video conferencing technologies
-• Experience and understanding of the Zoom platform, including Zoom Meetings, Zoom Phone, Zoom Rooms, and other Zoom modules
-• Excellent problem-solving skills with a focus on diagnosing hardware and software issues
-• Strong understanding of Windows 10/11 and Microsoft 365 environments
-• Ability to work independently with minimal supervision, as well as collaboratively within a team
-• Strong relationship-building skills with all levels of the organization
-• Capable of performing under pressure while providing confident technological support
-• Professional representation of the firm in various situations, interacting effectively with staff and external resources
-• Exemplary customer service skills
-• Excellent time management, organizational, and multitasking abilities
-• Reliable attendance record and punctuality
-• Adherence to all firm policies and procedures
-
-<b>Details</b>
-Office Location: New York, NY
-Schedule: Full-time, Monday through Friday, in-office presence, 9:30 AM – 5:30 PM`
-      },
-      {
-        id: "NJ-052",
-        title: "Cloud Infrastructure Engineer",
-        location: "Roseland, NJ",
-        type: "Full-Time · Hybrid",
-        description: `Hybrid | Roseland, NJ
-
-Responsible for the day-to-day design, administration, and optimization of the firm's cloud and hybrid infrastructure, with a primary focus on Microsoft Azure. Responds to platform alerts and incidents, and partners with security, endpoint, network, and application teams to deploy and maintain production services in alignment with governance and compliance requirements.
-
-<b>Responsibilities</b>
-• Design and architect end-to-end Azure infrastructure solutions aligned with business, security, and technical requirements
-• Lead cloud deployment initiatives; work with Information Security leadership to secure applications on Azure and other cloud platforms
-• Develop and enforce cloud architecture standards, governance frameworks, and best practices
-• Implement and maintain monitoring and observability across the Azure estate using Azure Monitor, Log Analytics, diagnostic settings, workbooks, and action groups
-• Define and deploy Azure Policy to enforce governance, security baselines, resource tagging, and regulatory compliance; author custom policies and remediation tasks where needed
-• Administer Entra ID at scale: Conditional Access, Privileged Identity Management (PIM), named locations, passwordless/FIDO2/YubiKey, administrative units, and Graph API automation
-• Automate routine tasks and workflows using PowerShell, including modules, error handling, REST API consumption, and Microsoft Graph SDK
-• Deliver infrastructure as code using Bicep, Terraform, or equivalent tooling
-• Implement and maintain hybrid environments integrating on-premises systems with Azure AD
-• Support and enhance Microsoft 365 services: Exchange Online, Teams, SharePoint, and Intune
-• Implement and maintain cloud networking solutions: VNets, VPNs, ExpressRoute, and hybrid connectivity
-• Optimize cloud environments for cost, performance, scalability, and reliability
-• Support backup, disaster recovery, and business continuity strategies
-• Troubleshoot complex infrastructure issues and provide root cause analysis
-• Evaluate emerging technologies and recommend improvements to cloud architecture strategy
-• Participate in on-call rotation (monthly)
-
-<b>Qualifications</b>
-• 5+ years designing cloud architecture and contributing to cloud strategy and standards
-• Hands-on experience with Azure infrastructure: IaaS, PaaS, networking, and identity
-• Proficiency with Azure Monitor, Log Analytics, and related observability tools
-• Experience implementing governance and compliance controls using Azure Policy
-• Deep experience administering Entra ID: Conditional Access, PIM, passwordless authentication (FIDO2/YubiKey)
-• Infrastructure as code experience: Bicep, Terraform, or equivalent
-• PowerShell scripting and automation proficiency, including Microsoft Graph SDK
-• Strong Windows Server administration skills; experience in hybrid environments
-• Active Directory and Group Policy administration in an enterprise environment
-• Experience supporting Microsoft 365: Exchange Online, Teams, SharePoint, Intune
-• Familiarity with cloud security best practices and production security standards
-• Experience with backup, disaster recovery, and business continuity practices
-• BS degree or equivalent experience; IT certifications a plus`
-      },
-      {
-        id: "NY-038",
-        title: "ITSM Supervisor",
-        location: "New York, NY",
-        type: "Full-Time · Hybrid",
-        description: `Hybrid | New York, NY
-
-Working supervisor role leading Help Desk and IT support operations while remaining hands-on in daily ticket work and escalations. Responsible for team development, SLA compliance, VIP/executive support, and continuous improvement of service delivery across a multi-office law firm environment. After-hours availability required for maintenance windows and incidents.
-
-<b>Responsibilities</b>
-• Lead, mentor, and coach Help Desk technicians; manage performance, workload, and team engagement
-• Work tickets directly and participate in day-to-day service delivery — this is a working supervisor role, not a pure management position
-• Serve as escalation point for complex incidents; assist technicians with advanced troubleshooting
-• Provide high-touch support for attorneys, executives, and VIP users — in-office when required
-• Monitor ticket queues, SLA compliance, escalation trends, response times, and backlog volume
-• Report on Help Desk KPIs weekly; maintain operational dashboards in the ITSM platform
-• Identify recurring issues and drive long-term fixes through process improvement and automation
-• Coordinate with engineers, infrastructure, and application teams to resolve roadblocks
-• Support after-hours maintenance windows, migrations, and East Coast operational coverage
-• Oversee onboarding and ongoing development of Help Desk staff
-• Drive knowledge base adoption and documentation consistency across the team
-
-<b>Metrics Ownership</b>
-• First Contact Resolution (FCR) rate
-• Average response and resolution time
-• SLA compliance and ticket backlog
-• Escalation trend analysis
-• Customer satisfaction (CSAT)
-• Technician productivity and workflow efficiency
-
-<b>Qualifications</b>
-• Proven Help Desk or IT support leadership experience — supervisory or team lead background required
-• Hands-on technical troubleshooting skills; must be comfortable working tickets alongside the team
-• Strong working knowledge of ITSM operations, ticket management, and SLA-driven environments
-• Experience supporting Microsoft applications and enterprise support systems; Citrix and legal applications a plus
-• Ability to manage escalations and high-pressure situations professionally
-• Strong communication skills across technical and non-technical audiences
-• Willingness to support after-hours activities when required`
-      },
-      {
-        id: "CA-029",
-        title: "Applications Support Specialist",
-        location: "Irvine, CA",
-        type: "Full-Time · Hybrid",
-        description: `Hybrid / Remote  |  Irvine, CA
-
-<b>Overview</b>
-We are seeking an experienced Application Support Specialist to provide remote technical assistance to end users across a range of software applications. This is a hybrid role with the primary work location being remote, with occasional visits required to the Irvine, California office.
-
-<b>Responsibilities</b>
-• Respond courteously and professionally to help requests received via telephone and email
-• Provide software support and troubleshoot application issues across the firm
-• Assess and understand user needs to deliver timely and effective resolutions
-• Participate in the design, improvement, and implementation of software applications
-
-<b>Qualifications</b>
-• Minimum of five years of technology experience in a law firm or related professional services environment
-• In-depth knowledge and hands-on support experience with the following applications: Microsoft Office 365 Suite, Adobe Acrobat DC, iManage Work, ALN Forms Workflow, pdfDocs and document comparison applications, Zoom and Microsoft Teams
-• Extensive knowledge and support of macro packages
-• Excellent verbal and written communication skills
-• Strong analytical and problem-solving skills
-• Proven ability to provide professional, courteous customer service
-• Ability to collaborate effectively within a team environment
-
-<b>Preferred Qualifications</b>
-• Bachelor's degree in Computer Science, Information Systems, or a related field`
-      },
-    ];
+    const JOBS = [];
     /* ═══════════════════════════════════════════════════════════ */
 
     function escapeHtml(str) {
@@ -652,7 +520,8 @@ We are seeking an experienced Application Support Specialist to provide remote t
     const positionSelect = document.getElementById('position');
 
     if (JOBS.length === 0) {
-      jobList.innerHTML = '<div class="job-empty">No open roles at the moment — check back soon, or submit your resume below for future searches.</div>';
+      document.getElementById('jobsHeadline').textContent = 'Nothing listed right now';
+      jobList.innerHTML = '<div class="job-empty">No open roles at the moment. New searches are added regularly — submit your resume below and we\'ll be in touch when something fits.</div>';
     } else {
       JOBS.forEach((job, i) => {
         const item = document.createElement('div');
@@ -738,7 +607,7 @@ We are seeking an experienced Application Support Specialist to provide remote t
         }
       } catch (err) {
         formStatus.className = 'form-status error';
-        formStatus.textContent = 'Something went wrong submitting your application. Please try again or email info@twb.legal directly.';
+        formStatus.textContent = 'Something went wrong submitting your application. Please try again or email info@twbls.com directly.';
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Submit Application';
