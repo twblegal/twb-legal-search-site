@@ -1,18 +1,3 @@
-// Cloudflare Pages Function — handles job application form submissions.
-// Receives multipart/form-data, stores the resume in R2, and emails
-// the application details (with a link to the resume) using Resend.
-//
-// SETUP REQUIRED — see SETUP.md in this repo for full step-by-step
-// instructions. Summary:
-//   1. Create an R2 bucket and bind it to this Pages project as "RESUMES_BUCKET"
-//   2. Create a free Resend account (resend.com), verify your sending domain
-//   3. Add environment variables in Cloudflare Pages dashboard:
-//        RESEND_API_KEY   - your Resend API key
-//        NOTIFY_EMAIL     - the email address that should receive applications
-//        FROM_EMAIL       - a verified sending address, e.g. apply@twb.legal
-//   4. Bind a Worker Route or use the R2 public bucket URL so resume links work
-//        R2_PUBLIC_URL    - base public URL for the bucket (see SETUP.md)
-
 export async function onRequestPost(context) {
   const { request, env } = context;
 
@@ -49,6 +34,13 @@ export async function onRequestPost(context) {
       return jsonResponse({ success: false, error: 'Resume must be a PDF or Word document.' }, 400);
     }
 
+    // Check env vars are present
+    if (!env.RESUMES_BUCKET) return jsonResponse({ success: false, error: 'DEBUG: RESUMES_BUCKET binding missing.' }, 500);
+    if (!env.RESEND_API_KEY) return jsonResponse({ success: false, error: 'DEBUG: RESEND_API_KEY not set.' }, 500);
+    if (!env.FROM_EMAIL)     return jsonResponse({ success: false, error: 'DEBUG: FROM_EMAIL not set.' }, 500);
+    if (!env.NOTIFY_EMAIL)   return jsonResponse({ success: false, error: 'DEBUG: NOTIFY_EMAIL not set.' }, 500);
+    if (!env.R2_PUBLIC_URL)  return jsonResponse({ success: false, error: 'DEBUG: R2_PUBLIC_URL not set.' }, 500);
+
     // Build a unique, safe object key for R2
     const timestamp = Date.now();
     const safeName = name.replace(/[^a-zA-Z0-9]+/g, '_').slice(0, 50);
@@ -56,9 +48,13 @@ export async function onRequestPost(context) {
     const objectKey = `resumes/${timestamp}_${safeName}.${originalExt}`;
 
     // Upload resume to R2
-    await env.RESUMES_BUCKET.put(objectKey, resumeFile.stream(), {
-      httpMetadata: { contentType: resumeFile.type || 'application/octet-stream' }
-    });
+    try {
+      await env.RESUMES_BUCKET.put(objectKey, resumeFile.stream(), {
+        httpMetadata: { contentType: resumeFile.type || 'application/octet-stream' }
+      });
+    } catch (r2err) {
+      return jsonResponse({ success: false, error: `DEBUG: R2 upload failed — ${r2err.message}` }, 500);
+    }
 
     const resumeUrl = `${env.R2_PUBLIC_URL}/${objectKey}`;
 
@@ -75,36 +71,38 @@ export async function onRequestPost(context) {
       <p style="color:#888;font-size:12px;">Submitted ${new Date().toISOString()}</p>
     `;
 
-    const emailResponse = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        from: env.FROM_EMAIL,
-        to: env.NOTIFY_EMAIL,
-        reply_to: email,
-        subject: `New Application: ${position} — ${name}`,
-        html: emailHtml
-      })
-    });
+    let emailResponse;
+    try {
+      emailResponse = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          from: env.FROM_EMAIL,
+          to: env.NOTIFY_EMAIL,
+          reply_to: email,
+          subject: `New Application: ${position} — ${name}`,
+          html: emailHtml
+        })
+      });
+    } catch (fetchErr) {
+      return jsonResponse({ success: false, error: `DEBUG: Fetch to Resend failed — ${fetchErr.message}` }, 500);
+    }
 
     if (!emailResponse.ok) {
       const errText = await emailResponse.text();
-      console.error('Resend error:', errText);
-      // Resume is safely stored even if email fails — don't lose the application.
       return jsonResponse({
         success: false,
-        error: 'Application was received but the notification email failed. Please also email info@twb.legal to confirm.'
+        error: `DEBUG: Resend returned ${emailResponse.status} — ${errText}`
       }, 502);
     }
 
     return jsonResponse({ success: true });
 
   } catch (err) {
-    console.error('Application submission error:', err);
-    return jsonResponse({ success: false, error: 'Unexpected server error.' }, 500);
+    return jsonResponse({ success: false, error: `DEBUG: Unexpected error — ${err.message}` }, 500);
   }
 }
 
