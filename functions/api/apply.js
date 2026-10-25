@@ -11,20 +11,16 @@ export async function onRequestPost(context) {
     const message = (formData.get('message') || '').toString().trim();
     const resumeFile = formData.get('resume');
 
-    // Basic validation
     if (!name || !email || !position) {
       return jsonResponse({ success: false, error: 'Missing required fields.' }, 400);
     }
-
     if (!resumeFile || typeof resumeFile === 'string') {
       return jsonResponse({ success: false, error: 'Resume file is required.' }, 400);
     }
-
-    const MAX_SIZE = 10 * 1024 * 1024; // 10MB
+    const MAX_SIZE = 10 * 1024 * 1024;
     if (resumeFile.size > MAX_SIZE) {
       return jsonResponse({ success: false, error: 'Resume file is too large (max 10MB).' }, 400);
     }
-
     const allowedTypes = [
       'application/pdf',
       'application/msword',
@@ -34,31 +30,17 @@ export async function onRequestPost(context) {
       return jsonResponse({ success: false, error: 'Resume must be a PDF or Word document.' }, 400);
     }
 
-    // Check env vars are present
-    if (!env.RESUMES_BUCKET) return jsonResponse({ success: false, error: 'DEBUG: RESUMES_BUCKET binding missing.' }, 500);
-    if (!env.RESEND_API_KEY) return jsonResponse({ success: false, error: 'DEBUG: RESEND_API_KEY not set.' }, 500);
-    if (!env.FROM_EMAIL)     return jsonResponse({ success: false, error: 'DEBUG: FROM_EMAIL not set.' }, 500);
-    if (!env.NOTIFY_EMAIL)   return jsonResponse({ success: false, error: 'DEBUG: NOTIFY_EMAIL not set.' }, 500);
-    if (!env.R2_PUBLIC_URL)  return jsonResponse({ success: false, error: 'DEBUG: R2_PUBLIC_URL not set.' }, 500);
-
-    // Build a unique, safe object key for R2
     const timestamp = Date.now();
     const safeName = name.replace(/[^a-zA-Z0-9]+/g, '_').slice(0, 50);
     const originalExt = (resumeFile.name.split('.').pop() || 'pdf').toLowerCase();
     const objectKey = `resumes/${timestamp}_${safeName}.${originalExt}`;
 
-    // Upload resume to R2
-    try {
-      await env.RESUMES_BUCKET.put(objectKey, resumeFile.stream(), {
-        httpMetadata: { contentType: resumeFile.type || 'application/octet-stream' }
-      });
-    } catch (r2err) {
-      return jsonResponse({ success: false, error: `DEBUG: R2 upload failed — ${r2err.message}` }, 500);
-    }
+    await env.RESUMES_BUCKET.put(objectKey, resumeFile.stream(), {
+      httpMetadata: { contentType: resumeFile.type || 'application/octet-stream' }
+    });
 
     const resumeUrl = `${env.R2_PUBLIC_URL}/${objectKey}`;
 
-    // Compose notification email
     const emailHtml = `
       <h2>New Job Application — TWB Legal Search</h2>
       <p><strong>Position:</strong> ${escapeHtml(position)}</p>
@@ -71,38 +53,35 @@ export async function onRequestPost(context) {
       <p style="color:#888;font-size:12px;">Submitted ${new Date().toISOString()}</p>
     `;
 
-    let emailResponse;
-    try {
-      emailResponse = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${env.RESEND_API_KEY}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          from: env.FROM_EMAIL,
-          to: env.NOTIFY_EMAIL,
-          reply_to: email,
-          subject: `New Application: ${position} — ${name}`,
-          html: emailHtml
-        })
-      });
-    } catch (fetchErr) {
-      return jsonResponse({ success: false, error: `DEBUG: Fetch to Resend failed — ${fetchErr.message}` }, 500);
-    }
+    const emailResponse = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        from: env.FROM_EMAIL,
+        to: env.NOTIFY_EMAIL,
+        reply_to: email,
+        subject: `New Application: ${position} — ${name}`,
+        html: emailHtml
+      })
+    });
 
     if (!emailResponse.ok) {
       const errText = await emailResponse.text();
+      console.error('Resend error:', errText);
       return jsonResponse({
         success: false,
-        error: `DEBUG: Resend returned ${emailResponse.status} — ${errText}`
+        error: 'Application received but notification failed. Please email info@twbls.com to confirm.'
       }, 502);
     }
 
     return jsonResponse({ success: true });
 
   } catch (err) {
-    return jsonResponse({ success: false, error: `DEBUG: Unexpected error — ${err.message}` }, 500);
+    console.error('Application submission error:', err);
+    return jsonResponse({ success: false, error: 'Something went wrong. Please try again or email info@twbls.com directly.' }, 500);
   }
 }
 
