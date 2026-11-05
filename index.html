@@ -361,7 +361,7 @@
     <header>
       <a class="wordmark reveal d1" href="#">TWB Legal Search</a>
       <nav class="reveal d1">
-        <a href="/jobs">Open Roles</a>
+        <a href="#jobs">Open Roles</a>
         <a href="#apply">Apply</a>
         <a href="#contact">Contact</a>
       </nav>
@@ -378,7 +378,7 @@
       <p class="hero-sub reveal d3">
         Every submission is reviewed personally. We don't forward resumes — we make introductions.
       </p>
-      <a class="hero-cta reveal d3" href="/jobs">See open roles</a>
+      <a class="hero-cta reveal d3" href="#jobs">See open roles</a>
     </section>
 
     <!-- About -->
@@ -505,7 +505,57 @@
        expanded — using yoursite.com/#job-<id>. Example: a job
        with id "NY-041" is linked as yoursite.com/#job-NY-041.
        ════════════════════════════════════════════════════════════ */
-    const JOBS = [];
+    const JOBS = [
+      {
+        id: "director-legal-innovation-ai",
+        title: "Director of Legal Innovation & AI",
+        location: "Los Angeles · New York · Washington, D.C.",
+        type: "Full-Time · Leadership",
+        description: `Compensation: $300,000 – $380,000 + benefits\n\n<b>The Role</b>\nA net-new position at a leading global firm, built to own the enterprise legal AI strategy from end to end. You'll execute a multi-year roadmap across 2,200+ attorneys, govern responsible AI deployment, build internal capability, and position the firm's voice in the broader legal AI conversation.\n\n<b>What You'll Own</b>\n— Firmwide AI and legal innovation strategy; runs the AI Execution Committee\n— Legal tech and AI vendor portfolio — evaluation, negotiation, performance, and sunset\n— AI Solutions function: custom tools, RAG pipelines, practice-group prompts\n— AI Governance Framework and bar association compliance across all jurisdictions\n— AI Institute — CLE-eligible training, adoption programs, attorney cohort network\n— Building and leading a team across AI solutions, governance, and adoption\n\n<b>What We're Looking For</b>\n— 15+ years in AI/ML strategy, enterprise technology, or legal technology; 5+ years at leadership level\n— Deep expertise in generative AI: LLMs, RAG, vector databases, AI evaluation, responsible AI frameworks\n— Track record with AI vendor evaluation, enterprise contract negotiation, and governance at the executive level\n— Experience in a law firm, legal operations, or legal technology company preferred\n— JD, MBA, or advanced degree in CS, AI, or related discipline preferred\n\nConfidential search — firm name disclosed to qualified candidates.`
+      },
+      {
+        id: "cloud-solutions-architect",
+        title: "Cloud Solutions Architect",
+        location: "Boston · Chicago · New York · Washington, D.C.",
+        type: "Full-Time · Hybrid",
+        description: `Compensation: $145,800 – $231,650 (varies by location) + bonus\n\n<b>The Role</b>\nReporting to the Senior Manager of Network Services at a global Am Law firm, this architect designs and manages public and private cloud environments across Azure (primary), AWS, GCP, and VMware. Hybrid on-site presence required, with some inter-office travel.\n\n<b>What You'll Own</b>\n— IaaS, PaaS, and SaaS solution architecture and implementation\n— Security best practices across cloud and on-prem; vulnerability and misconfiguration remediation via Defender for Cloud and Entra ID Protection\n— Disaster recovery planning and testing including Azure Site Recovery and Azure VMware Solution\n— VMware vSphere, NSX, Tanzu, and hybrid identity (Entra ID, Entra Connect)\n— Zero trust and least-privilege identity posture across Azure resources\n— Monitoring via Azure Monitor, Log Analytics, and Microsoft Sentinel\n\n<b>What We're Looking For</b>\n— 7+ years in corporate cloud/on-premises network environments\n— Proven expertise in Azure; AWS and GCP preferred\n— Hands-on VMware vSphere, NSX, Tanzu — a hard requirement\n— Strong Linux, cloud-native configurations, least-privilege approach\n— Kubernetes/Docker a plus, not required\n— Ability to create and review architecture and solution design documentation\n\nConfidential search — firm name disclosed to qualified candidates.`
+      },
+      {
+        id: "infrastructure-engineer-new-york",
+        title: "Infrastructure Engineer",
+        location: "New York, NY",
+        type: "Full-Time · On-Site",
+        description: `Compensation: $120,000 – $145,000\n\n<b>The Role</b>\nAt an international law firm in New York, this engineer owns reliability, security, performance, and scalability across on-prem, cloud, and hybrid environments. Serves as a technical lead for infrastructure initiatives and translates complex technical issues into clear business recommendations.\n\n<b>What You'll Own</b>\n— Physical and virtual server environments — VMware and Hyper-V\n— Azure and Microsoft 365 cloud infrastructure\n— Enterprise storage, replication, backup, and DR\n— Tier 2/3 escalation for server, storage, cloud, networking, and identity issues\n— Patch management, vulnerability remediation, AD administration\n— Monitoring via Varonis, ManageEngine, Dell iDRAC/OpenManage\n\n<b>What We're Looking For</b>\n— 5+ years supporting enterprise infrastructure environments\n— Strong Windows Server, VMware, Azure/M365, and hybrid cloud\n— Experience with enterprise storage, replication, and DR planning\n— Active Directory, Group Policy, DNS, DHCP, identity management\n— PowerShell scripting preferred; Azure or VMware certifications a plus\n— Prior experience in legal, financial services, or other regulated environments preferred\n\nConfidential search — firm name disclosed to qualified candidates.`
+      },
+      {
+        id: "senior-network-engineer-remote",
+        title: "Senior Network Engineer",
+        location: "Remote (Cleveland, OH base)",
+        type: "Full-Time · Remote",
+        description: `Compensation: $120,000 – $145,000 + performance bonus + full benefits\n\n<b>The Role</b>\nAt a full-service Am Law firm, this senior engineer architects, implements, supports, and monitors the firm's LAN/WAN infrastructure across 1,800+ users in 18 offices. Covers network security, remote access, and voice/data communications.\n\n<b>What You'll Own</b>\n— Tier 3 support for 1,800+ users across 18+ locations\n— Firewall, IDS, remote access design and implementation\n— Telephony systems design and support\n— Switching and routing oversight; mentoring Network Specialists and Engineers\n— Backup and recovery methodology and processes\n— System standards, documentation, and performance optimization\n\n<b>What We're Looking For</b>\n— Bachelor's degree + 7 years of experience (or equivalent)\n— Deep LAN/WAN, network security, firewall, and IDS background\n— Demonstrated ability to diagnose and solve complex hardware, software, and user issues\n— Proven ability to lead and build consensus among peers\n— Strong documentation and standards discipline\n\nConfidential search — firm name disclosed to qualified candidates.`
+      },
+      {
+        id: "it-service-specialist",
+        title: "IT Service Specialist",
+        location: "Boston · Chicago · Los Angeles · New York · Rochester · San Francisco · Washington, D.C.",
+        type: "Full-Time · Hybrid / Remote",
+        description: `Compensation: $52,500 – $86,900 (varies by market)\n\n<b>The Role</b>\nAt a full-service Am Law firm with offices across seven major markets, this specialist provides technical assistance to attorneys and staff, supporting hardware, software, and AV systems. Hybrid or remote schedule available.\n\n<b>What You'll Own</b>\n— Technical support via phone and in-person for firm-approved applications, connectivity, and hardware\n— Conference room AV: video/web conferencing, projection, device connectivity\n— Accurate incident and service request logging in ITSM platform\n— Asset inventory management\n— Collaboration with vendors on smartphones, PCs, printers, and AV equipment\n\n<b>What We're Looking For</b>\n— 3–5 years in IT support, preferably in a law firm\n— Ticketing systems (TeamDynamix, ServiceNow, Freshservice)\n— Remote support tools (VNC, SCCM, RDP)\n— Microsoft Windows OS, Apple iOS, Microsoft Office Suite\n— Collaboration platforms (Webex, Teams, Zoom)\n— Ability to create and update knowledge base articles\n\nConfidential search — firm name disclosed to qualified candidates.`
+      },
+      {
+        id: "help-desk-technician-new-york",
+        title: "Help Desk Technician",
+        location: "New York, NY",
+        type: "Full-Time · On-Site · 12 PM – 8 PM",
+        description: `Compensation: $70,000 – $80,000\n\n<b>The Role</b>\nAt a leading global law firm in New York, this technician handles all help desk analyst functions — fielding calls and emails from attorneys, managers, and staff, resolving issues or escalating to the appropriate group. Evening shift, 12 PM to 8 PM.\n\n<b>What You'll Own</b>\n— Inbound support requests for hardware, software, networking, and legal applications\n— Documentation of all support interactions in ticketing system\n— Trend monitoring and escalation to team/manager\n— MS Word expertise: document scrubbing, repair, recovery, styling, formatting\n— Rotation coverage for voicemail and email queues\n\n<b>What We're Looking For</b>\n— 3+ years in a medium-to-large PC-based legal or professional services organization\n— Law firm or corporate environment experience preferred\n— Familiarity with: iManage, CyberArk, Intune, ServiceNow, Citrix, Cisco VPN, Azure, Entra, Exchange Online, Mimecast, Zoom, Teams\n— Strong MS Word skills including document scrubbing and DMS workflows\n— Flexibility for shift coverage; availability for all shifts with short notice\n\nConfidential search — firm name disclosed to qualified candidates.`
+      },
+      {
+        id: "user-support-specialist-dallas",
+        title: "User Support Specialist",
+        location: "Dallas, TX",
+        type: "Full-Time · On-Site",
+        description: `<b>The Role</b>\nAt a full-service law firm in Dallas, this specialist provides inbound technical support to end users in a call center environment — resolving software issues, troubleshooting applications, and communicating solutions clearly to non-technical users.\n\n<b>What You'll Own</b>\n— Inbound call and ticket handling for software, application, and email issues\n— End-user interaction: gathering information, diagnosing, resolving or escalating\n— Call tracking and documentation in designated tracking software\n— After-hours on-call coverage on a rotating schedule\n— Staying current with system changes, updates, and known issues\n\n<b>What We're Looking For</b>\n— Prior law firm experience preferred\n— Knowledge of Microsoft Office and general legal applications\n— Strong verbal and written communication; professional phone manner\n— Outstanding customer service orientation; able to handle on-call including weekends\n— Some hardware setup and troubleshooting skills preferred\n\nConfidential search — firm name disclosed to qualified candidates.`
+      }
+    ];
     /* ═══════════════════════════════════════════════════════════ */
 
     function escapeHtml(str) {
