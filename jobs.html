@@ -741,7 +741,7 @@ async function submitApp(e, jobId, jobTitle) {
     try { data = await res.json(); } catch { data = {}; }
     if (res.ok && data.success) {
       msgEl.className = 'form-msg success';
-      msgEl.textContent = 'Application received. We'll be in touch.';
+      msgEl.textContent = 'Application received. We\'ll be in touch.';
       form.reset();
       // reset file label
       const fileLabel = form.querySelector('.file-label');
