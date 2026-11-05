@@ -1,0 +1,760 @@
+<title>Open Roles — TWB Legal Search</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap">
+
+<style>
+:root {
+  --bg: #FAFAF8;
+  --bg-card: #FFFFFF;
+  --fg: #1A1A18;
+  --fg-mid: #4A4A44;
+  --fg-muted: #8A8A80;
+  --accent: #2B4C3F;
+  --accent-soft: #E8F0EB;
+  --rule: #E0E0D8;
+  --tag-bg: #F0F0E8;
+  --tag-fg: #4A4A44;
+  --filled-bg: #FFF8F0;
+  --filled-border: #E8D8C0;
+  --filled-fg: #8A6830;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141412; --bg-card: #1E1E1A; --fg: #F0F0E8; --fg-mid: #B8B8A8;
+    --fg-muted: #6A6A5A; --accent: #5A8C74; --accent-soft: #1E2E26;
+    --rule: #2A2A24; --tag-bg: #2A2A22; --tag-fg: #A8A898;
+    --filled-bg: #2A2218; --filled-border: #4A3A20; --filled-fg: #C8A860;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141412; --bg-card: #1E1E1A; --fg: #F0F0E8; --fg-mid: #B8B8A8;
+  --fg-muted: #6A6A5A; --accent: #5A8C74; --accent-soft: #1E2E26;
+  --rule: #2A2A24; --tag-bg: #2A2A22; --tag-fg: #A8A898;
+  --filled-bg: #2A2218; --filled-border: #4A3A20; --filled-fg: #C8A860;
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 15px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+}
+
+/* Header */
+.site-header {
+  border-bottom: 1px solid var(--rule);
+  padding-block: 28px; margin-bottom: 48px;
+  display: flex; align-items: baseline;
+  justify-content: space-between; flex-wrap: wrap; gap: 8px;
+}
+.site-header .wordmark {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem; font-weight: 600; color: var(--accent);
+  letter-spacing: 0.01em; text-transform: uppercase;
+}
+.site-header .subtitle {
+  font-size: 0.75rem; color: var(--fg-muted);
+  letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500;
+}
+
+/* Detail view back nav */
+.back-nav {
+  display: none; margin-bottom: 32px;
+}
+.back-nav.visible { display: block; }
+.back-btn {
+  font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 500;
+  color: var(--accent); background: none; border: none; cursor: pointer;
+  padding: 0; display: inline-flex; align-items: center; gap: 6px;
+}
+.back-btn:hover { text-decoration: underline; }
+
+/* Page intro */
+.page-intro {
+  max-width: 640px; margin-bottom: 48px;
+}
+.page-intro.hidden { display: none; }
+.page-intro h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 400;
+  line-height: 1.2; color: var(--fg);
+  text-wrap: balance; margin-bottom: 16px;
+}
+.page-intro p { color: var(--fg-mid); font-size: 0.95rem; line-height: 1.7; max-width: 520px; }
+
+/* Filters */
+.filters {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 40px; align-items: center;
+}
+.filters.hidden { display: none; }
+.filter-label {
+  font-size: 0.72rem; color: var(--fg-muted);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  font-weight: 500; margin-right: 4px;
+}
+.filter-btn {
+  font-family: 'Inter', sans-serif; font-size: 0.78rem; font-weight: 500;
+  padding: 5px 14px; border-radius: 100px; border: 1px solid var(--rule);
+  background: transparent; color: var(--fg-mid); cursor: pointer;
+  transition: all 0.15s; letter-spacing: 0.01em;
+}
+.filter-btn:hover, .filter-btn.active {
+  background: var(--accent); border-color: var(--accent); color: #fff;
+}
+
+/* Jobs list */
+.jobs-list { display: flex; flex-direction: column; gap: 2px; margin-bottom: 80px; }
+.jobs-list.hidden { display: none; }
+
+/* Detail view */
+.job-detail { display: none; margin-bottom: 80px; }
+.job-detail.visible { display: block; }
+
+/* Job card */
+.job-card {
+  background: var(--bg-card); border: 1px solid var(--rule);
+  border-radius: 8px; overflow: hidden; transition: box-shadow 0.2s;
+  cursor: pointer;
+}
+.job-card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.07); }
+.job-card.filled { border-color: var(--filled-border); }
+
+/* Filled banner on card */
+.filled-badge {
+  display: none; font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.07em; text-transform: uppercase;
+  padding: 7px 16px; background: var(--filled-bg);
+  color: var(--filled-fg); border-bottom: 1px solid var(--filled-border);
+}
+.job-card.filled .filled-badge { display: block; }
+
+.job-header {
+  padding: 24px 28px 20px;
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 16px; align-items: start;
+}
+.job-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.tag {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.07em;
+  text-transform: uppercase; padding: 3px 10px; border-radius: 100px;
+  background: var(--tag-bg); color: var(--tag-fg);
+}
+.tag.accent { background: var(--accent-soft); color: var(--accent); }
+.tag.filled-tag { background: var(--filled-bg); color: var(--filled-fg); border: 1px solid var(--filled-border); }
+.job-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.25rem; font-weight: 600; color: var(--fg);
+  line-height: 1.25; margin-bottom: 5px;
+}
+.job-location { font-size: 0.82rem; color: var(--fg-muted); }
+.card-arrow {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1px solid var(--rule); display: flex;
+  align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 4px;
+  color: var(--fg-muted); font-size: 12px;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.job-card:hover .card-arrow {
+  background: var(--accent); border-color: var(--accent); color: #fff;
+}
+
+/* ── Detail page ── */
+.detail-header { margin-bottom: 40px; }
+.detail-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.detail-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 400;
+  line-height: 1.2; color: var(--fg); text-wrap: balance;
+  margin-bottom: 8px;
+}
+.detail-location { font-size: 0.9rem; color: var(--fg-muted); margin-bottom: 24px; }
+
+/* Filled overlay on detail */
+.filled-notice {
+  display: none; padding: 16px 20px; border-radius: 8px;
+  background: var(--filled-bg); border: 1px solid var(--filled-border);
+  color: var(--filled-fg); font-size: 0.88rem; line-height: 1.6;
+  margin-bottom: 32px;
+}
+.filled-notice strong { font-weight: 600; display: block; margin-bottom: 4px; }
+.filled-notice .cta-link {
+  color: var(--accent); font-weight: 500; cursor: pointer;
+  background: none; border: none; font-size: inherit;
+  text-decoration: underline; padding: 0; font-family: inherit;
+}
+.detail-body.filled-content .filled-notice { display: block; }
+
+.editorial {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.0rem; font-style: italic; color: var(--accent);
+  line-height: 1.65; padding: 20px 0 24px;
+  border-bottom: 1px solid var(--rule); margin-bottom: 28px;
+}
+.detail-section { margin-bottom: 28px; }
+.detail-section h3 {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--fg-muted); margin-bottom: 10px;
+}
+.detail-section p { font-size: 0.9rem; color: var(--fg-mid); line-height: 1.7; }
+.detail-section ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.detail-section ul li {
+  font-size: 0.88rem; color: var(--fg-mid);
+  padding-left: 16px; position: relative; line-height: 1.6;
+}
+.detail-section ul li::before {
+  content: "—"; position: absolute; left: 0; color: var(--accent); font-weight: 300;
+}
+.comp-range {
+  display: inline-block; font-size: 0.9rem; font-weight: 600; color: var(--fg);
+  background: var(--accent-soft); padding: 6px 14px;
+  border-radius: 6px; margin-top: 4px;
+}
+.apply-block {
+  margin-top: 32px; padding: 28px 28px 24px; background: var(--accent-soft);
+  border-radius: 8px;
+}
+.apply-block h3 {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
+}
+.apply-block.filled-apply { background: var(--filled-bg); }
+.apply-block.filled-apply h3 { color: var(--filled-fg); }
+.apply-block.filled-apply p { color: var(--filled-fg); font-size: 0.88rem; }
+
+/* Inline application form */
+.apply-form { display: flex; flex-direction: column; gap: 12px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-field { display: flex; flex-direction: column; gap: 4px; }
+.form-field label {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--accent);
+}
+.apply-block.filled-apply .form-field label { color: var(--filled-fg); }
+.form-field input, .form-field select {
+  font-family: 'Inter', sans-serif; font-size: 0.88rem;
+  padding: 9px 12px; border-radius: 6px;
+  border: 1px solid rgba(43,76,63,0.25); background: var(--bg-card);
+  color: var(--fg); outline: none; transition: border-color 0.15s;
+}
+.form-field input:focus { border-color: var(--accent); }
+.file-label {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: 6px;
+  border: 1px dashed rgba(43,76,63,0.35); background: var(--bg-card);
+  color: var(--fg-muted); font-size: 0.85rem; cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.file-label:hover { border-color: var(--accent); color: var(--accent); }
+.file-label input[type=file] { display: none; }
+.file-name { font-size: 0.82rem; color: var(--accent); font-weight: 500; }
+.submit-btn {
+  font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 600;
+  padding: 11px 24px; border-radius: 6px; border: none;
+  background: var(--accent); color: #fff; cursor: pointer;
+  transition: opacity 0.15s; align-self: flex-start; margin-top: 4px;
+}
+.submit-btn:hover { opacity: 0.85; }
+.submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.form-msg {
+  font-size: 0.85rem; padding: 10px 14px; border-radius: 6px;
+  display: none;
+}
+.form-msg.success { background: var(--accent-soft); color: var(--accent); display: block; }
+.form-msg.error { background: var(--filled-bg); color: var(--filled-fg); display: block; border: 1px solid var(--filled-border); }
+.confidential-note {
+  font-size: 0.75rem; color: var(--fg-muted); margin-top: 10px;
+  font-style: italic;
+}
+
+/* Permalink strip */
+.permalink-strip {
+  margin-top: 24px; display: flex; align-items: center; gap: 8px;
+  font-size: 0.78rem; color: var(--fg-muted);
+}
+.copy-link-btn {
+  font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 500;
+  color: var(--accent); background: none; border: 1px solid var(--accent-soft);
+  padding: 3px 10px; border-radius: 100px; cursor: pointer;
+  transition: background 0.15s;
+}
+.copy-link-btn:hover { background: var(--accent-soft); }
+
+/* Footer */
+footer {
+  border-top: 1px solid var(--rule); padding-block: 32px;
+  display: flex; justify-content: space-between;
+  align-items: center; flex-wrap: wrap; gap: 12px;
+}
+footer p { font-size: 0.78rem; color: var(--fg-muted); }
+
+@media (max-width: 600px) {
+  .job-header { padding: 18px 18px 16px; }
+  .apply-block { flex-direction: column; align-items: flex-start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .job-card, .card-arrow, .filter-btn { transition: none; }
+}
+</style>
+
+<!-- ── BACK NAV ── -->
+<header class="site-header">
+  <span class="wordmark">TWB Legal Search</span>
+  <span class="subtitle">Legal Technology Staffing</span>
+</header>
+
+<nav class="back-nav" id="backNav">
+  <button class="back-btn" onclick="showList()">← All Open Roles</button>
+</nav>
+
+<!-- ── BOARD VIEW ── -->
+<div class="page-intro" id="pageIntro">
+  <h1>Open Roles</h1>
+  <p>We place IT and legal technology professionals at Am Law 200 firms nationwide. These are active searches — if you're a fit, reach out directly.</p>
+</div>
+
+<div class="filters" id="filterBar">
+  <span class="filter-label">Filter:</span>
+  <button class="filter-btn active" data-filter="all">All Roles</button>
+  <button class="filter-btn" data-filter="infrastructure">Infrastructure</button>
+  <button class="filter-btn" data-filter="support">Support</button>
+  <button class="filter-btn" data-filter="leadership">Leadership</button>
+</div>
+
+<div class="jobs-list" id="jobsList"></div>
+
+<!-- ── DETAIL VIEW ── -->
+<div class="job-detail" id="jobDetail"></div>
+
+<footer>
+  <p>TWB Legal Search · Legal Technology Staffing · Am Law 200</p>
+  <p>info@twbls.com · twbls.com</p>
+</footer>
+
+<script>
+// ── JOB DATA ──
+// status: "open" | "filled"
+// filledDate: shown in archive banner when filled
+const JOBS = [
+  {
+    id: "director-legal-innovation-ai",
+    title: "Director of Legal Innovation & AI",
+    category: "leadership",
+    location: "Los Angeles · New York · Washington, D.C.",
+    comp: "$300,000 – $380,000 + benefits",
+    tags: ["Leadership", "New Role"],
+    status: "open",
+    filledDate: null,
+    editorial: "Few roles in the legal industry carry this kind of mandate — firmwide AI strategy, vendor governance, custom development, and attorney adoption, all reporting directly to the CLOO. This is a seat at the table that most firms are still figuring out how to create.",
+    summary: "A net-new position at a leading global firm, built to own the enterprise legal AI strategy from end to end. You'll execute a multi-year roadmap across 2,200+ attorneys, govern responsible AI deployment, build internal capability, and position the firm's voice in the broader legal AI conversation.",
+    owns: [
+      "Firmwide AI and legal innovation strategy; runs the AI Execution Committee",
+      "Legal tech and AI vendor portfolio — evaluation, negotiation, performance, and sunset",
+      "AI Solutions function: custom tools, RAG pipelines, practice-group prompts",
+      "AI Governance Framework and bar association compliance across all jurisdictions",
+      "AI Institute — CLE-eligible training, adoption programs, attorney cohort network",
+      "Building and leading a team across AI solutions, governance, and adoption"
+    ],
+    requirements: [
+      "15+ years in AI/ML strategy, enterprise technology, or legal technology; 5+ years at leadership level",
+      "Deep expertise in generative AI: LLMs, RAG, vector databases, AI evaluation, responsible AI frameworks",
+      "Track record with AI vendor evaluation, enterprise contract negotiation, and governance at the executive level",
+      "Experience in a law firm, legal operations, or legal technology company preferred",
+      "JD, MBA, or advanced degree in CS, AI, or related discipline preferred"
+    ]
+  },
+  {
+    id: "cloud-solutions-architect",
+    title: "Cloud Solutions Architect",
+    category: "infrastructure",
+    location: "Boston · Chicago · New York · Washington, D.C.",
+    comp: "$145,800 – $231,650 (varies by location) + bonus",
+    tags: ["Infrastructure", "Hybrid"],
+    status: "open",
+    filledDate: null,
+    editorial: "Azure-primary with VMware running deep — this stack is more sophisticated than what you typically find in legal, and the DR scope reflects a firm that's serious about resilience, not just compliance.",
+    summary: "Reporting to the Senior Manager of Network Services at a global Am Law firm, this architect designs and manages public and private cloud environments across Azure (primary), AWS, GCP, and VMware. Hybrid on-site presence required, with some inter-office travel.",
+    owns: [
+      "IaaS, PaaS, and SaaS solution architecture and implementation",
+      "Security best practices across cloud and on-prem; vulnerability and misconfiguration remediation via Defender for Cloud and Entra ID Protection",
+      "Disaster recovery planning and testing including Azure Site Recovery and Azure VMware Solution",
+      "VMware vSphere, NSX, Tanzu, and hybrid identity (Entra ID, Entra Connect)",
+      "Zero trust and least-privilege identity posture across Azure resources",
+      "Monitoring via Azure Monitor, Log Analytics, and Microsoft Sentinel"
+    ],
+    requirements: [
+      "7+ years in corporate cloud/on-premises network environments",
+      "Proven expertise in Azure; AWS and GCP preferred",
+      "Hands-on VMware vSphere, NSX, Tanzu — a hard requirement",
+      "Strong Linux, cloud-native configurations, least-privilege approach",
+      "Kubernetes/Docker a plus, not required",
+      "Ability to create and review architecture and solution design documentation"
+    ]
+  },
+  {
+    id: "infrastructure-engineer-new-york",
+    title: "Infrastructure Engineer",
+    category: "infrastructure",
+    location: "New York, NY",
+    comp: "$120,000 – $145,000",
+    tags: ["Infrastructure", "On-Site"],
+    status: "open",
+    filledDate: null,
+    editorial: "Tier 2/3 scope with real ownership of cloud adoption and DR at a firm that's genuinely invested in its infrastructure — not a maintenance role dressed up as something more.",
+    summary: "At an international law firm in New York, this engineer owns reliability, security, performance, and scalability across on-prem, cloud, and hybrid environments. Serves as a technical lead for infrastructure initiatives and translates complex technical issues into clear business recommendations.",
+    owns: [
+      "Physical and virtual server environments — VMware and Hyper-V",
+      "Azure and Microsoft 365 cloud infrastructure",
+      "Enterprise storage, replication, backup, and DR",
+      "Tier 2/3 escalation for server, storage, cloud, networking, and identity issues",
+      "Patch management, vulnerability remediation, AD administration",
+      "Monitoring via Varonis, ManageEngine, Dell iDRAC/OpenManage"
+    ],
+    requirements: [
+      "5+ years supporting enterprise infrastructure environments",
+      "Strong Windows Server, VMware, Azure/M365, and hybrid cloud",
+      "Experience with enterprise storage, replication, and DR planning",
+      "Active Directory, Group Policy, DNS, DHCP, identity management",
+      "PowerShell scripting preferred; Azure or VMware certifications a plus",
+      "Prior experience in legal, financial services, or other regulated environments preferred"
+    ]
+  },
+  {
+    id: "senior-network-engineer-remote",
+    title: "Senior Network Engineer",
+    category: "infrastructure",
+    location: "Remote (Cleveland, OH base)",
+    comp: "$120,000 – $145,000 + performance bonus + full benefits",
+    tags: ["Infrastructure", "Remote"],
+    status: "open",
+    filledDate: null,
+    editorial: "Tier 3 scope across 18 offices with real architecture ownership — LAN/WAN, security, telephony, remote access, and DR. Remote-eligible at a firm known for investing in its people and rarely turning over its technical staff.",
+    summary: "At a full-service Am Law firm, this senior engineer architects, implements, supports, and monitors the firm's LAN/WAN infrastructure across 1,800+ users in 18 offices. Covers network security, remote access, and voice/data communications.",
+    owns: [
+      "Tier 3 support for 1,800+ users across 18+ locations",
+      "Firewall, IDS, remote access design and implementation",
+      "Telephony systems design and support",
+      "Switching and routing oversight; mentoring Network Specialists and Engineers",
+      "Backup and recovery methodology and processes",
+      "System standards, documentation, and performance optimization"
+    ],
+    requirements: [
+      "Bachelor's degree + 7 years of experience (or equivalent)",
+      "Deep LAN/WAN, network security, firewall, and IDS background",
+      "Demonstrated ability to diagnose and solve complex hardware, software, and user issues",
+      "Proven ability to lead and build consensus among peers",
+      "Strong documentation and standards discipline"
+    ]
+  },
+  {
+    id: "it-service-specialist",
+    title: "IT Service Specialist",
+    category: "support",
+    location: "Boston · Chicago · Los Angeles · New York · Rochester · San Francisco · Washington, D.C.",
+    comp: "$52,500 – $86,900 (varies by market)",
+    tags: ["Support", "Hybrid / Remote"],
+    status: "open",
+    filledDate: null,
+    editorial: "One of the cleaner hybrid arrangements we've seen in legal IT support — real schedule flexibility at a firm with the infrastructure and culture to actually back it up. The multi-office footprint means strong collaboration exposure across markets.",
+    summary: "At a full-service Am Law firm with offices across seven major markets, this specialist provides technical assistance to attorneys and staff, supporting hardware, software, and AV systems. Hybrid or remote schedule available.",
+    owns: [
+      "Technical support via phone and in-person for firm-approved applications, connectivity, and hardware",
+      "Conference room AV: video/web conferencing, projection, device connectivity",
+      "Accurate incident and service request logging in ITSM platform",
+      "Asset inventory management",
+      "Collaboration with vendors on smartphones, PCs, printers, and AV equipment"
+    ],
+    requirements: [
+      "3–5 years in IT support, preferably in a law firm",
+      "Ticketing systems (TeamDynamix, ServiceNow, Freshservice)",
+      "Remote support tools (VNC, SCCM, RDP)",
+      "Microsoft Windows OS, Apple iOS, Microsoft Office Suite",
+      "Collaboration platforms (Webex, Teams, Zoom)",
+      "Ability to create and update knowledge base articles"
+    ]
+  },
+  {
+    id: "help-desk-technician-new-york",
+    title: "Help Desk Technician",
+    category: "support",
+    location: "New York, NY",
+    comp: "$70,000 – $80,000",
+    tags: ["Support", "12 PM – 8 PM"],
+    status: "open",
+    filledDate: null,
+    editorial: "The 12–8 shift at a global firm means you're supporting a live floor through the heaviest part of the billing day — this isn't a quiet afternoon role, and the app stack reflects that.",
+    summary: "At a leading global law firm in New York, this technician handles all help desk analyst functions — fielding calls and emails from attorneys, managers, and staff, resolving issues or escalating to the appropriate group. Evening shift, 12 PM to 8 PM.",
+    owns: [
+      "Inbound support requests for hardware, software, networking, and legal applications",
+      "Documentation of all support interactions in ticketing system",
+      "Trend monitoring and escalation to team/manager",
+      "MS Word expertise: document scrubbing, repair, recovery, styling, formatting",
+      "Rotation coverage for voicemail and email queues"
+    ],
+    requirements: [
+      "3+ years in a medium-to-large PC-based legal or professional services organization",
+      "Law firm or corporate environment experience preferred",
+      "Familiarity with: iManage, CyberArk, Intune, ServiceNow, Citrix, Cisco VPN, Azure, Entra, Exchange Online, Mimecast, Zoom, Teams",
+      "Strong MS Word skills including document scrubbing and DMS workflows",
+      "Flexibility for shift coverage; availability for all shifts with short notice"
+    ]
+  },
+  {
+    id: "user-support-specialist-dallas",
+    title: "User Support Specialist",
+    category: "support",
+    location: "Dallas, TX",
+    comp: null,
+    tags: ["Support", "On-Site", "Dallas, TX"],
+    status: "open",
+    filledDate: null,
+    editorial: "Help desk roles at law firms rarely get credit for how technically demanding they actually are — fast-moving environments, demanding users, and legacy legal applications that require real troubleshooting instincts, not just script-following.",
+    summary: "At a full-service law firm in Dallas, this specialist provides inbound technical support to end users in a call center environment — resolving software issues, troubleshooting applications, and communicating solutions clearly to non-technical users.",
+    owns: [
+      "Inbound call and ticket handling for software, application, and email issues",
+      "End-user interaction: gathering information, diagnosing, resolving or escalating",
+      "Call tracking and documentation in designated tracking software",
+      "After-hours on-call coverage on a rotating schedule",
+      "Staying current with system changes, updates, and known issues"
+    ],
+    requirements: [
+      "Prior law firm experience preferred",
+      "Knowledge of Microsoft Office and general legal applications",
+      "Strong verbal and written communication; professional phone manner",
+      "Outstanding customer service orientation; able to handle on-call including weekends",
+      "Some hardware setup and troubleshooting skills preferred"
+    ]
+  }
+];
+
+// ── RENDER ──
+const jobsList = document.getElementById('jobsList');
+const jobDetail = document.getElementById('jobDetail');
+const pageIntro = document.getElementById('pageIntro');
+const filterBar = document.getElementById('filterBar');
+const backNav = document.getElementById('backNav');
+
+function escH(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function renderCard(job) {
+  const isFilled = job.status === 'filled';
+  const filledClass = isFilled ? ' filled' : '';
+  const filledBadge = isFilled ? `<div class="filled-badge">✦ Position Filled</div>` : '';
+  const compTag = job.comp ? `<span class="tag">${escH(job.comp.split(' ')[0] + (job.comp.includes('–') ? ' ' + job.comp.split('–')[0].trim().replace(/^[^$]*/,'') + '–...' : ''))}</span>` : '';
+  // Show short comp range tag
+  const compShort = job.comp ? (() => {
+    const m = job.comp.match(/\$[\d,]+\s*–\s*\$[\d,]+/);
+    return m ? `<span class="tag">${escH(m[0])}</span>` : '';
+  })() : '';
+  const tags = job.tags.map(t => `<span class="tag${t === job.tags[0] ? ' accent' : ''}">${escH(t)}</span>`).join('');
+  const filledTag = isFilled ? `<span class="tag filled-tag">Filled</span>` : `<span class="tag">Confidential Search</span>`;
+
+  return `<div class="job-card${filledClass}" data-id="${escH(job.id)}" data-category="${escH(job.category)}" onclick="showDetail('${escH(job.id)}')">
+    ${filledBadge}
+    <div class="job-header">
+      <div>
+        <div class="job-meta">${tags}${filledTag}${compShort}</div>
+        <div class="job-title">${escH(job.title)}</div>
+        <div class="job-location">${escH(job.location)}</div>
+      </div>
+      <div class="card-arrow">›</div>
+    </div>
+  </div>`;
+}
+
+function renderDetail(job) {
+  const isFilled = job.status === 'filled';
+  const filledNotice = isFilled ? `
+    <div class="filled-notice">
+      <strong>This position has been filled${job.filledDate ? ' (' + escH(job.filledDate) + ')' : ''}.</strong>
+      We keep filled roles posted for reference. If you have similar experience, we may have comparable opportunities open now.
+      <br><button class="cta-link" onclick="showList()">See all open roles →</button>
+    </div>` : '';
+  const tags = job.tags.map(t => `<span class="tag${t === job.tags[0] ? ' accent' : ''}">${escH(t)}</span>`).join('');
+  const ownsHtml = job.owns.map(o => `<li>${escH(o)}</li>`).join('');
+  const reqHtml = job.requirements.map(r => `<li>${escH(r)}</li>`).join('');
+  const compSection = job.comp ? `<div class="detail-section"><h3>Compensation</h3><span class="comp-range">${escH(job.comp)}</span></div>` : '';
+  const applyClass = isFilled ? ' filled-apply' : '';
+  const formId = `form-${job.id}`;
+  const pageUrl = `${location.origin}${location.pathname}#${job.id}`;
+
+  const applyBlock = isFilled
+    ? `<div class="apply-block filled-apply">
+        <p>This position has been filled. For similar roles, reach out directly: <strong>info@twbls.com</strong></p>
+      </div>`
+    : `<div class="apply-block">
+        <h3>Apply for This Role</h3>
+        <form class="apply-form" id="${escH(formId)}" onsubmit="submitApp(event,'${escH(job.id)}','${escH(job.title)}')"
+          enctype="multipart/form-data">
+          <div class="form-row">
+            <div class="form-field">
+              <label for="${escH(formId)}-name">Full Name</label>
+              <input id="${escH(formId)}-name" name="name" type="text" placeholder="Jane Smith" required>
+            </div>
+            <div class="form-field">
+              <label for="${escH(formId)}-email">Email</label>
+              <input id="${escH(formId)}-email" name="email" type="email" placeholder="jane@email.com" required>
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="${escH(formId)}-phone">Phone (optional)</label>
+            <input id="${escH(formId)}-phone" name="phone" type="tel" placeholder="(555) 000-0000">
+          </div>
+          <div class="form-field">
+            <label>Resume</label>
+            <label class="file-label" id="${escH(formId)}-filelabel">
+              <span>📎 Choose PDF or Word file</span>
+              <input type="file" name="resume" accept=".pdf,.doc,.docx" required
+                onchange="updateFileName(this,'${escH(formId)}-filelabel')">
+            </label>
+          </div>
+          <div class="form-msg" id="${escH(formId)}-msg"></div>
+          <button class="submit-btn" type="submit">Submit Application</button>
+          <p class="confidential-note">Confidential search — firm name disclosed to qualified candidates.</p>
+        </form>
+      </div>`;
+
+  return `<div class="detail-header">
+    <div class="detail-meta">${tags}</div>
+    <div class="detail-title">${escH(job.title)}</div>
+    <div class="detail-location">${escH(job.location)}</div>
+  </div>
+  <div class="detail-body${isFilled ? ' filled-content' : ''}">
+    ${filledNotice}
+    <div class="editorial">"${escH(job.editorial)}"</div>
+    <div class="detail-section"><h3>The Role</h3><p>${escH(job.summary)}</p></div>
+    <div class="detail-section"><h3>What You'll Own</h3><ul>${ownsHtml}</ul></div>
+    <div class="detail-section"><h3>What We're Looking For</h3><ul>${reqHtml}</ul></div>
+    ${compSection}
+    ${applyBlock}
+    <div class="permalink-strip">
+      <span>Shareable link:</span>
+      <button class="copy-link-btn" onclick="copyLink('${escH(pageUrl)}', this)">Copy link</button>
+    </div>
+  </div>`;
+}
+
+function showList() {
+  const hash = '';
+  history.pushState(null, '', location.pathname);
+  pageIntro.classList.remove('hidden');
+  filterBar.classList.remove('hidden');
+  jobsList.classList.remove('hidden');
+  jobDetail.classList.remove('visible');
+  backNav.classList.remove('visible');
+  jobDetail.style.display = 'none';
+  document.title = 'Open Roles — TWB Legal Search';
+}
+
+function showDetail(id) {
+  const job = JOBS.find(j => j.id === id);
+  if (!job) return showList();
+  history.pushState(null, '', `${location.pathname}#${id}`);
+  pageIntro.classList.add('hidden');
+  filterBar.classList.add('hidden');
+  jobsList.classList.add('hidden');
+  jobDetail.classList.add('visible');
+  jobDetail.style.display = 'block';
+  backNav.classList.add('visible');
+  jobDetail.innerHTML = renderDetail(job);
+  document.title = `${job.title} — TWB Legal Search`;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function copyLink(url, btn) {
+  try {
+    navigator.clipboard.writeText(url).then(() => {
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy link', 2000);
+    }).catch(() => fallbackCopy(url, btn));
+  } catch(e) { fallbackCopy(url, btn); }
+}
+function fallbackCopy(url, btn) {
+  const ta = document.createElement('textarea');
+  ta.value = url; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); btn.textContent = 'Copied!'; } catch(e) {}
+  document.body.removeChild(ta);
+  setTimeout(() => btn.textContent = 'Copy link', 2000);
+}
+
+// ── FILTERS ──
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    const f = this.dataset.filter;
+    document.querySelectorAll('.job-card').forEach(card => {
+      card.style.display = (f === 'all' || card.dataset.category === f) ? '' : 'none';
+    });
+  });
+});
+
+// ── INIT ──
+jobsList.innerHTML = JOBS.map(renderCard).join('');
+
+function routeHash() {
+  const hash = location.hash.replace('#', '');
+  if (hash && JOBS.find(j => j.id === hash)) {
+    showDetail(hash);
+  } else {
+    showList();
+  }
+}
+
+window.addEventListener('hashchange', routeHash);
+window.addEventListener('popstate', routeHash);
+routeHash();
+
+function updateFileName(input, labelId) {
+  const label = document.getElementById(labelId);
+  if (!label) return;
+  if (input.files && input.files[0]) {
+    label.innerHTML = `<span class="file-name">✓ ${escH(input.files[0].name)}</span><input type="file" name="resume" accept=".pdf,.doc,.docx" required onchange="updateFileName(this,'${labelId}')"/>`;
+  }
+}
+
+async function submitApp(e, jobId, jobTitle) {
+  e.preventDefault();
+  const form = e.target;
+  const msgEl = form.querySelector('[id$="-msg"]');
+  const btn = form.querySelector('.submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting…';
+  msgEl.className = 'form-msg';
+  msgEl.textContent = '';
+
+  const fd = new FormData(form);
+  fd.set('position', jobTitle);
+
+  try {
+    const res = await fetch('/api/apply', { method: 'POST', body: fd });
+    let data;
+    try { data = await res.json(); } catch { data = {}; }
+    if (res.ok && data.success) {
+      msgEl.className = 'form-msg success';
+      msgEl.textContent = 'Application received. We'll be in touch.';
+      form.reset();
+      // reset file label
+      const fileLabel = form.querySelector('.file-label');
+      if (fileLabel) fileLabel.innerHTML = '<span>📎 Choose PDF or Word file</span><input type="file" name="resume" accept=".pdf,.doc,.docx" required onchange="updateFileName(this,this.closest(\'label\').id)">';
+    } else {
+      throw new Error(data.error || 'Submission failed. Please try again or email info@twbls.com.');
+    }
+  } catch(err) {
+    msgEl.className = 'form-msg error';
+    msgEl.textContent = err.message || 'Something went wrong. Please email info@twbls.com.';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Submit Application';
+  }
+}
+</script>
