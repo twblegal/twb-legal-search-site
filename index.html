@@ -290,6 +290,58 @@
       border-top: 1px solid var(--rule);
     }
 
+    /* ── Archived roles ─────────────────────────────────────── */
+    .archived-section { padding: 0 0 80px; }
+
+    .archived-header {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 48px;
+      align-items: baseline;
+      margin-bottom: 0;
+    }
+
+    .archived-header h2 {
+      font-weight: 400;
+      font-size: 1.5rem;
+      letter-spacing: -0.015em;
+    }
+
+    .archived-table { width: 100%; margin-top: 40px; }
+
+    .archived-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+      padding: 18px 0;
+      border-top: 1px solid var(--rule);
+    }
+    .archived-table .archived-row:last-of-type { border-bottom: 1px solid var(--rule); }
+
+    .archived-title {
+      font-size: 0.95rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      color: var(--ink-mid);
+    }
+
+    .archived-location {
+      margin-top: 3px;
+      font-size: 0.72rem;
+      letter-spacing: 0.03em;
+      color: var(--ink-faint);
+    }
+
+    .archived-badge {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      white-space: nowrap;
+    }
+
     /* ── Areas ──────────────────────────────────────────────── */
     .areas-section {
       padding: 80px 0;
@@ -565,6 +617,17 @@
 
     <div class="divider"></div>
 
+    <!-- Archived roles -->
+    <section class="archived-section">
+      <div class="archived-header">
+        <p class="section-tag">Past searches</p>
+        <h2>Recent placements</h2>
+      </div>
+      <div class="archived-table" id="archivedList"></div>
+    </section>
+
+    <div class="divider"></div>
+
     <!-- Areas -->
     <section class="areas-section">
       <div class="areas-header">
@@ -708,6 +771,31 @@
         description: `<b>The Role</b>\nAt a full-service law firm in Dallas, this specialist provides inbound technical support to end users in a call center environment — resolving software issues, troubleshooting applications, and communicating solutions clearly to non-technical users.\n\n<b>What You'll Own</b>\n— Inbound call and ticket handling for software, application, and email issues\n— End-user interaction: gathering information, diagnosing, resolving or escalating\n— Call tracking and documentation in designated tracking software\n— After-hours on-call coverage on a rotating schedule\n— Staying current with system changes, updates, and known issues\n\n<b>What We're Looking For</b>\n— Prior law firm experience preferred\n— Knowledge of Microsoft Office and general legal applications\n— Strong verbal and written communication; professional phone manner\n— Outstanding customer service orientation; able to handle on-call including weekends\n— Some hardware setup and troubleshooting skills preferred\n\nConfidential search — firm name disclosed to qualified candidates.`
       }
     ];
+
+    const ARCHIVED_JOBS = [
+      {
+        id: "director-legal-innovation-ai",
+        title: "Director of Legal Innovation & AI",
+        location: "Los Angeles · New York · Washington, D.C.",
+      },
+    ];
+
+    // Render archived jobs
+    const archivedList = document.getElementById('archivedList');
+    if (archivedList) {
+      ARCHIVED_JOBS.forEach((job) => {
+        const row = document.createElement('div');
+        row.className = 'archived-row';
+        row.innerHTML = `
+          <div>
+            <div class="archived-title">${job.title}</div>
+            <div class="archived-location">${job.location}</div>
+          </div>
+          <span class="archived-badge">Search closed</span>
+        `;
+        archivedList.appendChild(row);
+      });
+    }
 
     function escapeHtml(str) {
       return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
