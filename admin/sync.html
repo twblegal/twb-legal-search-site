@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TWB Site Sync</title>
+  <style>
+    :root {
+      --bg: #f7f6f4;
+      --card: #ffffff;
+      --fg: #15181d;
+      --muted: #6b7280;
+      --border: #e5e3df;
+      --accent: #2b4c3f;
+      --accent-hover: #1e3730;
+      --danger: #c0392b;
+      --success: #2b4c3f;
+      --warning-bg: #fff8f0;
+      --warning-border: #e8d8c0;
+      --warning-fg: #8a6830;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .logo {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--fg);
+    }
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    input[type="password"], input[type="text"] {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: monospace;
+      color: var(--fg);
+      background: var(--bg);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    input:focus { border-color: var(--accent); }
+    .input-hint {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    .input-hint a { color: var(--accent); text-decoration: none; }
+    .input-hint a:hover { text-decoration: underline; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+    button {
+      width: 100%;
+      padding: 13px 20px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+      margin-top: 20px;
+    }
+    button:hover:not(:disabled) { background: var(--accent-hover); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .status {
+      margin-top: 20px;
+      padding: 14px 16px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      display: none;
+    }
+    .status.info  { background: #eef4f2; border: 1px solid #c5dbd5; color: #1e3730; }
+    .status.ok    { background: #eef4f2; border: 1px solid #c5dbd5; color: var(--success); }
+    .status.error { background: #fdf0ef; border: 1px solid #f0c8c4; color: var(--danger); }
+    .spinner {
+      display: inline-block;
+      width: 14px; height: 14px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .warning {
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      color: var(--warning-fg);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">TWB Legal Search</div>
+    <h1>Sync Jobs</h1>
+    <p class="subtitle">Publish new searches from Airtable to the site immediately — without waiting for the scheduled run.</p>
+
+    <div class="warning">
+      🔑 Your API key is used only for this request and is never stored or logged.
+    </div>
+
+    <label for="apiKey">Claude API Key</label>
+    <input type="password" id="apiKey" placeholder="sk-ant-…" autocomplete="off" spellcheck="false" />
+    <p class="input-hint">Get yours at <a href="https://claude.ai/settings" target="_blank">claude.ai/settings</a> → API Keys</p>
+
+    <hr class="divider" />
+
+    <button id="syncBtn" onclick="runSync()">Sync Now</button>
+
+    <div class="status" id="status"></div>
+  </div>
+
+  <script>
+    const TRIGGER_ID = 'trig_01HXhgU99R17uUr6VUQrMHzQ';
+
+    async function runSync() {
+      const key = document.getElementById('apiKey').value.trim();
+      const btn = document.getElementById('syncBtn');
+      const statusEl = document.getElementById('status');
+
+      if (!key) {
+        showStatus('error', 'Please enter your Claude API key first.');
+        return;
+      }
+      if (!key.startsWith('sk-ant-')) {
+        showStatus('error', 'That doesn\'t look like a Claude API key (should start with sk-ant-).');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>Syncing…';
+      showStatus('info', 'Firing sync task — this usually takes 30–90 seconds to complete on the server. You can close this page; Cloudflare will deploy automatically when it finishes.');
+
+      try {
+        const res = await fetch(
+          `https://api.claude.ai/api/scheduled_tasks/${TRIGGER_ID}/fire`,
+          {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${key}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              text: 'On-demand sync triggered from twbls.com/admin/sync. Run sync_jobs.py now to publish any pending jobs from Airtable.'
+            })
+          }
+        );
+
+        if (res.ok) {
+          showStatus('ok', '✓ Sync triggered. The job cycle is running in the background — new jobs will appear on the site within a few minutes once Cloudflare deploys.');
+          btn.innerHTML = '✓ Triggered';
+        } else {
+          const body = await res.text();
+          if (res.status === 401) {
+            showStatus('error', 'API key rejected (401). Double-check the key and try again.');
+          } else {
+            showStatus('error', `Server returned ${res.status}. Response: ${body.slice(0, 200)}`);
+          }
+          btn.disabled = false;
+          btn.innerHTML = 'Sync Now';
+        }
+      } catch (err) {
+        showStatus('error', `Network error: ${err.message}. Check your connection and try again.`);
+        btn.disabled = false;
+        btn.innerHTML = 'Sync Now';
+      }
+    }
+
+    function showStatus(type, msg) {
+      const el = document.getElementById('status');
+      el.className = 'status ' + type;
+      el.style.display = 'block';
+      el.textContent = msg;
+    }
+
+    // Allow Enter key to trigger sync
+    document.getElementById('apiKey').addEventListener('keydown', e => {
+      if (e.key === 'Enter') runSync();
+    });
+  </script>
+</body>
+</html>
