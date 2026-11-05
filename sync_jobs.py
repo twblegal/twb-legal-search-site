@@ -156,6 +156,25 @@ def anonymise(text: str) -> str:
         flags=re.IGNORECASE,
     )
 
+    # Reporting hierarchy: strip the specific title after "reporting to" /
+    # "reports to" so the manager's name or exact title is never exposed.
+    # Keep only the seniority tier (e.g. "Senior Manager", "CIO", "Director").
+    # Pattern: "reporting to [Title] of [Department/Group/Team...]"
+    #          → "reporting to [Title]"
+    text = re.sub(
+        r"(report(?:s|ing) to\s+)([A-Z][^,\n]+?)\s+of\s+[^\.,\n]+",
+        r"\1\2",
+        text,
+    )
+
+    # Also strip "reporting to the [Title], [Name]" → "reporting to the [Title]"
+    # e.g. "reporting to the Director of IT, Jane Smith" → "reporting to the Director of IT"
+    text = re.sub(
+        r"(report(?:s|ing) to(?:\s+the)?\s+[^,\n]+),\s+[A-Z][a-z]+ [A-Z][a-z]+",
+        r"\1",
+        text,
+    )
+
     return text
 
 
