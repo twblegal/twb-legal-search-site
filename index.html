@@ -11,25 +11,26 @@
   <meta name="description" content="Open legal technology roles at Am Law 200 firms. Apply directly — every submission is reviewed personally." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Source+Sans+3:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #f6f5f1;
-      --surface: #ffffff;
-      --ink: #15181d;
-      --ink-soft: rgba(21,24,29,0.66);
-      --ink-faint: rgba(21,24,29,0.42);
-      --rule: rgba(21,24,29,0.13);
-      --accent: #7c5e2e;
-      --accent-soft: rgba(124,94,46,0.09);
-      --success: #1a7a3c;
+      --bg: #f5f5f4;
+      --bg-pure: #ffffff;
+      --ink: #0f1114;
+      --ink-mid: rgba(15,17,20,0.55);
+      --ink-faint: rgba(15,17,20,0.32);
+      --rule: rgba(15,17,20,0.10);
+      --rule-strong: rgba(15,17,20,0.18);
+      --accent: #2d4a6e;
+      --accent-soft: rgba(45,74,110,0.08);
+      color-scheme: light;
+      --success: #1a6b40;
       --error: #b3261e;
-      --serif: 'Spectral', Georgia, serif;
-      --sans: 'Source Sans 3', system-ui, sans-serif;
-      --mono: 'IBM Plex Mono', ui-monospace, monospace;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --mono: 'DM Mono', ui-monospace, monospace;
     }
 
     html { scroll-behavior: smooth; }
@@ -45,312 +46,469 @@
     a { color: inherit; }
     :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-    .reveal { opacity: 0; transform: translateY(14px); animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) forwards; }
-    .d1 { animation-delay: 0.05s; }
-    .d2 { animation-delay: 0.16s; }
-    .d3 { animation-delay: 0.27s; }
-    .d4 { animation-delay: 0.38s; }
-    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-
     @media (prefers-reduced-motion: reduce) {
-      .reveal { animation: none; opacity: 1; transform: none; }
       html { scroll-behavior: auto; }
     }
 
-    .page { max-width: 860px; margin: 0 auto; padding: 0 40px; }
+    .page { max-width: 800px; margin: 0 auto; padding: 0 40px; }
 
-    /* Header */
+    /* ── Header ─────────────────────────────────────────────── */
     header {
-      padding: 44px 0 0;
+      padding: 40px 0 0;
       display: flex;
-      align-items: baseline;
+      align-items: center;
       justify-content: space-between;
       gap: 24px;
     }
 
     .wordmark {
       font-family: var(--sans);
-      font-weight: 600;
-      font-size: 1.05rem;
-      letter-spacing: -0.01em;
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.01em;
       color: var(--ink);
       text-decoration: none;
     }
 
-    nav { display: flex; gap: 32px; align-items: center; }
+    nav { display: flex; gap: 28px; align-items: center; }
 
     nav a {
       font-size: 0.72rem;
-      letter-spacing: 0.11em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       text-decoration: none;
-      color: var(--ink-soft);
-      transition: color 0.2s;
+      color: var(--ink-mid);
+      transition: color 0.15s;
     }
     nav a:hover { color: var(--ink); }
 
-    .rule { height: 1px; background: var(--rule); margin-top: 32px; }
+    .header-rule {
+      height: 1px;
+      background: var(--rule-strong);
+      margin-top: 28px;
+    }
 
-    /* Hero */
-    .hero { padding: 88px 0 72px; }
+    /* ── Hero ───────────────────────────────────────────────── */
+    .hero {
+      padding: 100px 0 80px;
+    }
 
-    .hero-eyebrow {
+    .hero-label {
       font-family: var(--mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.16em;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 28px;
+      color: var(--ink-faint);
+      margin-bottom: 32px;
     }
 
     .hero-headline {
-      font-family: var(--serif);
+      font-family: var(--sans);
       font-weight: 300;
-      font-size: clamp(2.3rem, 4.6vw, 3.4rem);
-      line-height: 1.14;
-      letter-spacing: -0.01em;
-      max-width: 680px;
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      max-width: 640px;
+      color: var(--ink);
     }
 
-    .hero-headline em { font-style: italic; color: var(--accent); }
+    .hero-headline strong {
+      font-weight: 500;
+    }
 
     .hero-sub {
-      margin-top: 26px;
-      font-size: 1rem;
-      line-height: 1.7;
-      color: var(--ink-soft);
-      max-width: 500px;
+      margin-top: 28px;
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: var(--ink-mid);
+      max-width: 440px;
+      font-weight: 300;
     }
 
-    .hero-cta {
-      display: inline-flex;
+    .hero-action {
+      margin-top: 40px;
+      display: flex;
       align-items: center;
       gap: 10px;
-      margin-top: 36px;
-      padding: 13px 26px;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      font-size: 0.75rem;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      background: var(--ink);
+      color: var(--bg);
+      font-family: var(--sans);
+      font-size: 0.72rem;
       font-weight: 500;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       text-decoration: none;
-      transition: background 0.2s, color 0.2s;
+      transition: opacity 0.15s;
     }
-    .hero-cta:hover { background: var(--accent); color: var(--surface); }
+    .btn-primary:hover { opacity: 0.78; }
 
-    /* Section shared */
-    .section-label {
+    /* ── Thin divider ───────────────────────────────────────── */
+    .divider { height: 1px; background: var(--rule); }
+
+    /* ── About ──────────────────────────────────────────────── */
+    .about-section {
+      padding: 80px 0;
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .section-tag {
       font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.14em;
+      font-size: 0.63rem;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 18px;
+      color: var(--ink-faint);
+      padding-top: 6px;
     }
 
-    .section-headline {
-      font-family: var(--serif);
-      font-weight: 300;
-      font-size: clamp(1.6rem, 3vw, 2rem);
-      letter-spacing: -0.01em;
-      margin-bottom: 12px;
+    .about-text h2 {
+      font-weight: 400;
+      font-size: 1.5rem;
+      letter-spacing: -0.015em;
+      margin-bottom: 16px;
+      line-height: 1.25;
     }
 
-    .section-body {
+    .about-text p {
       font-size: 0.875rem;
-      line-height: 1.75;
-      color: var(--ink-soft);
-      max-width: 560px;
+      line-height: 1.8;
+      color: var(--ink-mid);
+      font-weight: 300;
+      max-width: 520px;
     }
 
-    /* About */
-    .about-section { padding: 64px 0; border-top: 1px solid var(--rule); }
+    /* ── Jobs ───────────────────────────────────────────────── */
+    .jobs-section { padding: 0 0 80px; }
 
-    /* Jobs */
-    .jobs-section { padding: 64px 0; border-top: 1px solid var(--rule); }
+    .jobs-header {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 48px;
+      align-items: baseline;
+      margin-bottom: 0;
+    }
 
-    .job-list { display: flex; flex-direction: column; margin-top: 40px; }
-    .job-item { border-top: 1px solid var(--rule); }
-    .job-list .job-item:last-child { border-bottom: 1px solid var(--rule); }
+    .jobs-header h2 {
+      font-weight: 400;
+      font-size: 1.5rem;
+      letter-spacing: -0.015em;
+    }
+
+    /* Job table */
+    .job-table { width: 100%; margin-top: 40px; }
 
     .job-row {
-      padding: 26px 0;
       display: grid;
-      grid-template-columns: 74px 1fr auto auto;
-      gap: 22px;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
       align-items: center;
+      padding: 20px 0;
+      border-top: 1px solid var(--rule);
       cursor: pointer;
+      transition: background 0.1s;
+    }
+    .job-table .job-row:last-of-type { border-bottom: 1px solid var(--rule); }
+
+    .job-row:hover .job-title { color: var(--accent); }
+
+    .job-title {
+      font-size: 0.95rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      transition: color 0.15s;
     }
 
-    .job-docket {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--accent);
-      letter-spacing: 0.02em;
+    .job-location {
+      margin-top: 3px;
+      font-size: 0.72rem;
+      letter-spacing: 0.03em;
+      color: var(--ink-faint);
     }
 
-    .job-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; letter-spacing: -0.01em; }
-    .job-meta { margin-top: 4px; font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-faint); }
-
-    .job-apply-link {
-      font-size: 0.7rem;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-      color: var(--accent);
-      text-decoration: none;
-      white-space: nowrap;
+    .job-arrow {
+      font-size: 0.8rem;
+      color: var(--ink-faint);
+      transition: transform 0.2s, color 0.15s;
+      flex-shrink: 0;
     }
-
-    .job-toggle-icon {
-      width: 9px; height: 9px;
-      border-right: 1.5px solid var(--ink-faint);
-      border-bottom: 1.5px solid var(--ink-faint);
-      transform: rotate(-45deg);
-      transition: transform 0.25s;
-      justify-self: end;
-    }
-    .job-item.expanded .job-toggle-icon { transform: rotate(45deg); }
+    .job-item.expanded .job-arrow { transform: rotate(90deg); color: var(--ink-mid); }
 
     .job-description {
       display: none;
-      padding: 0 0 30px 96px;
-      font-size: 0.85rem;
-      line-height: 1.8;
-      color: var(--ink-soft);
-      max-width: 620px;
+      padding: 4px 0 28px;
+      font-size: 0.82rem;
+      line-height: 1.85;
+      color: var(--ink-mid);
       white-space: pre-line;
+      max-width: 560px;
+      border-top: none;
+      font-weight: 300;
     }
     .job-item.expanded .job-description { display: block; }
-    .job-description b { color: var(--ink); font-weight: 600; }
+    .job-description b { color: var(--ink); font-weight: 500; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; }
 
-    .job-empty {
-      padding: 40px 0;
-      color: var(--ink-soft);
-      font-size: 0.9rem;
-      font-style: italic;
-      font-family: var(--serif);
-    }
-
-    /* Areas we place into */
-    .areas-section { padding: 64px 0; border-top: 1px solid var(--rule); }
-
-    .areas-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1px;
-      background: var(--rule);
-      margin-top: 32px;
-    }
-
-    .area-card { background: var(--bg); padding: 26px 26px 26px 0; }
-    .areas-grid .area-card:nth-child(odd) { padding-right: 30px; }
-    .areas-grid .area-card:nth-child(even) { padding-left: 30px; padding-right: 0; }
-
-    .area-title { font-family: var(--serif); font-size: 1rem; margin-bottom: 8px; }
-    .area-body { font-size: 0.82rem; line-height: 1.65; color: var(--ink-soft); }
-
-    /* Apply form */
-    .apply-section { padding: 64px 0; border-top: 1px solid var(--rule); }
-
-    .apply-form { margin-top: 36px; max-width: 560px; }
-
-    .form-row { display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
-
-    .form-row label {
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-    }
-
-    .form-row input, .form-row select, .form-row textarea {
-      font-family: var(--sans);
-      font-size: 0.9rem;
-      color: var(--ink);
-      background: var(--surface);
-      border: 1px solid var(--rule);
-      padding: 12px 14px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .form-row input:focus, .form-row select:focus, .form-row textarea:focus { border-color: var(--accent); }
-    .form-row textarea { resize: vertical; min-height: 96px; font-family: var(--sans); }
-    .form-row-file { font-size: 0.8rem; color: var(--ink-soft); }
-
-    .form-submit-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 6px;
-      padding: 13px 26px;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      background: transparent;
-      transition: background 0.2s, color 0.2s;
-      cursor: pointer;
-    }
-    .form-submit-btn:hover { background: var(--accent); color: var(--surface); }
-    .form-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    .form-trust { margin-top: 12px; font-size: 0.75rem; color: var(--ink-faint); }
-    .form-status { margin-top: 16px; font-size: 0.85rem; display: none; }
-    .form-status.success { color: var(--success); display: block; }
-    .form-status.error { color: var(--error); display: block; }
-
-    /* Contact / footer */
-    .contact-strip {
-      padding: 56px 0;
-      border-top: 1px solid var(--rule);
+    .job-description-footer {
+      margin-top: 20px;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
       align-items: center;
       gap: 20px;
     }
 
-    .contact-label {
-      font-family: var(--mono);
+    .job-apply-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 18px;
+      background: var(--ink);
+      color: var(--bg);
       font-size: 0.68rem;
-      letter-spacing: 0.14em;
+      font-weight: 500;
+      letter-spacing: 0.09em;
       text-transform: uppercase;
-      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      font-family: var(--sans);
+      transition: opacity 0.15s;
+    }
+    .job-apply-btn:hover { opacity: 0.75; }
+
+    .job-empty {
+      padding: 48px 0;
+      font-size: 0.85rem;
+      color: var(--ink-faint);
+      font-weight: 300;
+      border-top: 1px solid var(--rule);
     }
 
-    .contact-links { display: flex; flex-wrap: wrap; gap: 32px; align-items: center; }
-    .contact-strip a { text-decoration: none; font-size: 0.85rem; color: var(--ink-soft); transition: color 0.2s; }
-    .contact-strip a:hover { color: var(--accent); }
-
-    footer {
+    /* ── Areas ──────────────────────────────────────────────── */
+    .areas-section {
+      padding: 80px 0;
       border-top: 1px solid var(--rule);
-      padding: 28px 0 44px;
-      font-size: 0.7rem;
+    }
+
+    .areas-header {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 48px;
+      align-items: baseline;
+      margin-bottom: 16px;
+    }
+
+    .areas-header h2 {
+      font-weight: 400;
+      font-size: 1.5rem;
+      letter-spacing: -0.015em;
+    }
+
+    .areas-intro {
+      font-size: 0.875rem;
+      line-height: 1.75;
+      color: var(--ink-mid);
+      font-weight: 300;
+      max-width: 440px;
+      margin-left: 208px;
+      margin-bottom: 32px;
+    }
+
+    .areas-list { display: flex; flex-direction: column; }
+
+    .area-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 48px;
+      padding: 22px 0;
+      border-top: 1px solid var(--rule);
+    }
+    .areas-list .area-row:last-child { border-bottom: 1px solid var(--rule); }
+
+    .area-index {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      color: var(--ink-faint);
+      padding-top: 3px;
+    }
+
+    .area-content h3 {
+      font-weight: 400;
+      font-size: 0.9rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+
+    .area-content p {
+      font-size: 0.8rem;
+      line-height: 1.7;
+      color: var(--ink-mid);
+      font-weight: 300;
+    }
+
+    /* ── Apply ──────────────────────────────────────────────── */
+    .apply-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    .apply-header {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 48px;
+      align-items: baseline;
+      margin-bottom: 48px;
+    }
+
+    .apply-header-text h2 {
+      font-weight: 400;
+      font-size: 1.5rem;
+      letter-spacing: -0.015em;
+      margin-bottom: 10px;
+    }
+
+    .apply-header-text p {
+      font-size: 0.875rem;
+      line-height: 1.75;
+      color: var(--ink-mid);
+      font-weight: 300;
+      max-width: 440px;
+    }
+
+    .apply-form { max-width: 520px; }
+
+    .form-field {
+      margin-bottom: 20px;
+    }
+
+    .form-field label {
+      display: block;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 8px;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      font-family: var(--sans);
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: var(--ink);
+      background: var(--bg-pure);
+      border: 1px solid var(--rule-strong);
+      padding: 10px 12px;
+      outline: none;
+      transition: border-color 0.15s;
+      -webkit-appearance: none;
+    }
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus { border-color: var(--accent); }
+    .form-field textarea { resize: vertical; min-height: 88px; }
+    .form-field input[type="file"] { font-size: 0.8rem; color: var(--ink-mid); }
+
+    .form-actions { margin-top: 8px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+
+    .form-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      background: var(--ink);
+      color: var(--bg);
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .form-submit:hover:not(:disabled) { opacity: 0.78; }
+    .form-submit:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .form-note {
+      font-size: 0.72rem;
+      color: var(--ink-faint);
+      font-weight: 300;
+      margin-top: 10px;
+    }
+
+    .form-status { margin-top: 14px; font-size: 0.8rem; display: none; }
+    .form-status.success { color: var(--success); display: block; }
+    .form-status.error { color: var(--error); display: block; }
+
+    /* ── Footer strip ───────────────────────────────────────── */
+    .footer-section {
+      border-top: 1px solid var(--rule-strong);
+      padding: 36px 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--ink-mid);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--ink); }
+
+    .footer-copy {
+      font-size: 0.65rem;
       letter-spacing: 0.06em;
       color: var(--ink-faint);
     }
 
-    @media (max-width: 720px) {
+    /* ── Mobile ─────────────────────────────────────────────── */
+    @media (max-width: 680px) {
       .page { padding: 0 24px; }
-      header { flex-direction: column; align-items: flex-start; gap: 16px; padding-top: 32px; }
-      nav { gap: 22px; }
-      .hero { padding: 56px 0 48px; }
-      .areas-grid { grid-template-columns: 1fr; }
-      .areas-grid .area-card { padding: 22px 0 !important; }
-      .areas-grid .area-card:first-child { padding-top: 0 !important; }
+      header { padding-top: 28px; }
+      nav { gap: 20px; }
 
-      .job-row { grid-template-columns: 1fr auto; grid-template-areas: "docket toggle" "title title" "apply apply"; row-gap: 6px; }
-      .job-docket { grid-area: docket; }
-      .job-toggle-icon { grid-area: toggle; }
-      .job-title-wrap { grid-area: title; }
-      .job-apply-link { grid-area: apply; justify-self: start; }
-      .job-description { padding-left: 0; }
+      .hero { padding: 72px 0 56px; }
 
-      .contact-strip { flex-direction: column; align-items: flex-start; gap: 16px; }
-      .contact-links { gap: 20px; }
+      .about-section,
+      .jobs-header,
+      .areas-header,
+      .apply-header,
+      .area-row {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .about-section { padding: 56px 0; }
+      .jobs-section { padding: 0 0 56px; }
+      .areas-section { padding: 56px 0; }
+      .areas-section .areas-header { margin-bottom: 12px; }
+      .areas-intro { margin-left: 0; }
+      .apply-section { padding: 56px 0; }
+      .apply-section .apply-header { margin-bottom: 32px; }
+
+      .footer-section { flex-direction: column; align-items: flex-start; gap: 20px; }
     }
   </style>
 </head>
@@ -359,160 +517,154 @@
   <div class="page">
 
     <header>
-      <a class="wordmark reveal d1" href="#">TWB Legal Search</a>
-      <nav class="reveal d1">
-        <a href="#jobs">Open Roles</a>
+      <a class="wordmark" href="#">TWB Legal Search</a>
+      <nav>
+        <a href="#jobs">Roles</a>
         <a href="#apply">Apply</a>
         <a href="#contact">Contact</a>
       </nav>
     </header>
 
-    <div class="rule reveal d1"></div>
+    <div class="header-rule"></div>
 
     <!-- Hero -->
     <section class="hero">
-      <p class="hero-eyebrow reveal d2">LEGAL TECHNOLOGY CAREERS</p>
-      <h1 class="hero-headline reveal d2">
-        Legal technology careers at Am Law 200 firms.
+      <p class="hero-label">Legal technology careers</p>
+      <h1 class="hero-headline">
+        Am Law 200 firms.<br><strong>Direct placement.</strong>
       </h1>
-      <p class="hero-sub reveal d3">
+      <p class="hero-sub">
         Every submission is reviewed personally. We don't forward resumes — we make introductions.
       </p>
-      <a class="hero-cta reveal d3" href="#jobs">See open roles</a>
+      <div class="hero-action">
+        <a class="btn-primary" href="#jobs">View open roles →</a>
+      </div>
     </section>
+
+    <div class="divider"></div>
 
     <!-- About -->
-    <section class="about-section reveal d4">
-      <p class="section-label">About</p>
-      <h2 class="section-headline">We know this space.</h2>
-      <p class="section-body">TWB Legal Search works exclusively in legal technology — infrastructure, applications, support, and IT leadership at Am Law 200 firms. That focus has been the whole business for eight years, which means we already know the firms, the roles, and what they actually look for. When we submit a candidate, it's because we believe there's a real match — not because we're running volume.</p>
+    <section class="about-section">
+      <p class="section-tag">About</p>
+      <div class="about-text">
+        <h2>We know this space.</h2>
+        <p>TWB Legal Search works exclusively in legal technology — infrastructure, applications, support, and IT leadership at Am Law 200 firms. That focus has been the whole business for eight years, which means we already know the firms, the roles, and what they actually look for. When we submit a candidate, it's because we believe there's a real match — not because we're running volume.</p>
+      </div>
     </section>
+
+    <div class="divider"></div>
 
     <!-- Jobs -->
-    <section class="jobs-section reveal d4" id="jobs">
-      <p class="section-label">Open roles</p>
-      <h2 class="section-headline" id="jobsHeadline">Current opportunities</h2>
-      <div class="job-list" id="jobList"></div>
+    <section class="jobs-section" id="jobs">
+      <div class="jobs-header">
+        <p class="section-tag">Open roles</p>
+        <h2 id="jobsHeadline">Current opportunities</h2>
+      </div>
+      <div class="job-table" id="jobList"></div>
     </section>
 
-    <!-- Areas we place into -->
+    <div class="divider"></div>
+
+    <!-- Areas -->
     <section class="areas-section">
-      <p class="section-label">Where we place</p>
-      <h2 class="section-headline">Career areas</h2>
-      <p class="section-body">We place across all four of these areas regularly. If nothing's listed right now, it's still worth applying — searches move quickly and we stay close to the market.</p>
-      <div class="areas-grid">
-        <div class="area-card">
-          <div class="area-title">Cloud Infrastructure & Automation</div>
-          <p class="area-body">Azure, IaC, networking, and cybersecurity roles supporting firm-wide operations.</p>
+      <div class="areas-header">
+        <p class="section-tag">Where we place</p>
+        <h2>Career areas</h2>
+      </div>
+      <p class="areas-intro">We place across all four areas regularly. If nothing's listed, it's still worth applying — searches move quickly.</p>
+      <div class="areas-list">
+        <div class="area-row">
+          <span class="area-index">01</span>
+          <div class="area-content">
+            <h3>Cloud Infrastructure &amp; Automation</h3>
+            <p>Azure, IaC, networking, and cybersecurity roles supporting firm-wide operations.</p>
+          </div>
         </div>
-        <div class="area-card">
-          <div class="area-title">Legal Applications</div>
-          <p class="area-body">iManage, NetDocuments, Aderant, Elite 3E — implementation, support, and optimization.</p>
+        <div class="area-row">
+          <span class="area-index">02</span>
+          <div class="area-content">
+            <h3>Legal Applications</h3>
+            <p>iManage, NetDocuments, Aderant, Elite 3E — implementation, support, and optimization.</p>
+          </div>
         </div>
-        <div class="area-card">
-          <div class="area-title">IT Leadership</div>
-          <p class="area-body">CIO, IT Director, and IT Manager roles setting technology strategy at the firm level.</p>
+        <div class="area-row">
+          <span class="area-index">03</span>
+          <div class="area-content">
+            <h3>IT Leadership</h3>
+            <p>CIO, IT Director, and IT Manager roles setting technology strategy at the firm level.</p>
+          </div>
         </div>
-        <div class="area-card">
-          <div class="area-title">Technology Support</div>
-          <p class="area-body">End user support and ITSM roles keeping firms running day to day.</p>
+        <div class="area-row">
+          <span class="area-index">04</span>
+          <div class="area-content">
+            <h3>Technology Support</h3>
+            <p>End user support and ITSM roles keeping firms running day to day.</p>
+          </div>
         </div>
       </div>
     </section>
 
+    <div class="divider"></div>
+
     <!-- Apply -->
     <section class="apply-section" id="apply">
-      <p class="section-label">Application</p>
-      <h2 class="section-headline">Submit your resume</h2>
-      <p class="section-body">Apply to a specific role or send a general application. We read every submission and reach out when there's a genuine fit. Your information stays with us.</p>
+      <div class="apply-header">
+        <p class="section-tag">Application</p>
+        <div class="apply-header-text">
+          <h2>Submit your resume</h2>
+          <p>Apply to a specific role or send a general application. We read every submission and reach out when there's a genuine fit. Your information stays with us.</p>
+        </div>
+      </div>
 
       <form class="apply-form" id="applyForm">
-        <div class="form-row">
+        <div class="form-field">
           <label for="name">Full Name</label>
           <input type="text" id="name" name="name" required />
         </div>
-
-        <div class="form-row">
+        <div class="form-field">
           <label for="email">Email</label>
           <input type="email" id="email" name="email" required />
         </div>
-
-        <div class="form-row">
+        <div class="form-field">
           <label for="phone">Phone</label>
           <input type="tel" id="phone" name="phone" />
         </div>
-
-        <div class="form-row">
+        <div class="form-field">
           <label for="position">Position</label>
           <select id="position" name="position" required>
             <option value="">Select a role</option>
-            <!-- Options are populated automatically from the JOBS list below, plus General Application -->
           </select>
         </div>
-
-        <div class="form-row">
+        <div class="form-field">
           <label for="message">Note (optional)</label>
           <textarea id="message" name="message" placeholder="Anything you'd like us to know"></textarea>
         </div>
-
-        <div class="form-row">
+        <div class="form-field">
           <label for="resume">Resume (PDF or Word, max 10MB)</label>
-          <input class="form-row-file" type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required />
+          <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required />
         </div>
-
-        <button class="form-submit-btn" type="submit" id="submitBtn">Submit Application</button>
-        <p class="form-trust">Your resume is kept confidential and never shared without your permission.</p>
+        <div class="form-actions">
+          <button class="form-submit" type="submit" id="submitBtn">Submit Application</button>
+        </div>
+        <p class="form-note">Your resume is kept confidential and never shared without your permission.</p>
         <div class="form-status" id="formStatus"></div>
       </form>
     </section>
 
-    <!-- Contact -->
-    <section class="contact-strip" id="contact">
-      <p class="contact-label">Get in touch</p>
-      <div class="contact-links">
+    <!-- Footer -->
+    <footer class="footer-section" id="contact">
+      <div class="footer-links">
         <a href="mailto:info@twbls.com">info@twbls.com</a>
         <a href="https://www.linkedin.com/company/twb-legal-search/" target="_blank" rel="noopener">LinkedIn</a>
         <a href="tel:+18595130161">859-513-0161</a>
       </div>
-    </section>
-
-    <footer>
-      © 2026 TWB Legal Search LLC. All rights reserved.
+      <span class="footer-copy">© 2026 TWB Legal Search LLC</span>
     </footer>
 
   </div>
 
   <script>
-    /* ════════════════════════════════════════════════════════════
-       JOBS — this is the only thing you need to touch to add,
-       edit, or remove a listing. Copy an object, change the
-       fields, done. Order here is the order shown on the page.
-
-       id        — short reference code, shown next to the title.
-                   Keep it unique; format is up to you (e.g. state
-                   + a running number). This also becomes the
-                   direct link to that listing — see below.
-       title     — job title.
-       location  — "City, ST" shown under the title.
-       type      — e.g. "Full-Time · On-Site" / "Full-Time · Hybrid".
-       description — plain text. Blank lines create paragraph
-                   breaks. Wrap a line in <b>...</b> to bold it
-                   (used for section headers like Requirements).
-
-       LINKING DIRECTLY TO ONE JOB
-       For a LinkedIn post (or anywhere else), link straight to a
-       single listing — the page opens with that job already
-       expanded — using yoursite.com/#job-<id>. Example: a job
-       with id "NY-041" is linked as yoursite.com/#job-NY-041.
-       ════════════════════════════════════════════════════════════ */
     const JOBS = [
-      {
-        id: "director-legal-innovation-ai",
-        title: "Director of Legal Innovation & AI",
-        location: "Los Angeles · New York · Washington, D.C.",
-        type: "Full-Time · Leadership",
-        description: `Compensation: $300,000 – $380,000 + benefits\n\n<b>The Role</b>\nA net-new position at a leading global firm, built to own the enterprise legal AI strategy from end to end. You'll execute a multi-year roadmap across 2,000+ attorneys, govern responsible AI deployment, build internal capability, and position the firm's voice in the broader legal AI conversation.\n\n<b>What You'll Own</b>\n— Firmwide AI and legal innovation strategy; runs the AI Execution Committee\n— Legal tech and AI vendor portfolio — evaluation, negotiation, performance, and sunset\n— AI Solutions function: custom tools, RAG pipelines, practice-group prompts\n— AI Governance Framework and bar association compliance across all jurisdictions\n— AI Institute — CLE-eligible training, adoption programs, attorney cohort network\n— Building and leading a team across AI solutions, governance, and adoption\n\n<b>What We're Looking For</b>\n— 15+ years in AI/ML strategy, enterprise technology, or legal technology; 5+ years at leadership level\n— Deep expertise in generative AI: LLMs, RAG, vector databases, AI evaluation, responsible AI frameworks\n— Track record with AI vendor evaluation, enterprise contract negotiation, and governance at the executive level\n— Experience in a law firm, legal operations, or legal technology company preferred\n— JD, MBA, or advanced degree in CS, AI, or related discipline preferred\n\nConfidential search — firm name disclosed to qualified candidates.`
-      },
       {
         id: "cloud-solutions-architect",
         title: "Cloud Solutions Architect",
@@ -556,14 +708,11 @@
         description: `<b>The Role</b>\nAt a full-service law firm in Dallas, this specialist provides inbound technical support to end users in a call center environment — resolving software issues, troubleshooting applications, and communicating solutions clearly to non-technical users.\n\n<b>What You'll Own</b>\n— Inbound call and ticket handling for software, application, and email issues\n— End-user interaction: gathering information, diagnosing, resolving or escalating\n— Call tracking and documentation in designated tracking software\n— After-hours on-call coverage on a rotating schedule\n— Staying current with system changes, updates, and known issues\n\n<b>What We're Looking For</b>\n— Prior law firm experience preferred\n— Knowledge of Microsoft Office and general legal applications\n— Strong verbal and written communication; professional phone manner\n— Outstanding customer service orientation; able to handle on-call including weekends\n— Some hardware setup and troubleshooting skills preferred\n\nConfidential search — firm name disclosed to qualified candidates.`
       }
     ];
-    /* ═══════════════════════════════════════════════════════════ */
 
     function escapeHtml(str) {
       return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
-    // Allow only <b> back in after escaping, so job copy can bold section headers
-    // without opening up the field to arbitrary HTML.
     function renderDescription(desc) {
       return escapeHtml(desc).replace(/&lt;b&gt;/g, '<b>').replace(/&lt;\/b&gt;/g, '</b>');
     }
@@ -575,29 +724,35 @@
       document.getElementById('jobsHeadline').textContent = 'Nothing listed right now';
       jobList.innerHTML = '<div class="job-empty">No open roles at the moment. New searches are added regularly — submit your resume below and we\'ll be in touch when something fits.</div>';
     } else {
-      JOBS.forEach((job, i) => {
+      JOBS.forEach((job) => {
         const item = document.createElement('div');
         item.className = 'job-item';
         item.id = `job-${job.id}`;
         item.innerHTML = `
           <div class="job-row">
-            <span class="job-docket">${escapeHtml(job.id)}</span>
-            <span class="job-title-wrap">
-              <span class="job-title">${escapeHtml(job.title)}</span>
-              <div class="job-meta">${escapeHtml(job.location)} — ${escapeHtml(job.type)}</div>
-            </span>
-            <span class="job-apply-link">Apply →</span>
-            <span class="job-toggle-icon"></span>
+            <div class="job-title-wrap">
+              <div class="job-title">${escapeHtml(job.title)}</div>
+              <div class="job-location">${escapeHtml(job.location)}</div>
+            </div>
+            <span class="job-arrow">→</span>
           </div>
-          <div class="job-description">${renderDescription(job.description)}</div>
+          <div class="job-description">
+${renderDescription(job.description)}
+<div class="job-description-footer">
+  <button class="job-apply-btn" data-role="${escapeHtml(job.title)}">Apply for this role →</button>
+</div>
+          </div>
         `;
+
         const row = item.querySelector('.job-row');
-        const applyLink = item.querySelector('.job-apply-link');
         row.addEventListener('click', () => item.classList.toggle('expanded'));
-        applyLink.addEventListener('click', (e) => {
+
+        const applyBtn = item.querySelector('.job-apply-btn');
+        applyBtn.addEventListener('click', (e) => {
           e.stopPropagation();
           applyToRole(job.title);
         });
+
         jobList.appendChild(item);
 
         const opt = document.createElement('option');
@@ -606,11 +761,6 @@
         positionSelect.appendChild(opt);
       });
 
-      // Deep link support: a URL like yoursite.com/#job-NY-041 opens
-      // straight to that listing, expanded — this is the link to drop
-      // into a short LinkedIn post instead of paying to post the job
-      // there directly. The part after "job-" is just the docket id
-      // shown next to each title.
       if (location.hash) {
         const target = document.querySelector(location.hash);
         if (target && target.classList.contains('job-item')) {
@@ -643,11 +793,7 @@
 
       try {
         const formData = new FormData(applyForm);
-        const response = await fetch('/api/apply', {
-          method: 'POST',
-          body: formData
-        });
-
+        const response = await fetch('/api/apply', { method: 'POST', body: formData });
         const result = await response.json();
 
         if (response.ok && result.success) {
@@ -659,7 +805,7 @@
         }
       } catch (err) {
         formStatus.className = 'form-status error';
-        const msg = err.message && err.message !== 'Submission failed' ? err.message : 'Something went wrong submitting your application. Please try again or email info@twbls.com directly.';
+        const msg = err.message && err.message !== 'Submission failed' ? err.message : 'Something went wrong. Please try again or email info@twbls.com directly.';
         formStatus.textContent = msg;
       } finally {
         submitBtn.disabled = false;
