@@ -7,715 +7,376 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="manifest" href="/site.webmanifest">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TWB Legal Search — Legal Technology Careers</title>
-  <meta name="description" content="Open legal technology roles at Am Law 200 firms. Apply directly — every submission is reviewed personally." />
+  <title>TWB Legal Search</title>
+  <meta name="description" content="Legal technology roles at Am Law 200 firms. Direct placement." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
 
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #f5f5f4;
-      --bg-pure: #ffffff;
-      --ink: #0f1114;
-      --ink-mid: rgba(15,17,20,0.55);
-      --ink-faint: rgba(15,17,20,0.32);
-      --rule: rgba(15,17,20,0.10);
-      --rule-strong: rgba(15,17,20,0.18);
-      --accent: #2d4a6e;
-      --accent-soft: rgba(45,74,110,0.08);
+      --bg:      #f7f7f6;
+      --surface: #ffffff;
+      --ink:     #0d0f12;
+      --mid:     rgba(13,15,18,0.52);
+      --faint:   rgba(13,15,18,0.30);
+      --rule:    rgba(13,15,18,0.09);
+      --rule-hv: rgba(13,15,18,0.16);
+      --accent:  #1f3a5f;
+      --ok:      #1a6b40;
+      --err:     #b3261e;
+      --sans:    'Inter', system-ui, sans-serif;
+      --mono:    'JetBrains Mono', ui-monospace, monospace;
       color-scheme: light;
-      --success: #1a6b40;
-      --error: #b3261e;
-      --sans: 'DM Sans', system-ui, sans-serif;
-      --mono: 'DM Mono', ui-monospace, monospace;
     }
 
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
     body {
       background: var(--bg);
       color: var(--ink);
       font-family: var(--sans);
-      min-height: 100vh;
+      font-size: 14px;
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
 
-    a { color: inherit; }
-    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    a { color: inherit; text-decoration: none; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-    }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left, 0px)); }
 
-    .page { max-width: 800px; margin: 0 auto; padding: 0 40px; }
-
-    /* ── Header ─────────────────────────────────────────────── */
-    header {
-      padding: 40px 0 0;
+    /* ── Nav ── */
+    nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 24px;
+      padding-block: 28px;
+      border-bottom: 1px solid var(--rule-hv);
     }
+    .wordmark { font-size: 13px; font-weight: 500; letter-spacing: -0.01em; }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a { font-size: 12px; color: var(--mid); transition: color 0.12s; }
+    .nav-links a:hover { color: var(--ink); }
 
-    .wordmark {
-      font-family: var(--sans);
-      font-weight: 500;
-      font-size: 0.9rem;
-      letter-spacing: 0.01em;
-      color: var(--ink);
-      text-decoration: none;
-    }
-
-    nav { display: flex; gap: 28px; align-items: center; }
-
-    nav a {
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-decoration: none;
-      color: var(--ink-mid);
-      transition: color 0.15s;
-    }
-    nav a:hover { color: var(--ink); }
-
-    .header-rule {
-      height: 1px;
-      background: var(--rule-strong);
-      margin-top: 28px;
-    }
-
-    /* ── Hero ───────────────────────────────────────────────── */
+    /* ── Hero ── */
     .hero {
-      padding: 100px 0 80px;
+      padding-block: 80px 72px;
+      border-bottom: 1px solid var(--rule);
     }
-
-    .hero-label {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin-bottom: 32px;
-    }
-
-    .hero-headline {
-      font-family: var(--sans);
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 44px);
       font-weight: 300;
-      font-size: clamp(2.2rem, 5vw, 3.6rem);
-      line-height: 1.1;
-      letter-spacing: -0.025em;
-      max-width: 640px;
-      color: var(--ink);
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      text-wrap: balance;
+      max-width: 560px;
     }
-
-    .hero-headline strong {
-      font-weight: 500;
-    }
-
-    .hero-sub {
-      margin-top: 28px;
-      font-size: 0.9rem;
-      line-height: 1.75;
-      color: var(--ink-mid);
-      max-width: 440px;
-      font-weight: 300;
-    }
-
-    .hero-action {
-      margin-top: 40px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .btn-primary {
+    .hero h1 strong { font-weight: 500; }
+    .hero-cta {
+      margin-top: 36px;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 10px 22px;
-      background: var(--ink);
-      color: var(--bg);
-      font-family: var(--sans);
-      font-size: 0.72rem;
+      gap: 6px;
+      font-size: 12px;
       font-weight: 500;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      text-decoration: none;
-      transition: opacity 0.15s;
+      color: var(--accent);
+      transition: gap 0.15s;
     }
-    .btn-primary:hover { opacity: 0.78; }
+    .hero-cta:hover { gap: 10px; }
 
-    /* ── Thin divider ───────────────────────────────────────── */
-    .divider { height: 1px; background: var(--rule); }
-
-    /* ── About ──────────────────────────────────────────────── */
-    .about-section {
-      padding: 80px 0;
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      gap: 48px;
-      align-items: start;
+    /* ── About ── */
+    .about {
+      padding-block: 56px;
+      border-bottom: 1px solid var(--rule);
+      max-width: 480px;
     }
+    .about p { font-size: 14px; font-weight: 300; line-height: 1.8; color: var(--mid); }
 
-    .section-tag {
-      font-family: var(--mono);
-      font-size: 0.63rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      padding-top: 6px;
-    }
-
-    .about-text h2 {
-      font-weight: 400;
-      font-size: 1.5rem;
-      letter-spacing: -0.015em;
-      margin-bottom: 16px;
-      line-height: 1.25;
-    }
-
-    .about-text p {
-      font-size: 0.875rem;
-      line-height: 1.8;
-      color: var(--ink-mid);
-      font-weight: 300;
-      max-width: 520px;
-    }
-
-    /* ── Jobs ───────────────────────────────────────────────── */
-    .jobs-section { padding: 0 0 80px; }
-
-    .jobs-header {
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      gap: 48px;
+    /* ── Section header ── */
+    .section-head {
+      padding-block: 56px 0;
+      display: flex;
       align-items: baseline;
-      margin-bottom: 0;
+      justify-content: space-between;
+      gap: 16px;
     }
+    .section-head h2 { font-size: 13px; font-weight: 500; letter-spacing: -0.01em; }
+    .section-count { font-family: var(--mono); font-size: 11px; color: var(--faint); }
 
-    .jobs-header h2 {
-      font-weight: 400;
-      font-size: 1.5rem;
-      letter-spacing: -0.015em;
-    }
-
-    /* Job table */
-    .job-table { width: 100%; margin-top: 40px; }
+    /* ── Job rows ── */
+    .jobs { padding-bottom: 56px; }
+    .job-item { border-top: 1px solid var(--rule); }
+    .job-item:last-child { border-bottom: 1px solid var(--rule); }
 
     .job-row {
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: 24px;
       align-items: center;
-      padding: 20px 0;
-      border-top: 1px solid var(--rule);
+      gap: 16px;
+      padding-block: 18px;
       cursor: pointer;
-      transition: background 0.1s;
+      user-select: none;
     }
-    .job-table .job-row:last-of-type { border-bottom: 1px solid var(--rule); }
+    .job-name { font-size: 14px; font-weight: 400; letter-spacing: -0.01em; transition: color 0.12s; }
+    .job-item:hover .job-name { color: var(--accent); }
+    .job-meta { margin-top: 2px; font-size: 11px; color: var(--faint); letter-spacing: 0.02em; }
+    .job-toggle { font-size: 12px; color: var(--faint); transition: transform 0.18s, color 0.12s; flex-shrink: 0; }
+    .job-item.open .job-toggle { transform: rotate(90deg); color: var(--mid); }
 
-    .job-row:hover .job-title { color: var(--accent); }
-
-    .job-title {
-      font-size: 0.95rem;
-      font-weight: 400;
-      letter-spacing: -0.01em;
-      transition: color 0.15s;
-    }
-
-    .job-location {
-      margin-top: 3px;
-      font-size: 0.72rem;
-      letter-spacing: 0.03em;
-      color: var(--ink-faint);
-    }
-
-    .job-arrow {
-      font-size: 0.8rem;
-      color: var(--ink-faint);
-      transition: transform 0.2s, color 0.15s;
-      flex-shrink: 0;
-    }
-    .job-item.expanded .job-arrow { transform: rotate(90deg); color: var(--ink-mid); }
-
-    .job-description {
+    .job-body {
       display: none;
-      padding: 4px 0 28px;
-      font-size: 0.82rem;
-      line-height: 1.85;
-      color: var(--ink-mid);
-      white-space: pre-line;
-      max-width: 560px;
-      border-top: none;
+      padding-block: 0 24px;
+      font-size: 13px;
       font-weight: 300;
+      line-height: 1.85;
+      color: var(--mid);
+      white-space: pre-line;
+      max-width: 540px;
     }
-    .job-item.expanded .job-description { display: block; }
-    .job-description b { color: var(--ink); font-weight: 500; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; }
-
-    .job-description-footer {
+    .job-item.open .job-body { display: block; }
+    .job-body b {
+      display: block;
+      margin-top: 16px;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .job-apply {
       margin-top: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: var(--ink);
+      color: var(--bg);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      font-family: var(--sans);
+      transition: opacity 0.12s;
+    }
+    .job-apply:hover { opacity: 0.72; }
+
+    /* ── Past searches ── */
+    .past { padding-bottom: 56px; }
+    .past-item {
       display: flex;
       align-items: center;
-      gap: 20px;
-    }
-
-    .job-apply-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 8px 18px;
-      background: var(--ink);
-      color: var(--bg);
-      font-size: 0.68rem;
-      font-weight: 500;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-      text-decoration: none;
-      cursor: pointer;
-      border: none;
-      font-family: var(--sans);
-      transition: opacity 0.15s;
-    }
-    .job-apply-btn:hover { opacity: 0.75; }
-
-    .job-empty {
-      padding: 48px 0;
-      font-size: 0.85rem;
-      color: var(--ink-faint);
-      font-weight: 300;
+      justify-content: space-between;
+      gap: 16px;
+      padding-block: 15px;
       border-top: 1px solid var(--rule);
     }
+    .past-item:last-child { border-bottom: 1px solid var(--rule); }
+    .past-name { font-size: 13px; font-weight: 400; letter-spacing: -0.01em; color: var(--mid); }
+    .past-loc { margin-top: 2px; font-size: 11px; color: var(--faint); }
+    .past-badge { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); white-space: nowrap; flex-shrink: 0; }
 
-    /* ── Archived roles ─────────────────────────────────────── */
-    .archived-section { padding: 0 0 80px; }
-
-    .archived-header {
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      gap: 48px;
-      align-items: baseline;
-      margin-bottom: 0;
-    }
-
-    .archived-header h2 {
-      font-weight: 400;
-      font-size: 1.5rem;
-      letter-spacing: -0.015em;
-    }
-
-    .archived-table { width: 100%; margin-top: 40px; }
-
-    .archived-row {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 24px;
-      align-items: center;
-      padding: 18px 0;
-      border-top: 1px solid var(--rule);
-    }
-    .archived-table .archived-row:last-of-type { border-bottom: 1px solid var(--rule); }
-
-    .archived-title {
-      font-size: 0.95rem;
-      font-weight: 400;
-      letter-spacing: -0.01em;
-      color: var(--ink-mid);
-    }
-
-    .archived-location {
-      margin-top: 3px;
-      font-size: 0.72rem;
-      letter-spacing: 0.03em;
-      color: var(--ink-faint);
-    }
-
-    .archived-badge {
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      white-space: nowrap;
-    }
-
-    /* ── Areas ──────────────────────────────────────────────── */
-    .areas-section {
-      padding: 80px 0;
-      border-top: 1px solid var(--rule);
-    }
-
-    .areas-header {
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      gap: 48px;
-      align-items: baseline;
-      margin-bottom: 16px;
-    }
-
-    .areas-header h2 {
-      font-weight: 400;
-      font-size: 1.5rem;
-      letter-spacing: -0.015em;
-    }
-
-    .areas-intro {
-      font-size: 0.875rem;
-      line-height: 1.75;
-      color: var(--ink-mid);
-      font-weight: 300;
-      max-width: 440px;
-      margin-left: 208px;
-      margin-bottom: 32px;
-    }
-
-    .areas-list { display: flex; flex-direction: column; }
-
+    /* ── Areas ── */
+    .areas { padding-block: 56px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
     .area-row {
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      gap: 48px;
-      padding: 22px 0;
+      padding-block: 16px;
       border-top: 1px solid var(--rule);
     }
-    .areas-list .area-row:last-child { border-bottom: 1px solid var(--rule); }
+    .areas .area-row:last-child { border-bottom: 1px solid var(--rule); }
+    .area-title { font-size: 13px; font-weight: 400; letter-spacing: -0.01em; }
+    .area-desc { margin-top: 3px; font-size: 12px; font-weight: 300; color: var(--mid); max-width: 400px; }
 
-    .area-index {
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.1em;
-      color: var(--ink-faint);
-      padding-top: 3px;
+    /* ── Apply ── */
+    .apply { padding-block: 56px; border-bottom: 1px solid var(--rule); }
+    .apply-form {
+      margin-top: 32px;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
-
-    .area-content h3 {
-      font-weight: 400;
-      font-size: 0.9rem;
-      letter-spacing: -0.01em;
-      margin-bottom: 6px;
-    }
-
-    .area-content p {
-      font-size: 0.8rem;
-      line-height: 1.7;
-      color: var(--ink-mid);
-      font-weight: 300;
-    }
-
-    /* ── Apply ──────────────────────────────────────────────── */
-    .apply-section {
-      padding: 80px 0;
-      border-top: 1px solid var(--rule);
-    }
-
-    .apply-header {
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      gap: 48px;
-      align-items: baseline;
-      margin-bottom: 48px;
-    }
-
-    .apply-header-text h2 {
-      font-weight: 400;
-      font-size: 1.5rem;
-      letter-spacing: -0.015em;
-      margin-bottom: 10px;
-    }
-
-    .apply-header-text p {
-      font-size: 0.875rem;
-      line-height: 1.75;
-      color: var(--ink-mid);
-      font-weight: 300;
-      max-width: 440px;
-    }
-
-    .apply-form { max-width: 520px; }
-
-    .form-field {
-      margin-bottom: 20px;
-    }
-
-    .form-field label {
+    .field label {
       display: block;
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin-bottom: 8px;
-    }
-
-    .form-field input,
-    .form-field select,
-    .form-field textarea {
-      width: 100%;
-      font-family: var(--sans);
-      font-size: 0.875rem;
-      font-weight: 300;
-      color: var(--ink);
-      background: var(--bg-pure);
-      border: 1px solid var(--rule-strong);
-      padding: 10px 12px;
-      outline: none;
-      transition: border-color 0.15s;
-      -webkit-appearance: none;
-    }
-    .form-field input:focus,
-    .form-field select:focus,
-    .form-field textarea:focus { border-color: var(--accent); }
-    .form-field textarea { resize: vertical; min-height: 88px; }
-    .form-field input[type="file"] { font-size: 0.8rem; color: var(--ink-mid); }
-
-    .form-actions { margin-top: 8px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-
-    .form-submit {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 22px;
-      background: var(--ink);
-      color: var(--bg);
-      font-family: var(--sans);
-      font-size: 0.72rem;
-      font-weight: 500;
+      font-size: 11px;
+      font-weight: 400;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 6px;
+    }
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--ink);
+      background: var(--surface);
+      border: 1px solid var(--rule-hv);
+      padding: 9px 10px;
+      outline: none;
+      transition: border-color 0.12s;
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent); }
+    .field textarea { resize: vertical; min-height: 80px; }
+    .field input[type="file"] { font-size: 12px; color: var(--mid); padding: 8px 10px; }
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 28px;
+    }
+    .form-submit {
+      align-self: flex-start;
+      padding: 9px 20px;
+      background: var(--ink);
+      color: var(--bg);
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
       border: none;
       cursor: pointer;
-      transition: opacity 0.15s;
+      transition: opacity 0.12s;
     }
-    .form-submit:hover:not(:disabled) { opacity: 0.78; }
-    .form-submit:disabled { opacity: 0.4; cursor: not-allowed; }
+    .form-submit:hover:not(:disabled) { opacity: 0.72; }
+    .form-submit:disabled { opacity: 0.35; cursor: not-allowed; }
+    .form-status { margin-top: 12px; font-size: 12px; display: none; }
+    .form-status.success { color: var(--ok); display: block; }
+    .form-status.error   { color: var(--err); display: block; }
 
-    .form-note {
-      font-size: 0.72rem;
-      color: var(--ink-faint);
-      font-weight: 300;
-      margin-top: 10px;
-    }
-
-    .form-status { margin-top: 14px; font-size: 0.8rem; display: none; }
-    .form-status.success { color: var(--success); display: block; }
-    .form-status.error { color: var(--error); display: block; }
-
-    /* ── Footer strip ───────────────────────────────────────── */
-    .footer-section {
-      border-top: 1px solid var(--rule-strong);
-      padding: 36px 0 48px;
+    /* ── Footer ── */
+    footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 16px;
+      padding-block: 32px 40px;
     }
-
-    .footer-links {
-      display: flex;
-      align-items: center;
-      gap: 28px;
-      flex-wrap: wrap;
-    }
-
-    .footer-links a {
-      font-size: 0.8rem;
-      font-weight: 300;
-      color: var(--ink-mid);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-links a { font-size: 12px; font-weight: 300; color: var(--mid); transition: color 0.12s; }
     .footer-links a:hover { color: var(--ink); }
+    .footer-copy { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; color: var(--faint); }
 
-    .footer-copy {
-      font-size: 0.65rem;
-      letter-spacing: 0.06em;
-      color: var(--ink-faint);
-    }
-
-    /* ── Mobile ─────────────────────────────────────────────── */
-    @media (max-width: 680px) {
-      .page { padding: 0 24px; }
-      header { padding-top: 28px; }
-      nav { gap: 20px; }
-
-      .hero { padding: 72px 0 56px; }
-
-      .about-section,
-      .jobs-header,
-      .areas-header,
-      .apply-header,
-      .area-row {
-        grid-template-columns: 1fr;
-        gap: 16px;
-      }
-
-      .about-section { padding: 56px 0; }
-      .jobs-section { padding: 0 0 56px; }
-      .areas-section { padding: 56px 0; }
-      .areas-section .areas-header { margin-bottom: 12px; }
-      .areas-intro { margin-left: 0; }
-      .apply-section { padding: 56px 0; }
-      .apply-section .apply-header { margin-bottom: 32px; }
-
-      .footer-section { flex-direction: column; align-items: flex-start; gap: 20px; }
+    /* ── Mobile ── */
+    @media (max-width: 600px) {
+      .hero { padding-block: 56px 48px; }
+      .nav-links { gap: 20px; }
+      .section-head { padding-block: 40px 0; }
+      .jobs, .past, .apply { padding-bottom: 40px; }
+      .areas { padding-block: 40px; }
     }
   </style>
 </head>
 
 <body>
-  <div class="page">
+  <div class="wrap">
 
-    <header>
-      <a class="wordmark" href="#">TWB Legal Search</a>
-      <nav>
-        <a href="#jobs">Roles</a>
+    <nav>
+      <span class="wordmark">TWB Legal Search</span>
+      <div class="nav-links">
+        <a href="#roles">Roles</a>
         <a href="#apply">Apply</a>
         <a href="#contact">Contact</a>
-      </nav>
-    </header>
+      </div>
+    </nav>
 
-    <div class="header-rule"></div>
-
-    <!-- Hero -->
     <section class="hero">
-      <p class="hero-label">Legal technology careers</p>
-      <h1 class="hero-headline">
-        Am Law 200 firms.<br><strong>Direct placement.</strong>
-      </h1>
-      <p class="hero-sub">
-        Every submission is reviewed personally. We don't forward resumes — we make introductions.
-      </p>
-      <div class="hero-action">
-        <a class="btn-primary" href="#jobs">View open roles →</a>
-      </div>
+      <h1>Am Law 200 firms.<br><strong>Direct placement.</strong></h1>
+      <a class="hero-cta" href="#roles">View open roles →</a>
     </section>
 
-    <div class="divider"></div>
-
-    <!-- About -->
-    <section class="about-section">
-      <p class="section-tag">About</p>
-      <div class="about-text">
-        <h2>We know this space.</h2>
-        <p>TWB Legal Search works exclusively in legal technology — infrastructure, applications, support, and IT leadership at Am Law 200 firms. That focus has been the whole business for eight years, which means we already know the firms, the roles, and what they actually look for. When we submit a candidate, it's because we believe there's a real match — not because we're running volume.</p>
-      </div>
+    <section class="about">
+      <p>TWB Legal Search works exclusively in legal technology — infrastructure, applications, support, and IT leadership at Am Law 200 firms. We know the firms, the roles, and what they actually look for. When we submit a candidate, it's because we believe there's a real match.</p>
     </section>
 
-    <div class="divider"></div>
-
-    <!-- Jobs -->
-    <section class="jobs-section" id="jobs">
-      <div class="jobs-header">
-        <p class="section-tag">Open roles</p>
-        <h2 id="jobsHeadline">Current opportunities</h2>
+    <section class="jobs" id="roles">
+      <div class="section-head">
+        <h2>Open roles</h2>
+        <span class="section-count" id="roleCount"></span>
       </div>
-      <div class="job-table" id="jobList"></div>
+      <div id="jobList"></div>
     </section>
 
-    <div class="divider"></div>
-
-    <!-- Archived roles -->
-    <section class="archived-section">
-      <div class="archived-header">
-        <p class="section-tag">Past searches</p>
-        <h2>Recent placements</h2>
+    <section class="past">
+      <div class="section-head">
+        <h2>Past searches</h2>
       </div>
-      <div class="archived-table" id="archivedList"></div>
+      <div id="pastList"></div>
     </section>
 
-    <div class="divider"></div>
-
-    <!-- Areas -->
-    <section class="areas-section">
-      <div class="areas-header">
-        <p class="section-tag">Where we place</p>
-        <h2>Career areas</h2>
+    <section class="areas">
+      <div class="section-head">
+        <h2>Where we place</h2>
       </div>
-      <p class="areas-intro">We place across all four areas regularly. If nothing's listed, it's still worth applying — searches move quickly.</p>
-      <div class="areas-list">
+      <div style="margin-top: 32px;">
         <div class="area-row">
-          <span class="area-index">01</span>
-          <div class="area-content">
-            <h3>Cloud Infrastructure &amp; Automation</h3>
-            <p>Azure, IaC, networking, and cybersecurity roles supporting firm-wide operations.</p>
-          </div>
+          <div class="area-title">Cloud Infrastructure &amp; Automation</div>
+          <div class="area-desc">Azure, IaC, networking, and cybersecurity roles supporting firm-wide operations.</div>
         </div>
         <div class="area-row">
-          <span class="area-index">02</span>
-          <div class="area-content">
-            <h3>Legal Applications</h3>
-            <p>iManage, NetDocuments, Aderant, Elite 3E — implementation, support, and optimization.</p>
-          </div>
+          <div class="area-title">Legal Applications</div>
+          <div class="area-desc">iManage, NetDocuments, Aderant, Elite 3E — implementation, support, and optimization.</div>
         </div>
         <div class="area-row">
-          <span class="area-index">03</span>
-          <div class="area-content">
-            <h3>IT Leadership</h3>
-            <p>CIO, IT Director, and IT Manager roles setting technology strategy at the firm level.</p>
-          </div>
+          <div class="area-title">IT Leadership</div>
+          <div class="area-desc">CIO, IT Director, and IT Manager roles setting technology strategy at the firm level.</div>
         </div>
         <div class="area-row">
-          <span class="area-index">04</span>
-          <div class="area-content">
-            <h3>Technology Support</h3>
-            <p>End user support and ITSM roles keeping firms running day to day.</p>
-          </div>
+          <div class="area-title">Technology Support</div>
+          <div class="area-desc">End user support and ITSM roles keeping firms running day to day.</div>
         </div>
       </div>
     </section>
 
-    <div class="divider"></div>
-
-    <!-- Apply -->
-    <section class="apply-section" id="apply">
-      <div class="apply-header">
-        <p class="section-tag">Application</p>
-        <div class="apply-header-text">
-          <h2>Submit your resume</h2>
-          <p>Apply to a specific role or send a general application. We read every submission and reach out when there's a genuine fit. Your information stays with us.</p>
-        </div>
+    <section class="apply" id="apply">
+      <div class="section-head">
+        <h2>Submit your resume</h2>
       </div>
-
       <form class="apply-form" id="applyForm">
-        <div class="form-field">
-          <label for="name">Full Name</label>
-          <input type="text" id="name" name="name" required />
+        <div class="field">
+          <label for="f-name">Name</label>
+          <input type="text" id="f-name" name="name" autocomplete="name" required>
         </div>
-        <div class="form-field">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required />
+        <div class="field">
+          <label for="f-email">Email</label>
+          <input type="email" id="f-email" name="email" autocomplete="email" required>
         </div>
-        <div class="form-field">
-          <label for="phone">Phone</label>
-          <input type="tel" id="phone" name="phone" />
+        <div class="field">
+          <label for="f-phone">Phone</label>
+          <input type="tel" id="f-phone" name="phone" autocomplete="tel">
         </div>
-        <div class="form-field">
-          <label for="position">Position</label>
-          <select id="position" name="position" required>
-            <option value="">Select a role</option>
+        <div class="field">
+          <label for="f-role">Role</label>
+          <select id="f-role" name="role" required>
+            <option value="">Select</option>
           </select>
         </div>
-        <div class="form-field">
-          <label for="message">Note (optional)</label>
-          <textarea id="message" name="message" placeholder="Anything you'd like us to know"></textarea>
+        <div class="field">
+          <label for="f-note">Note</label>
+          <textarea id="f-note" name="note" placeholder="Optional"></textarea>
         </div>
-        <div class="form-field">
-          <label for="resume">Resume (PDF or Word, max 10MB)</label>
-          <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required />
+        <div class="field">
+          <label for="f-resume">Resume</label>
+          <input type="file" id="f-resume" name="resume" accept=".pdf,.doc,.docx" required>
         </div>
-        <div class="form-actions">
-          <button class="form-submit" type="submit" id="submitBtn">Submit Application</button>
-        </div>
-        <p class="form-note">Your resume is kept confidential and never shared without your permission.</p>
+        <button class="form-submit" type="submit" id="submitBtn">Submit</button>
         <div class="form-status" id="formStatus"></div>
       </form>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer-section" id="contact">
+    <footer id="contact">
       <div class="footer-links">
         <a href="mailto:info@twbls.com">info@twbls.com</a>
         <a href="https://www.linkedin.com/company/twb-legal-search/" target="_blank" rel="noopener">LinkedIn</a>
@@ -733,42 +394,42 @@
         title: "Cloud Solutions Architect",
         location: "New York · Chicago · Washington, D.C.",
         type: "Full-Time · Hybrid",
-        description: `Compensation: $145,000 – $230,000\n\n<b>The Role</b>\nReporting to the Senior Manager at a global Am Law firm, this architect designs and manages public and private cloud environments across Azure (primary), AWS, GCP, and VMware. Hybrid on-site presence required, with some inter-office travel.\n\n<b>What You'll Own</b>\n— IaaS, PaaS, and SaaS solution architecture and implementation\n— Security best practices across cloud and on-prem; vulnerability and misconfiguration remediation via Defender for Cloud and Entra ID Protection\n— Disaster recovery planning and testing including Azure Site Recovery and Azure VMware Solution\n— VMware vSphere, NSX, Tanzu, and hybrid identity (Entra ID, Entra Connect)\n— Zero trust and least-privilege identity posture across Azure resources\n— Monitoring via Azure Monitor, Log Analytics, and Microsoft Sentinel\n\n<b>What We're Looking For</b>\n— 7+ years in corporate cloud/on-premises network environments\n— Proven expertise in Azure; AWS and GCP preferred\n— Hands-on VMware vSphere, NSX, Tanzu — a hard requirement\n— Strong Linux, cloud-native configurations, least-privilege approach\n— Kubernetes/Docker a plus, not required\n— Ability to create and review architecture and solution design documentation\n\nConfidential search — firm name disclosed to qualified candidates.`
+        description: `Compensation: $145,000 – $230,000\n\n<b>The Role</b>\nAt a global Am Law firm, this architect designs and manages public and private cloud environments across Azure (primary), AWS, GCP, and VMware.\n\n<b>What You'll Own</b>\n— IaaS, PaaS, and SaaS solution architecture and implementation\n— Security best practices across cloud and on-prem; vulnerability and misconfiguration remediation via Defender for Cloud and Entra ID Protection\n— Disaster recovery planning and testing including Azure Site Recovery and Azure VMware Solution\n— VMware vSphere, NSX, Tanzu, and hybrid identity (Entra ID, Entra Connect)\n— Zero trust and least-privilege identity posture across Azure resources\n— Monitoring via Azure Monitor, Log Analytics, and Microsoft Sentinel\n\n<b>What We're Looking For</b>\n— 7+ years in corporate cloud/on-premises network environments\n— Proven expertise in Azure; AWS and GCP preferred\n— Hands-on VMware vSphere, NSX, Tanzu — a hard requirement\n— Strong Linux, cloud-native configurations, least-privilege approach\n— Kubernetes/Docker a plus, not required\n— Ability to create and review architecture and solution design documentation\n\nConfidential search — firm name disclosed to qualified candidates.`
       },
       {
         id: "infrastructure-engineer-new-york",
         title: "Infrastructure Engineer",
         location: "New York, NY",
         type: "Full-Time · On-Site",
-        description: `Compensation: $120,000 – $145,000\n\n<b>The Role</b>\nAt an international law firm in New York, this engineer owns reliability, security, performance, and scalability across on-prem, cloud, and hybrid environments. Serves as a technical lead for infrastructure initiatives and translates complex technical issues into clear business recommendations.\n\n<b>What You'll Own</b>\n— Physical and virtual server environments — VMware and Hyper-V\n— Azure and Microsoft 365 cloud infrastructure\n— Enterprise storage, replication, backup, and DR\n— Tier 2/3 escalation for server, storage, cloud, networking, and identity issues\n— Patch management, vulnerability remediation, AD administration\n— Monitoring via Varonis, ManageEngine, Dell iDRAC/OpenManage\n\n<b>What We're Looking For</b>\n— 5+ years supporting enterprise infrastructure environments\n— Strong Windows Server, VMware, Azure/M365, and hybrid cloud\n— Experience with enterprise storage, replication, and DR planning\n— Active Directory, Group Policy, DNS, DHCP, identity management\n— PowerShell scripting preferred; Azure or VMware certifications a plus\n— Prior experience in legal, financial services, or other regulated environments preferred\n\nConfidential search — firm name disclosed to qualified candidates.`
+        description: `Compensation: $120,000 – $145,000\n\n<b>The Role</b>\nAt an international law firm in New York, this engineer owns reliability, security, performance, and scalability across on-prem, cloud, and hybrid environments. Serves as a technical lead for infrastructure initiatives.\n\n<b>What You'll Own</b>\n— Physical and virtual server environments — VMware and Hyper-V\n— Azure and Microsoft 365 cloud infrastructure\n— Enterprise storage, replication, backup, and DR\n— Escalation support for server, storage, cloud, networking, and identity issues\n— Patch management, vulnerability remediation, AD administration\n— Monitoring via Varonis, ManageEngine, Dell iDRAC/OpenManage\n\n<b>What We're Looking For</b>\n— 5+ years supporting enterprise infrastructure environments\n— Strong Windows Server, VMware, Azure/M365, and hybrid cloud\n— Experience with enterprise storage, replication, and DR planning\n— Active Directory, Group Policy, DNS, DHCP, identity management\n— PowerShell scripting preferred; Azure or VMware certifications a plus\n\nConfidential search — firm name disclosed to qualified candidates.`
       },
       {
         id: "senior-network-engineer-remote",
         title: "Senior Network Engineer",
         location: "Remote",
-        type: "Full-Time · Remote",
-        description: `Compensation: $120,000 – $145,000\n\n<b>The Role</b>\nAt a full-service Am Law firm, this senior engineer architects, implements, supports, and monitors the firm's LAN/WAN infrastructure across 1,000+ users across several offices. Covers network security, remote access, and voice/data communications.\n\n<b>What You'll Own</b>\n— Tier 3 support for 1,000+ users across multiple locations\n— Firewall, IDS, remote access design and implementation\n— Telephony systems design and support\n— Switching and routing oversight; mentoring Network Specialists and Engineers\n— Backup and recovery methodology and processes\n— System standards, documentation, and performance optimization\n\n<b>What We're Looking For</b>\n— Bachelor's degree + 7 years of experience (or equivalent)\n— Deep LAN/WAN, network security, firewall, and IDS background\n— Demonstrated ability to diagnose and solve complex hardware, software, and user issues\n— Proven ability to lead and build consensus among peers\n— Strong documentation and standards discipline\n\nConfidential search — firm name disclosed to qualified candidates.`
+        type: "Full-Time",
+        description: `Compensation: $120,000 – $145,000\n\n<b>The Role</b>\nAt a full-service Am Law firm, this senior engineer architects, implements, supports, and monitors the firm's LAN/WAN infrastructure across 1,000+ users and multiple offices.\n\n<b>What You'll Own</b>\n— Firewall, IDS, and remote access design and implementation\n— Telephony systems design and support\n— Switching and routing oversight\n— Backup and recovery methodology and processes\n\n<b>What We're Looking For</b>\n— 7+ years in LAN/WAN and network security environments\n— Deep firewall, IDS, and remote access background\n— Demonstrated ability to diagnose and solve complex network issues\n— Proven ability to lead and build consensus among peers\n\nConfidential search — firm name disclosed to qualified candidates.`
       },
       {
         id: "it-service-specialist",
         title: "IT Service Specialist",
         location: "New York · Chicago · Los Angeles",
-        type: "Full-Time · Hybrid / Remote",
-        description: `Compensation: $55,000 – $85,000\n\n<b>The Role</b>\nAt a full-service Am Law firm with offices across seven major markets, this specialist provides technical assistance to attorneys and staff, supporting hardware, software, and AV systems. Hybrid or remote schedule available.\n\n<b>What You'll Own</b>\n— Technical support via phone and in-person for firm-approved applications, connectivity, and hardware\n— Conference room AV: video/web conferencing, projection, device connectivity\n— Accurate incident and service request logging in ITSM platform\n— Asset inventory management\n— Collaboration with vendors on smartphones, PCs, printers, and AV equipment\n\n<b>What We're Looking For</b>\n— 3–5 years in IT support, preferably in a law firm\n— Ticketing systems (TeamDynamix, ServiceNow, Freshservice)\n— Remote support tools (VNC, SCCM, RDP)\n— Microsoft Windows OS, Apple iOS, Microsoft Office Suite\n— Collaboration platforms (Webex, Teams, Zoom)\n— Ability to create and update knowledge base articles\n\nConfidential search — firm name disclosed to qualified candidates.`
+        type: "Full-Time · Hybrid",
+        description: `Compensation: $55,000 – $85,000\n\n<b>The Role</b>\nAt a full-service Am Law firm, this specialist provides technical assistance to attorneys and staff, supporting hardware, software, and AV systems.\n\n<b>What You'll Own</b>\n— Technical support via phone and in-person for firm-approved applications, connectivity, and hardware\n— Conference room AV: video/web conferencing, projection, device connectivity\n— Accurate incident and service request logging in ITSM platform\n— Asset inventory management\n\n<b>What We're Looking For</b>\n— 3–5 years in IT support, preferably in a law firm\n— Ticketing systems (TeamDynamix, ServiceNow, Freshservice)\n— Remote support tools (VNC, SCCM, RDP)\n— Microsoft Windows OS, Apple iOS, Microsoft Office Suite\n— Collaboration platforms (Webex, Teams, Zoom)\n\nConfidential search — firm name disclosed to qualified candidates.`
       },
       {
         id: "help-desk-technician-new-york",
         title: "Help Desk Technician",
         location: "New York, NY",
-        type: "Full-Time · On-Site · 12 PM – 8 PM",
-        description: `Compensation: $70,000 – $80,000\n\n<b>The Role</b>\nAt a leading global law firm in New York, this technician handles all help desk analyst functions — fielding calls and emails from attorneys, managers, and staff, resolving issues or escalating to the appropriate group. Evening shift, 12 PM to 8 PM.\n\n<b>What You'll Own</b>\n— Inbound support requests for hardware, software, networking, and legal applications\n— Documentation of all support interactions in ticketing system\n— Trend monitoring and escalation to team/manager\n— MS Word expertise: document scrubbing, repair, recovery, styling, formatting\n— Rotation coverage for voicemail and email queues\n\n<b>What We're Looking For</b>\n— 3+ years in a medium-to-large PC-based legal or professional services organization\n— Law firm or corporate environment experience preferred\n— Familiarity with: iManage, CyberArk, Intune, ServiceNow, Citrix, Cisco VPN, Azure, Entra, Exchange Online, Mimecast, Zoom, Teams\n— Strong MS Word skills including document scrubbing and DMS workflows\n— Flexibility for shift coverage; availability for all shifts with short notice\n\nConfidential search — firm name disclosed to qualified candidates.`
+        type: "Full-Time · On-Site · Evening",
+        description: `Compensation: $70,000 – $80,000\n\n<b>The Role</b>\nAt a global law firm in New York, this technician handles inbound support — resolving issues across hardware, software, networking, and legal applications.\n\n<b>What You'll Own</b>\n— Inbound support for hardware, software, networking, and legal applications\n— Documentation of all support interactions in ticketing system\n— MS Word expertise: document scrubbing, repair, recovery, styling, formatting\n— Rotation coverage for voicemail and email queues\n\n<b>What We're Looking For</b>\n— 3+ years in legal or professional services IT support\n— Familiarity with: iManage, CyberArk, Intune, ServiceNow, Citrix, Cisco VPN, Azure, Entra, Exchange Online, Mimecast, Zoom, Teams\n— Strong MS Word skills including document scrubbing and DMS workflows\n\nConfidential search — firm name disclosed to qualified candidates.`
       },
       {
         id: "user-support-specialist-dallas",
         title: "User Support Specialist",
         location: "Dallas, TX",
         type: "Full-Time · On-Site",
-        description: `<b>The Role</b>\nAt a full-service law firm in Dallas, this specialist provides inbound technical support to end users in a call center environment — resolving software issues, troubleshooting applications, and communicating solutions clearly to non-technical users.\n\n<b>What You'll Own</b>\n— Inbound call and ticket handling for software, application, and email issues\n— End-user interaction: gathering information, diagnosing, resolving or escalating\n— Call tracking and documentation in designated tracking software\n— After-hours on-call coverage on a rotating schedule\n— Staying current with system changes, updates, and known issues\n\n<b>What We're Looking For</b>\n— Prior law firm experience preferred\n— Knowledge of Microsoft Office and general legal applications\n— Strong verbal and written communication; professional phone manner\n— Outstanding customer service orientation; able to handle on-call including weekends\n— Some hardware setup and troubleshooting skills preferred\n\nConfidential search — firm name disclosed to qualified candidates.`
+        description: `<b>The Role</b>\nAt a full-service law firm in Dallas, this specialist provides inbound technical support — resolving software issues, troubleshooting applications, and communicating solutions clearly.\n\n<b>What You'll Own</b>\n— Inbound call and ticket handling for software, application, and email issues\n— End-user interaction: gathering information, diagnosing, resolving or escalating\n— Call tracking and documentation in designated tracking software\n— After-hours on-call coverage on a rotating schedule\n\n<b>What We're Looking For</b>\n— Prior law firm experience preferred\n— Knowledge of Microsoft Office and general legal applications\n— Strong verbal and written communication; professional phone manner\n\nConfidential search — firm name disclosed to qualified candidates.`
       }
     ];
 
@@ -777,127 +438,116 @@
         id: "director-legal-innovation-ai",
         title: "Director of Legal Innovation & AI",
         location: "Los Angeles · New York · Washington, D.C.",
-      },
+      }
     ];
 
-    // Render archived jobs
-    const archivedList = document.getElementById('archivedList');
-    if (archivedList) {
-      ARCHIVED_JOBS.forEach((job) => {
-        const row = document.createElement('div');
-        row.className = 'archived-row';
-        row.innerHTML = `
-          <div>
-            <div class="archived-title">${job.title}</div>
-            <div class="archived-location">${job.location}</div>
-          </div>
-          <span class="archived-badge">Search closed</span>
-        `;
-        archivedList.appendChild(row);
-      });
+    function esc(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     }
 
-    function escapeHtml(str) {
-      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    }
+    // Render archived
+    const archivedList = document.getElementById('pastList');
+    ARCHIVED_JOBS.forEach(job => {
+      const row = document.createElement('div');
+      row.className = 'past-item';
+      row.innerHTML = `
+        <div>
+          <div class="past-name">${esc(job.title)}</div>
+          <div class="past-loc">${esc(job.location)}</div>
+        </div>
+        <span class="past-badge">Closed</span>
+      `;
+      archivedList.appendChild(row);
+    });
 
-    function renderDescription(desc) {
-      return escapeHtml(desc).replace(/&lt;b&gt;/g, '<b>').replace(/&lt;\/b&gt;/g, '</b>');
-    }
-
+    // Render open roles
     const jobList = document.getElementById('jobList');
-    const positionSelect = document.getElementById('position');
+    const roleSelect = document.getElementById('f-role');
+    document.getElementById('roleCount').textContent = JOBS.length;
 
-    if (JOBS.length === 0) {
-      document.getElementById('jobsHeadline').textContent = 'Nothing listed right now';
-      jobList.innerHTML = '<div class="job-empty">No open roles at the moment. New searches are added regularly — submit your resume below and we\'ll be in touch when something fits.</div>';
-    } else {
-      JOBS.forEach((job) => {
-        const item = document.createElement('div');
-        item.className = 'job-item';
-        item.id = `job-${job.id}`;
-        item.innerHTML = `
-          <div class="job-row">
-            <div class="job-title-wrap">
-              <div class="job-title">${escapeHtml(job.title)}</div>
-              <div class="job-location">${escapeHtml(job.location)}</div>
-            </div>
-            <span class="job-arrow">→</span>
+    JOBS.forEach(job => {
+      const item = document.createElement('div');
+      item.className = 'job-item';
+      item.id = `job-${job.id}`;
+
+      const desc = esc(job.description)
+        .replace(/&lt;b&gt;/g, '<b>')
+        .replace(/&lt;\/b&gt;/g, '</b>');
+
+      item.innerHTML = `
+        <div class="job-row">
+          <div>
+            <div class="job-name">${esc(job.title)}</div>
+            <div class="job-meta">${esc(job.location)}</div>
+            <div class="job-meta">${esc(job.type)}</div>
           </div>
-          <div class="job-description">
-${renderDescription(job.description)}
-<div class="job-description-footer">
-  <button class="job-apply-btn" data-role="${escapeHtml(job.title)}">Apply for this role →</button>
-</div>
-          </div>
-        `;
+          <span class="job-toggle">→</span>
+        </div>
+        <div class="job-body">${desc}
+          <div><button class="job-apply" data-id="${job.id}">Apply →</button></div>
+        </div>
+      `;
 
-        const row = item.querySelector('.job-row');
-        row.addEventListener('click', () => item.classList.toggle('expanded'));
-
-        const applyBtn = item.querySelector('.job-apply-btn');
-        applyBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          applyToRole(job.title);
-        });
-
-        jobList.appendChild(item);
-
-        const opt = document.createElement('option');
-        opt.value = job.title;
-        opt.textContent = `${job.title} — ${job.location}`;
-        positionSelect.appendChild(opt);
+      item.querySelector('.job-row').addEventListener('click', () => {
+        const wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.job-item.open').forEach(el => el.classList.remove('open'));
+        if (!wasOpen) item.classList.add('open');
       });
 
-      if (location.hash) {
-        const target = document.querySelector(location.hash);
-        if (target && target.classList.contains('job-item')) {
-          target.classList.add('expanded');
-          setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
-        }
+      item.querySelector('.job-apply').addEventListener('click', e => {
+        e.stopPropagation();
+        document.getElementById('apply').scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => { roleSelect.value = job.id; }, 400);
+      });
+
+      jobList.appendChild(item);
+
+      const opt = document.createElement('option');
+      opt.value = job.id;
+      opt.textContent = job.title;
+      roleSelect.appendChild(opt);
+    });
+
+    const genOpt = document.createElement('option');
+    genOpt.value = 'general';
+    genOpt.textContent = 'General application';
+    roleSelect.appendChild(genOpt);
+
+    // Hash-based auto-expand
+    if (location.hash) {
+      const target = document.querySelector(location.hash);
+      if (target && target.classList.contains('job-item')) {
+        target.classList.add('open');
+        setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
       }
     }
 
-    const generalOpt = document.createElement('option');
-    generalOpt.value = 'General Application';
-    generalOpt.textContent = 'General Application';
-    positionSelect.appendChild(generalOpt);
-
-    function applyToRole(roleName) {
-      positionSelect.value = roleName;
-      document.getElementById('apply').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    const applyForm = document.getElementById('applyForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const formStatus = document.getElementById('formStatus');
-
-    applyForm.addEventListener('submit', async (e) => {
+    // Form submit
+    document.getElementById('applyForm').addEventListener('submit', async e => {
       e.preventDefault();
-      formStatus.className = 'form-status';
-      formStatus.textContent = '';
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Submitting…';
+      const btn = document.getElementById('submitBtn');
+      const status = document.getElementById('formStatus');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      status.className = 'form-status';
 
       try {
-        const formData = new FormData(applyForm);
-        const response = await fetch('/api/apply', { method: 'POST', body: formData });
-        const result = await response.json();
-
-        if (response.ok && result.success) {
-          formStatus.className = 'form-status success';
-          formStatus.textContent = "Application received — thank you. We'll be in touch if there's a fit.";
-          applyForm.reset();
+        const data = new FormData(e.target);
+        const res = await fetch('/api/apply', { method: 'POST', body: data });
+        const json = await res.json();
+        if (res.ok && json.success) {
+          status.className = 'form-status success';
+          status.textContent = "Received. We'll be in touch.";
+          e.target.reset();
         } else {
-          throw new Error(result.error || 'Submission failed');
+          throw new Error(json.error || 'error');
         }
       } catch (err) {
-        formStatus.className = 'form-status error';
-        const msg = err.message && err.message !== 'Submission failed' ? err.message : 'Something went wrong. Please try again or email info@twbls.com directly.';
-        formStatus.textContent = msg;
+        status.className = 'form-status error';
+        status.textContent = err.message !== 'error' ? err.message : 'Something went wrong. Email info@twbls.com directly.';
       } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Submit Application';
+        btn.disabled = false;
+        btn.textContent = 'Submit';
       }
     });
   </script>
