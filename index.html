@@ -169,6 +169,22 @@
 
     /* ── Past searches ── */
     .past { padding-bottom: 56px; }
+    .past-toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-block: 56px 0;
+      cursor: pointer;
+      user-select: none;
+    }
+    .past-toggle-row h2 { font-size: 13px; font-weight: 500; letter-spacing: -0.01em; }
+    .past-toggle-meta { display: flex; align-items: center; gap: 20px; }
+    .past-toggle-count { font-family: var(--mono); font-size: 11px; color: var(--faint); }
+    .past-toggle-arrow { font-size: 12px; color: var(--faint); transition: transform 0.18s, color 0.12s; }
+    .past.open .past-toggle-arrow { transform: rotate(90deg); color: var(--mid); }
+    .past-list { display: none; }
+    .past.open .past-list { display: block; }
     .past-item {
       display: flex;
       align-items: center;
@@ -309,11 +325,15 @@
       <div id="jobList"></div>
     </section>
 
-    <section class="past">
-      <div class="section-head">
+    <section class="past" id="pastSection">
+      <div class="past-toggle-row" id="pastToggle">
         <h2>Past searches</h2>
+        <div class="past-toggle-meta">
+          <span class="past-toggle-count" id="pastCount"></span>
+          <span class="past-toggle-arrow">→</span>
+        </div>
       </div>
-      <div id="pastList"></div>
+      <div class="past-list" id="pastList"></div>
     </section>
 
     <section class="areas">
@@ -518,6 +538,10 @@
         <span class="past-badge">Closed</span>
       `;
       archivedList.appendChild(row);
+    });
+    document.getElementById('pastCount').textContent = ARCHIVED_JOBS.length;
+    document.getElementById('pastToggle').addEventListener('click', () => {
+      document.getElementById('pastSection').classList.toggle('open');
     });
 
     // Render open roles
