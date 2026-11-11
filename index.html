@@ -468,20 +468,22 @@
       }
     ];
 
+    // ARCHIVED_JOBS — description field is stored silently for record-keeping; not shown in UI.
+    // Always carry the description over from JOBS when closing a role.
     const ARCHIVED_JOBS = [
-      { id: "it-service-specialist",                 ref: "J-057", title: "IT Service Specialist",                location: "New York · Chicago · Los Angeles" },
-      { id: "help-desk-technician-new-york",         ref: "J-055", title: "Help Desk Technician",                location: "New York, NY" },
-      { id: "director-legal-innovation-ai",          ref: "J-050", title: "Director of Legal Innovation & AI",   location: "Los Angeles · New York · Washington, D.C." },
-      { id: "deskside-services-technician-nyc",      ref: "J-047", title: "Deskside Services Technician",        location: "New York, NY" },
-      { id: "endpoint-solutions-engineer-la",        ref: "J-045", title: "Endpoint Solutions Engineer",         location: "Los Angeles, CA" },
-      { id: "technology-support-analyst",            ref: "J-044", title: "Technology Support Analyst",          location: "Salt Lake City · San Diego · San Francisco" },
-      { id: "user-support-manager-la",               ref: "J-042", title: "User Support Manager",                location: "Los Angeles, CA" },
-      { id: "director-digital-transformation-la",    ref: "J-040", title: "Director, Digital Transformation",    location: "Los Angeles, CA" },
-      { id: "itsm-supervisor-nyc",                   ref: "J-037", title: "ITSM Supervisor",                     location: "New York, NY" },
-      { id: "senior-technology-trainer-century-city",ref: "J-035", title: "Senior Technology Trainer",           location: "Century City, CA" },
-      { id: "applications-support-specialist-la",    ref: "J-033", title: "Applications Support Specialist",     location: "Los Angeles, CA" },
-      { id: "it-support-analyst-ii-oakland",         ref: "J-031", title: "IT Support Analyst II",               location: "Oakland, CA" },
-      { id: "help-desk-analyst-nashville",           ref: "J-029", title: "Help Desk Analyst",                   location: "Nashville, TN" },
+      { id: "it-service-specialist",                 ref: "J-057", title: "IT Service Specialist",                location: "New York · Chicago · Los Angeles",                        description: `` },
+      { id: "help-desk-technician-new-york",         ref: "J-055", title: "Help Desk Technician",                location: "New York, NY",                                            description: `` },
+      { id: "director-legal-innovation-ai",          ref: "J-050", title: "Director of Legal Innovation & AI",   location: "Los Angeles · New York · Washington, D.C.",               description: `` },
+      { id: "deskside-services-technician-nyc",      ref: "J-047", title: "Deskside Services Technician",        location: "New York, NY",                                            description: `` },
+      { id: "endpoint-solutions-engineer-la",        ref: "J-045", title: "Endpoint Solutions Engineer",         location: "Los Angeles, CA",                                         description: `` },
+      { id: "technology-support-analyst",            ref: "J-044", title: "Technology Support Analyst",          location: "Salt Lake City · San Diego · San Francisco",              description: `` },
+      { id: "user-support-manager-la",               ref: "J-042", title: "User Support Manager",                location: "Los Angeles, CA",                                         description: `` },
+      { id: "director-digital-transformation-la",    ref: "J-040", title: "Director, Digital Transformation",    location: "Los Angeles, CA",                                         description: `` },
+      { id: "itsm-supervisor-nyc",                   ref: "J-037", title: "ITSM Supervisor",                     location: "New York, NY",                                            description: `` },
+      { id: "senior-technology-trainer-century-city",ref: "J-035", title: "Senior Technology Trainer",           location: "Century City, CA",                                        description: `` },
+      { id: "applications-support-specialist-la",    ref: "J-033", title: "Applications Support Specialist",     location: "Los Angeles, CA",                                         description: `` },
+      { id: "it-support-analyst-ii-oakland",         ref: "J-031", title: "IT Support Analyst II",               location: "Oakland, CA",                                             description: `` },
+      { id: "help-desk-analyst-nashville",           ref: "J-029", title: "Help Desk Analyst",                   location: "Nashville, TN",                                           description: `` },
     ];
 
     function esc(s) {
